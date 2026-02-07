@@ -5,18 +5,18 @@ using UnityEngine;
 public class CaseInfection : MonoBehaviour
 {
     CouleurInfection couleur;
-    [SerializeField] Color color;
+    Color color;
     SpriteRenderer spriteRenderer;
-    public int population { get; private set; }
-    public int nbInfectés { get; private set; }
-    bool goingUp;
-    private float time;
+    public float population { get; private set; }
+    public float nbInfectés;
+    private float nextNbInfectés;
+    public float resistance; // % de réduction du nombre d'infectés
 
     public void Initialiser()
     {
-        goingUp = true;
-        time = Time.time;
-        population = 400;
+        resistance = (float)Random.Range(0, 101) / 100;
+
+        population = 10000;
         couleur = new CouleurInfection();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -30,10 +30,18 @@ public class CaseInfection : MonoBehaviour
     }
 
 
-    public void Infecter(int nouveauxInfectés)
+    public void Infecter(float nbInfection)
     {
-        nbInfectés += nouveauxInfectés;
-        if (nbInfectés > population)
-            nbInfectés = population;
+        nextNbInfectés += (int)(nbInfection * (1f - resistance));
+        if (nextNbInfectés > population)
+            nextNbInfectés = population;
+
+        ChangerCouleur();
+    }
+
+    public void FinTick()
+    {
+        nbInfectés += nextNbInfectés;
+        nextNbInfectés = 0;
     }
 }

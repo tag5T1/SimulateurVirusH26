@@ -9,7 +9,7 @@ public class GrilleInfection : MonoBehaviour
     [SerializeField] int taille = 20;
     CaseInfection[,] casesInfection = null;
     // CaseInfection[,] matriceAdjacence = new CaseInfection[3,3]; IDK IF USEFUL
-    int tickSpeed = 2;
+    int tickSpeed = 10;
     const int TICK_RATE = 6; // Sommeil - deplacement - travail - deplacement - libre - deplacement
     Coroutine coroutine;
 
@@ -24,9 +24,23 @@ public class GrilleInfection : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CreerGrille();
-            Debug.Log("SPACE");
         }
-            
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            var camera = Camera.main;
+            var pos = camera.ScreenToWorldPoint(Input.mousePosition);
+            pos.x = Mathf.Floor(pos.x);
+            pos.y = Mathf.Floor(pos.y);
+            foreach (var o in casesInfection) {
+                Debug.Log((Vector2)o.transform.position + "  vs  " + (Vector2)pos);
+                if ((Vector2)o.transform.position == (Vector2)pos)
+                {
+                    o.Infecter(o.population / 10);
+                    break;
+                }
+            }
+        }
     }
 
 
@@ -34,55 +48,55 @@ public class GrilleInfection : MonoBehaviour
     {
         while (true)
         {
-            var time = Time.time;
+            float time = Time.time;
 
-            for (int i = 0; i < taille; i++) {
-                for (int j = 0; j < taille; j++) {
-                    var caseVise = casesInfection[i, j];
-                    var infectés = caseVise.nbInfectés;
-                    var population = caseVise.population;
+            // Infecte les cases
+            for (int y = 0; y < taille; y++) {
+                for (int x = 0; x < taille; x++) {
+                    var caseVise = casesInfection[y, x];
+                    float infectés = caseVise.nbInfectés;
 
-                    int nouveauxInfectés = (int)(infectés * 0.25f);
+                    float nbInfection = (int)(infectés * 0.05f);
 
-                    // Infection sur soi-même
-                    caseVise.Infecter(nouveauxInfectés);
-                    caseVise.ChangerCouleur();
+                    // Infecte soi-meme
+                    caseVise.Infecter(nbInfection);
 
-                    // Infection en haut
-                    if (i > 0)
+                    // Infecte en haut
+                    if (y > 0)
                     {
-                        caseVise = casesInfection[i - 1, j];
-                        caseVise.Infecter(nouveauxInfectés);
-                        caseVise.ChangerCouleur();
+                        caseVise = casesInfection[y - 1, x];
+                        caseVise.Infecter(nbInfection);
                     }
 
-                    // Infection en bas
-                    if (i < taille-1)
+                    // Infecte en bas
+                    if (y < taille-1)
                     {
-                        caseVise = casesInfection[i + 1, j];
-                        caseVise.Infecter(nouveauxInfectés);
-                        caseVise.ChangerCouleur();
+                        caseVise = casesInfection[y + 1, x];
+                        caseVise.Infecter(nbInfection);
                     }
 
-                    // Infection à gauche
-                    if (j > 0)
+                    // Infecte à gauche
+                    if (x > 0)
                     {
-                        caseVise = casesInfection[i, j - 1];
-                        caseVise.Infecter(nouveauxInfectés);
-                        caseVise.ChangerCouleur();
+                        caseVise = casesInfection[y, x - 1];
+                        caseVise.Infecter(nbInfection);
                     }
 
-                    // Infection à droite
-                    if (j < taille-1)
+                    // Infecte à droite
+                    if (x < taille-1)
                     {
-                        caseVise = casesInfection[i, j + 1];
-                        caseVise.Infecter(nouveauxInfectés);
-                        caseVise.ChangerCouleur();
+                        caseVise = casesInfection[y, x + 1];
+                        caseVise.Infecter(nbInfection);
                     }
                 }
             }
 
-            var tempsRestant = (1/tickSpeed) - (Time.time - time);
+            // Applique les nouvelles infection
+            foreach (var o in casesInfection) 
+                o.FinTick();
+
+            float tempsRestant = (1f/tickSpeed) - (Time.time - time);
+            Debug.Log("TICK");
             yield return new WaitForSeconds(tempsRestant);
         }
     }

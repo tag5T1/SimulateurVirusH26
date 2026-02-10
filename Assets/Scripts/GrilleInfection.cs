@@ -9,7 +9,8 @@ public class GrilleInfection : MonoBehaviour
     [SerializeField] int taille = 20;
     CaseInfection[,] casesInfection = null;
     // CaseInfection[,] matriceAdjacence = new CaseInfection[3,3]; IDK IF USEFUL
-    int tickSpeed = 10;
+    [SerializeField] int tickSpeed = 10;
+    [SerializeField] int nbInfectionInitiale;
     const int TICK_RATE = 6; // Sommeil - deplacement - travail - deplacement - libre - deplacement
     bool pause;
     Coroutine coroutine;
@@ -69,7 +70,7 @@ public class GrilleInfection : MonoBehaviour
             Debug.Log(tickSpeed);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             var camera = Camera.main;
             var pos = camera.ScreenToWorldPoint(Input.mousePosition);
@@ -182,7 +183,7 @@ public class GrilleInfection : MonoBehaviour
         }
 
         // Infecte un nombre aléatoire de cases
-        for (int i = 0; i < Random.Range(1, 4); i++)
+        for (int i = 0; i < nbInfectionInitiale; i++)
         {
             int x = (int)(Random.value * taille);
             int y = (int)(Random.value * taille);

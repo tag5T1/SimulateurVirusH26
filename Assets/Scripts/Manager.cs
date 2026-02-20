@@ -13,7 +13,6 @@ public class Manager : MonoBehaviour
 
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         personne = Resources.Load<GameObject>("Personne");
@@ -30,13 +29,8 @@ public class Manager : MonoBehaviour
             var o = GameObject.Instantiate(personne);
             o.GetComponent<IAPersonne>().Creation();
             o.GetComponent<IAPersonne>().personne.espaceDeTravail = espace;
-           
+            if (i%5 == 0)
+                o.GetComponent<IAPersonne>().personne.Infecter(new Virus(transform, Random.Range(100, 160) / 10, 15, Random.Range(55, 85), 1f, 0.2f, 10));
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

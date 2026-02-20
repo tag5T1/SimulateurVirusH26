@@ -5,9 +5,10 @@ using UnityEngine.AI;
 public class Personne
 {
     public Virus virus;
+    public bool infecté {  get; private set; }
     [SerializeField] int rayonPathfinding = 10;
     public float niveauToux;
-    public Vector3 destination;
+    public Vector3 destination {  get; private set; }
     public EspaceDeTravail espaceDeTravail;
 
     public Personne()
@@ -15,7 +16,7 @@ public class Personne
         destination = new Vector3(Random.Range(-rayonPathfinding, rayonPathfinding), -5, Random.Range(-rayonPathfinding, rayonPathfinding));
     }
 
-    public Vector3 G�n�rerPosition()
+    public Vector3 GénérerPosition()
     {
         Vector3 position;
         position = espaceDeTravail.bureau.transform.position;
@@ -25,5 +26,6 @@ public class Personne
     public void Infecter(Virus virus)
     {
         this.virus = virus.Muter();
+        infecté = true;
     }
 }

@@ -10,6 +10,7 @@ public class Virus
     public float gravité { get; private set; }
     public float duréeVie { get; private set; }
     public float puissanceMutation { get; private set; } // % possible de changement
+    public float maxSpread = 20;
 
     // Copie
     public Virus(Virus vir)

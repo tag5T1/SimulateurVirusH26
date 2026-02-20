@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 8777614584792492733}
   - component: {fileID: 8141636451306648579}
   - component: {fileID: 3198990095204762233}
+  - component: {fileID: 5662993986307091566}
   m_Layer: 8
   m_Name: Personne
-  m_TagString: Untagged
+  m_TagString: Personne
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,3 +151,18 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &5662993986307091566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098120291148209196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592e0006e09643b4a8be478dc99b9822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  particuleDeBase: {fileID: 5123916652799007557, guid: ba35c9eb1704fb949812b162f4eda1b5, type: 3}
+  rayonPathfinding: 30
+  niveauToux: 0

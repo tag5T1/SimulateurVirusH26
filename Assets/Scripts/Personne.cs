@@ -15,10 +15,15 @@ public class Personne
         destination = new Vector3(Random.Range(-rayonPathfinding, rayonPathfinding), -5, Random.Range(-rayonPathfinding, rayonPathfinding));
     }
 
-    public Vector3 GénérerPosition()
+    public Vector3 Gï¿½nï¿½rerPosition()
     {
         Vector3 position;
         position = espaceDeTravail.bureau.transform.position;
         return position;
+    }
+
+    public void Infecter(Virus virus)
+    {
+        this.virus = virus.Muter();
     }
 }

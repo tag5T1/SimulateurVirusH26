@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class VirusParticule : MonoBehaviour
@@ -9,10 +11,16 @@ public class VirusParticule : MonoBehaviour
     float gravité; // Force appliquée vers le bas
     float duréeVie; // Tremps de vie avant de mourir
     float tempsVie; // Temps de vie depuis sa création
+    List<GameObject> objetsCollisionnés; // Objets que la particule à touché
+    bool premièreCollision;
+    bool estEnCollision = false;
+
 
     public void Création(GameObject personne, Vector3 directionEmission, Virus virus)
     {
         personneÉmettrice = personne;
+        premièreCollision = true;
+        objetsCollisionnés = new List<GameObject>();
         rb = GetComponent<Rigidbody>();
         this.virus = virus;
         force = virus.force;
@@ -29,7 +37,10 @@ public class VirusParticule : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(0, -gravité, 0);
+        if (!estEnCollision)
+        {
+            rb.AddForce(0, -gravité, 0);
+        }
         tempsVie += Time.fixedDeltaTime;
         if (tempsVie > duréeVie)
             GameObject.Destroy(gameObject);
@@ -38,10 +49,32 @@ public class VirusParticule : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Personne" && collision.gameObject != personneÉmettrice)
+        if (collision.gameObject != personneÉmettrice && !objetsCollisionnés.Contains(collision.gameObject))
         {
-            Debug.Log(personneÉmettrice.name + " --> " + collision.gameObject.name);
-            collision.gameObject.GetComponent<IAPersonne>().personne.Infecter(virus);
+            if (collision.gameObject.tag == "Personne")
+            {
+                collision.gameObject.GetComponent<IAPersonne>().personne.Infecter(virus);
+            }
+            else
+            {
+                if (premièreCollision)
+                {
+                    Debug.Log("stick");
+                    gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    gameObject.GetComponent<VirusParticule>().personneÉmettrice = collision.gameObject;
+                    premièreCollision = false;
+                    estEnCollision = true;
+                }
+                else
+                {
+                    Debug.Log("Copie");
+                    GameObject instance;
+                    instance = Instantiate(gameObject, collision.GetContact(0).point, Quaternion.identity);
+                }
+
+            }
+
+            objetsCollisionnés.Add(collision.gameObject);
         }
     }
 }

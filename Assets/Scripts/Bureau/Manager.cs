@@ -15,8 +15,8 @@ public class Manager : MonoBehaviour
 
     void Awake()
     {
-        personne = Resources.Load<GameObject>("Personne");
-        bureau = Resources.Load<GameObject>("Bureau");
+        personne = Resources.Load<GameObject>("Prefabs/Personne");
+        bureau = Resources.Load<GameObject>("Prefabs/Bureau");
         espacesDeTravail = new List<EspaceDeTravail>();
         for (int i = 0; i < nbPersonne; i++) {
             EspaceDeTravail espace = new()

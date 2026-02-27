@@ -4,9 +4,10 @@ public class Virus
 {
     Transform personne;
 
+    public string nom = "virus 1";
     public float niveauMin {  get; private set; }
     public float force {  get; private set; }
-    public  float decceleration {  get; private set; }
+    public  float décceleration {  get; private set; }
     public float gravité { get; private set; }
     public float duréeVie { get; private set; }
     public float puissanceMutation { get; private set; } // % possible de changement
@@ -22,7 +23,7 @@ public class Virus
         this.force = vir.force;
         this.duréeVie = vir.duréeVie;
         this.niveauMin = vir.niveauMin;
-        this.decceleration = vir.decceleration;
+        this.décceleration = vir.décceleration;
         this.gravité = vir.gravité;
     }
 
@@ -36,7 +37,7 @@ public class Virus
         this.force = Random.Range(100, 160) / 10;
         this.duréeVie = 15;
         this.niveauMin = Random.Range(55, 85);
-        this.decceleration = 1.0f;
+        this.décceleration = 1.0f;
         this.gravité = 0.18f;
         this.puissanceMutation = 10;
     }
@@ -57,7 +58,7 @@ public class Virus
         this.force = force;
         this.duréeVie = duréeVie;
         this.niveauMin = niveauMin;
-        this.decceleration = decceleration;
+        this.décceleration = decceleration;
         this.gravité = gravité;
         this.puissanceMutation = puissanceMutation;
     }
@@ -76,7 +77,7 @@ public class Virus
         // Modifie légèrement les paramètres
         niveauMin *= Random.Range(min, max) / scale;
         force *= Random.Range(min, max) / scale;
-        decceleration *= Random.Range(min, max) / scale;
+        décceleration *= Random.Range(min, max) / scale;
         gravité *= Random.Range(min, max) / scale;
         duréeVie *= Random.Range(min, max) / scale;
         puissanceMutation *= Random.Range(900, 1100) / 1000; // 10% de mutation de base sur la mutation

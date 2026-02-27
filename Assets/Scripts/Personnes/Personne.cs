@@ -30,4 +30,26 @@ public class Personne
         this.virus = virus.Muter();
         infecté = true;
     }
+
+    public List<Dictionary<string, string>> OnClick()
+    {
+        DataEspaceDeTravail dataEspaceDeTravail = new DataEspaceDeTravail();
+        DataVirus dataVirus = new DataVirus();
+        DataInfection dataInfection = new DataInfection();
+        List<Dictionary<string, string>> listeData = new List<Dictionary<string, string>>();
+
+        dataEspaceDeTravail.Add(espaceDeTravail);
+        listeData.Add(dataEspaceDeTravail.données);
+
+        dataInfection.Add(infecté);
+        listeData.Add(dataInfection.données);
+
+        if (infecté)
+        {
+            dataVirus.Add(virus);
+            listeData.Add(dataVirus.données);
+        }
+
+        return listeData;
+    }
 }

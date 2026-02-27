@@ -33,12 +33,12 @@ public class Virus
     public Virus(Transform personne)
     {
         this.personne = personne;
-        this.force = Random.Range(100, 160) / 10;
+        this.force = Random.Range(10f, 16f);
         this.duréeVie = 15;
-        this.niveauMin = Random.Range(55, 85);
-        this.decceleration = 1.0f;
-        this.gravité = 0.18f;
-        this.puissanceMutation = 10;
+        this.niveauMin = Random.Range(85, 105);
+        this.decceleration = 1.2f;
+        this.gravité = Random.Range(0.1f, 0.4f);
+        this.puissanceMutation = 10f;
     }
 
     /// <summary>

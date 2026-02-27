@@ -1,24 +1,32 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class VirusParticule : MonoBehaviour
 {
-    GameObject personneÉmettrice;
+    GameObject personneï¿½mettrice;
     Rigidbody rb;
     Virus virus;
-    float force; // Force à laquelle la particule est projetée
-    float gravité; // Force appliquée vers le bas
-    float duréeVie; // Tremps de vie avant de mourir
-    float tempsVie; // Temps de vie depuis sa création
+    float force; // Force ï¿½ laquelle la particule est projetï¿½e
+    float gravitï¿½; // Force appliquï¿½e vers le bas
+    float durï¿½eVie; // Tremps de vie avant de mourir
+    float tempsVie; // Temps de vie depuis sa crï¿½ation
+    List<GameObject> objetsCollisionnï¿½s; // Objets que la particule ï¿½ touchï¿½
+    bool premiï¿½reCollision;
+    bool estEnCollision = false;
 
-    public void Création(GameObject personne, Vector3 directionEmission, Virus virus)
+
+    public void Crï¿½ation(GameObject personne, Vector3 directionEmission, Virus virus)
     {
-        personneÉmettrice = personne;
+        personneï¿½mettrice = personne;
+        premiï¿½reCollision = true;
+        objetsCollisionnï¿½s = new List<GameObject>();
         rb = GetComponent<Rigidbody>();
         this.virus = virus;
         force = virus.force;
-        gravité = virus.gravité;
+        gravitï¿½ = virus.gravitï¿½;
         rb.linearDamping = Random.Range(virus.decceleration*500, virus.decceleration*1500)/1000;
-        duréeVie = virus.duréeVie;
+        durï¿½eVie = virus.durï¿½eVie;
         tempsVie = 0;
 
         var forceVectorielle = directionEmission * Random.Range(0, force) + new Vector3((float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10);
@@ -28,18 +36,44 @@ public class VirusParticule : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(0, -gravité, 0);
+        if (!estEnCollision)
+        {
+            rb.AddForce(0, -gravitï¿½, 0);
+        }
         tempsVie += Time.fixedDeltaTime;
-        if (tempsVie > duréeVie)
+        if (tempsVie > durï¿½eVie)
             GameObject.Destroy(gameObject);
     }
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Personne" && collision.gameObject != personneÉmettrice)
+        if (collision.gameObject != personneï¿½mettrice && !objetsCollisionnï¿½s.Contains(collision.gameObject))
         {
-            collision.gameObject.GetComponent<IAPersonne>().personne.Infecter(virus);
+            if (collision.gameObject.tag == "Personne")
+            {
+                collision.gameObject.GetComponent<IAPersonne>().personne.Infecter(virus);
+            }
+            else
+            {
+                if (premiï¿½reCollision)
+                {
+                    Debug.Log("stick");
+                    gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    gameObject.GetComponent<VirusParticule>().personneï¿½mettrice = collision.gameObject;
+                    premiï¿½reCollision = false;
+                    estEnCollision = true;
+                }
+                else
+                {
+                    Debug.Log("Copie");
+                    GameObject instance;
+                    instance = Instantiate(gameObject, collision.GetContact(0).point, Quaternion.identity);
+                }
+
+            }
+
+            objetsCollisionnï¿½s.Add(collision.gameObject);
         }
     }
 }

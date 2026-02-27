@@ -7,11 +7,11 @@ public class VirusParticule : MonoBehaviour
     GameObject personneÉmettrice;
     Rigidbody rb;
     Virus virus;
-    float force; // Force à laquelle la particule est projetée
+    float force; // Force avec laquelle la particule est projetée
     float gravité; // Force appliquée vers le bas
     float duréeVie; // Tremps de vie avant de mourir
     float tempsVie; // Temps de vie depuis sa création
-    List<GameObject> objetsCollisionnés; // Objets que la particule à touché
+    List<GameObject> objetsCollisionnés; // Objets que la particule a touchés
     bool premièreCollision;
     bool estEnCollision = false;
 
@@ -25,13 +25,12 @@ public class VirusParticule : MonoBehaviour
         this.virus = virus;
         force = virus.force;
         gravité = virus.gravité;
-        rb.linearDamping = Random.Range(virus.décceleration*500, virus.décceleration*1500)/1000;
+        rb.linearDamping = Random.Range(virus.decceleration*0.25f, virus.decceleration*2f);
         duréeVie = virus.duréeVie;
         tempsVie = 0;
 
         var forceVectorielle = directionEmission * Random.Range(0, force) + new Vector3((float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10);
         rb.AddForce(forceVectorielle, ForceMode.Impulse);
-        //transform.LookAt(transform.position + forceVectorielle);
     }
 
     private void FixedUpdate()
@@ -40,6 +39,7 @@ public class VirusParticule : MonoBehaviour
         {
             rb.AddForce(0, -gravité, 0);
         }
+
         tempsVie += Time.fixedDeltaTime;
         if (tempsVie > duréeVie)
             GameObject.Destroy(gameObject);
@@ -48,22 +48,24 @@ public class VirusParticule : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject != personneÉmettrice && !objetsCollisionnés.Contains(collision.gameObject))
+        GameObject objet = collision.gameObject;
+
+        if (objet != personneÉmettrice && !objetsCollisionnés.Contains(collision.gameObject))
         {
-            if (collision.gameObject.tag == "Personne")
+            if (objet.tag == "Personne")
             {
-                collision.gameObject.GetComponent<IAPersonne>().personne.Infecter(virus);
+                objet.GetComponent<IAPersonne>().Infecter(virus);
+                Destroy(gameObject);
             }
             else
             {
                 if (premièreCollision)
                 {
-                    gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                    gameObject.GetComponent<VirusParticule>().personneÉmettrice = collision.gameObject;
+                    rb.isKinematic = true;
                     premièreCollision = false;
                     estEnCollision = true;
+                    gameObject.GetComponent<VirusParticule>().personneÉmettrice = objet;
                 }
-
             }
 
             objetsCollisionnés.Add(collision.gameObject);

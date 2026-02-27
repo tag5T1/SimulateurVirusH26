@@ -150,3 +150,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IAPersonne
   particuleDeBase: {fileID: 5123916652799007557, guid: ba35c9eb1704fb949812b162f4eda1b5, type: 3}
+  "materialInfect\xE9": {fileID: 2100000, guid: f9d5d9a7950d93243ab444bb3359a12f, type: 2}
+  "nomT\xE2che": 0

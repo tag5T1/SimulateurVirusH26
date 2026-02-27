@@ -7,80 +7,80 @@ public class Virus
     public string nom = "virus 1";
     public float niveauMin {  get; private set; }
     public float force {  get; private set; }
-    public  float décceleration {  get; private set; }
-    public float gravité { get; private set; }
-    public float duréeVie { get; private set; }
+    public  float dÃ©cceleration {  get; private set; }
+    public float gravitÃ© { get; private set; }
+    public float durÃ©eVie { get; private set; }
     public float puissanceMutation { get; private set; } // % possible de changement
     public float maxSpread = 20;
 
     /// <summary>
     /// Constructeur qui copie le Virus
     /// </summary>
-    /// <param name="vir"> Le Virus à copier </param>
+    /// <param name="vir"> Le Virus Ã  copier </param>
     public Virus(Virus vir)
     {
         this.personne = vir.personne;
         this.force = vir.force;
-        this.duréeVie = vir.duréeVie;
+        this.durÃ©eVie = vir.durÃ©eVie;
         this.niveauMin = vir.niveauMin;
-        this.décceleration = vir.décceleration;
-        this.gravité = vir.gravité;
+        this.dÃ©cceleration = vir.dÃ©cceleration;
+        this.gravitÃ© = vir.gravitÃ©;
     }
 
     /// <summary>
-    /// Constructeur qui crée un virus aléatoire
+    /// Constructeur qui crÃ©e un virus alÃ©atoire
     /// </summary>
-    /// <param name="personne"> Le Transform de la personne qui possède le Virus </param>
+    /// <param name="personne"> Le Transform de la personne qui possÃ¨de le Virus </param>
     public Virus(Transform personne)
     {
         this.personne = personne;
-        this.force = Random.Range(100, 160) / 10;
-        this.duréeVie = 15;
-        this.niveauMin = Random.Range(55, 85);
-        this.décceleration = 1.0f;
-        this.gravité = 0.18f;
-        this.puissanceMutation = 10;
+        this.force = Random.Range(10f, 16f);
+        this.durÃ©eVie = 15;
+        this.niveauMin = Random.Range(85, 105);
+        this.decceleration = 1.2f;
+        this.gravitÃ© = Random.Range(0.1f, 0.4f);
+        this.puissanceMutation = 10f;
     }
 
     /// <summary>
-    /// Constructeur à paramètres donnés
+    /// Constructeur Ã  paramÃ¨tres donnÃ©s
     /// </summary>
-    /// <param name="personne"> Le Transform de la personne qui possède le virus </param>
+    /// <param name="personne"> Le Transform de la personne qui possÃ¨de le virus </param>
     /// <param name="force"> La force de projection des particules </param>
-    /// <param name="duréeVie"> La durée de vie des particules en secondes </param>
-    /// <param name="niveauMin"> Le niveau minimum de symptome nécessaire pour en voir </param>
-    /// <param name="decceleration"> La déccélération des particules </param>
-    /// <param name="gravité"> La gravité que subisse les particules </param>
-    /// <param name="puissanceMutation"> Le % qui détermine la valeur minimum et maximum de mutation </param>
-    public Virus(Transform personne, float force, float duréeVie, float niveauMin, float decceleration, float gravité, int puissanceMutation)
+    /// <param name="durÃ©eVie"> La durÃ©e de vie des particules en secondes </param>
+    /// <param name="niveauMin"> Le niveau minimum de symptome nÃ©cessaire pour en voir </param>
+    /// <param name="decceleration"> La dÃ©ccÃ©lÃ©ration des particules </param>
+    /// <param name="gravitÃ©"> La gravitÃ© que subisse les particules </param>
+    /// <param name="puissanceMutation"> Le % qui dÃ©termine la valeur minimum et maximum de mutation </param>
+    public Virus(Transform personne, float force, float durÃ©eVie, float niveauMin, float decceleration, float gravitÃ©, int puissanceMutation)
     {
         this.personne = personne;
         this.force = force;
-        this.duréeVie = duréeVie;
+        this.durÃ©eVie = durÃ©eVie;
         this.niveauMin = niveauMin;
-        this.décceleration = decceleration;
-        this.gravité = gravité;
+        this.dÃ©cceleration = decceleration;
+        this.gravitÃ© = gravitÃ©;
         this.puissanceMutation = puissanceMutation;
     }
 
     /// <summary>
-    /// Change légèrement les paramètres du Virus selon sa force de mutation
+    /// Change lÃ©gÃ¨rement les paramÃ¨tres du Virus selon sa force de mutation
     /// </summary>
-    /// <returns> Le nouveau Virus muté </returns>
+    /// <returns> Le nouveau Virus mutÃ© </returns>
     public Virus Muter()
     {
         // Copie le virus
-        Virus virusMuté = new Virus(this);
+        Virus virusMutÃ© = new Virus(this);
         int scale = 1000;
         float min = scale - (puissanceMutation/100 * scale);
         float max = scale + (puissanceMutation/100 * scale);
-        // Modifie légèrement les paramètres
+        // Modifie lÃ©gÃ¨rement les paramÃ¨tres
         niveauMin *= Random.Range(min, max) / scale;
         force *= Random.Range(min, max) / scale;
-        décceleration *= Random.Range(min, max) / scale;
-        gravité *= Random.Range(min, max) / scale;
-        duréeVie *= Random.Range(min, max) / scale;
+        dÃ©cceleration *= Random.Range(min, max) / scale;
+        gravitÃ© *= Random.Range(min, max) / scale;
+        durÃ©eVie *= Random.Range(min, max) / scale;
         puissanceMutation *= Random.Range(900, 1100) / 1000; // 10% de mutation de base sur la mutation
-        return virusMuté;
+        return virusMutÃ©;
     }
 }

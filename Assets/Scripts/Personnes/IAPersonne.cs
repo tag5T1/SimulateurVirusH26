@@ -10,17 +10,24 @@ public class IAPersonne : MonoBehaviour
 {
     [SerializeField] GameObject particuleDeBase;
     NavMeshAgent agent;
+    public Manager manager;
     public Personne personne { get; private set; }
-    public string actionEnCours;
+    [SerializeField] Material materialInfecté;
+    SélecteurTâche sélecteur;
+    Symptomes symptomes;
+    public NomTâche nomTâche;
     public Tâche tâcheEnCours;
     public Vector2 position2D { get; private set; }
 
 
 
-    public void Creation(EspaceDeTravail espace)
+    public void Création(Manager manager, EspaceDeTravail espace)
     {
+        this.manager = manager;
         personne = new Personne(espace);
+        sélecteur = new SélecteurTâche(this);
     }
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -41,6 +48,8 @@ public class IAPersonne : MonoBehaviour
             }
             else
                 personne.niveauToux += 25 * Time.deltaTime;
+
+            GetComponent<MeshRenderer>().material = materialInfecté;
         }
         
         transform.LookAt(transform.position + agent.velocity);
@@ -49,20 +58,10 @@ public class IAPersonne : MonoBehaviour
 
     private IEnumerator Pathfinding()
     {
-        // CHOIX DE TÂCHE [À DÉPLACER DANS SÉLECTEUR DE TÂCHE]
-        if (actionEnCours == "AuBureau")
-        {
-            tâcheEnCours = new Roam(this);
-        }
-        else
-        {
-            tâcheEnCours = new AllerAuBureau(this);
-        }
+        tâcheEnCours = sélecteur.ChoisirTâche();
         FaireTâche(tâcheEnCours);
 
         yield return new WaitUntil(() => tâcheEnCours.status == StatusTâche.TERMINÉ);
-        // Attente entre les tâches [À DÉPLACER DANS LES TÂCHES]
-        yield return new WaitForSeconds(Random.Range(20, 60)/10);
         StartCoroutine(Pathfinding());
     }
 
@@ -84,6 +83,13 @@ public class IAPersonne : MonoBehaviour
     }
 
 
+
+    public void Infecter(Virus virus)
+    {
+        personne.Infecter(virus);
+    }
+
+
     public void FaireTâche(Tâche tâche)
     {
         StartCoroutine(tâche.FaireTâche());
@@ -93,8 +99,8 @@ public class IAPersonne : MonoBehaviour
     {
         agent.SetDestination(destination);
     }
-    public void SetActionEnCours(string action)
+    public void SetNomTâche(NomTâche nom)
     {
-        actionEnCours = action;
+        nomTâche = nom;
     }
 }

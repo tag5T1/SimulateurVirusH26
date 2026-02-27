@@ -9,10 +9,10 @@ public class Roam : Tâche
     public override IEnumerator FaireTâche()
     {
         status = StatusTâche.EN_COURS;
-        personne.SetActionEnCours("Roaming");
+        personne.SetNomTâche(NomTâche.ROAMING);
         UpdateDestination(new Vector3(Random.Range(-20, 20), -5, Random.Range(-20, 20)));
-        yield return new WaitUntil(() => Vector2.Distance(destination2D, personne.position2D) <= 1);
+        yield return new WaitUntil(() => Vector2.Distance(destination2D, personne.position2D) <= 2);
         status = StatusTâche.TERMINÉ;
-        personne.SetActionEnCours("Idle");
+        personne.SetNomTâche(NomTâche.IDLE);
     }
 }

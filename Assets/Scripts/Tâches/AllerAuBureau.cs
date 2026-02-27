@@ -8,10 +8,12 @@ public class AllerAuBureau : Tâche
     public override IEnumerator FaireTâche()
     {
         status = StatusTâche.EN_COURS;
-        personne.SetActionEnCours("AllerAuBureau");
+        personne.SetNomTâche(NomTâche.DÉPLACEMENT);
         UpdateDestination(personne.personne.GetPositionBureau());
-        yield return new WaitUntil(() => Vector2.Distance(destination2D, personne.position2D) <= 1);
+        yield return new WaitUntil(() => Vector2.Distance(destination2D, personne.position2D) <= 2);
+
+        yield return new WaitForSeconds(0);
         status = StatusTâche.TERMINÉ;
-        personne.SetActionEnCours("AuBureau");
+        personne.SetNomTâche(NomTâche.AU_BUREAU);
     }
 }

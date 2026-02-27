@@ -1,20 +1,25 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class IAPersonne : MonoBehaviour
 {
     [SerializeField] GameObject particuleDeBase;
     NavMeshAgent agent;
     public Personne personne { get; private set; }
-    string location;
+    public string actionEnCours;
+    public Tâche tâcheEnCours;
+    public Vector2 position2D { get; private set; }
 
 
 
-    public void Creation()
+    public void Creation(EspaceDeTravail espace)
     {
-        personne = new Personne();
+        personne = new Personne(espace);
     }
     private void Start()
     {
@@ -24,18 +29,18 @@ public class IAPersonne : MonoBehaviour
 
     private void Update()
     {
+        position2D = new Vector2(transform.position.x, transform.position.z);
+
         if (personne.infecté)
         {
             // LOGIQUE MUST BE POPPED
             if (personne.niveauToux - personne.virus.niveauMin > Random.Range(20, 50))
             {
-                Toux();
+                Symptomes();
                 personne.niveauToux = 0;
             }
             else
                 personne.niveauToux += 25 * Time.deltaTime;
-
-            Debug.DrawRay(transform.position, transform.forward * 5, Color.green, 0.1f);
         }
         
         transform.LookAt(transform.position + agent.velocity);
@@ -44,27 +49,24 @@ public class IAPersonne : MonoBehaviour
 
     private IEnumerator Pathfinding()
     {
-        Vector3 destination;
-        if (location == "Bureau")
+        // CHOIX DE TÂCHE [À DÉPLACER DANS SÉLECTEUR DE TÂCHE]
+        if (actionEnCours == "AuBureau")
         {
-            destination = new Vector3(Random.Range(-20, 20), -5, Random.Range(-20, 20));
-            agent.SetDestination(destination);
-            yield return new WaitUntil(() => new Vector2(transform.position.x, transform.position.z) == new Vector2(destination.x, destination.z));
-            location = "Roam";
+            tâcheEnCours = new Roam(this);
         }
         else
         {
-            destination = personne.GénérerPosition();
-            agent.SetDestination(destination);
-            yield return new WaitUntil(() => new Vector2(transform.position.x, transform.position.z) == new Vector2(destination.x, destination.z));
-            location = "Bureau";
+            tâcheEnCours = new AllerAuBureau(this);
         }
+        FaireTâche(tâcheEnCours);
 
-        yield return new WaitForSeconds(Random.Range(10, 30)/10);
+        yield return new WaitUntil(() => tâcheEnCours.status == StatusTâche.TERMINÉ);
+        // Attente entre les tâches [À DÉPLACER DANS LES TÂCHES]
+        yield return new WaitForSeconds(Random.Range(20, 60)/10);
         StartCoroutine(Pathfinding());
     }
 
-    private void Toux()
+    private void Symptomes()
     {
         Tousse(particuleDeBase);
     }
@@ -77,8 +79,22 @@ public class IAPersonne : MonoBehaviour
         {
             instance = GameObject.Instantiate(prefab, pos, transform.rotation);
             VirusParticule vir = instance.GetComponent<VirusParticule>();
-            Debug.DrawRay(transform.position, transform.forward * 5, Color.blue, 2f);
-            vir.Création(this.gameObject, transform.forward, personne.virus);
+            vir.Création(gameObject, transform.forward, personne.virus);
         }
+    }
+
+
+    public void FaireTâche(Tâche tâche)
+    {
+        StartCoroutine(tâche.FaireTâche());
+    }
+
+    public void SetDestination(Vector3 destination)
+    {
+        agent.SetDestination(destination);
+    }
+    public void SetActionEnCours(string action)
+    {
+        actionEnCours = action;
     }
 }

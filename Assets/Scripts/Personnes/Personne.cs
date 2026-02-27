@@ -1,26 +1,28 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class Personne
 {
     public Virus virus;
-    public bool infecté {  get; private set; }
-    [SerializeField] int rayonPathfinding = 10;
-    public float niveauToux;
-    public Vector3 destination {  get; private set; }
     public EspaceDeTravail espaceDeTravail;
+    public BureauDeTravail bureauDeTravail;
+    public List<Coroutine> listeActions;
+    public bool infecté { get; private set; }
+    public float niveauToux;
 
-    public Personne()
+
+    public Personne(EspaceDeTravail espace)
     {
-        destination = new Vector3(Random.Range(-rayonPathfinding, rayonPathfinding), -5, Random.Range(-rayonPathfinding, rayonPathfinding));
+        espaceDeTravail = espace;
+        bureauDeTravail = espace.bureau.GetComponent<BureauDeTravail>();
     }
 
-    public Vector3 GénérerPosition()
+    public Vector3 GetPositionBureau()
     {
-        Vector3 position;
-        position = espaceDeTravail.bureau.transform.position;
-        return position;
+        return bureauDeTravail.positionInteraction;
     }
 
     public void Infecter(Virus virus)

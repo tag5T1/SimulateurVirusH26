@@ -12,7 +12,10 @@ public class Virus
     public float puissanceMutation { get; private set; } // % possible de changement
     public float maxSpread = 20;
 
-    // Copie
+    /// <summary>
+    /// Constructeur qui copie le Virus
+    /// </summary>
+    /// <param name="vir"> Le Virus à copier </param>
     public Virus(Virus vir)
     {
         this.personne = vir.personne;
@@ -23,6 +26,31 @@ public class Virus
         this.gravité = vir.gravité;
     }
 
+    /// <summary>
+    /// Constructeur qui crée un virus aléatoire
+    /// </summary>
+    /// <param name="personne"> Le Transform de la personne qui possède le Virus </param>
+    public Virus(Transform personne)
+    {
+        this.personne = personne;
+        this.force = Random.Range(100, 160) / 10;
+        this.duréeVie = 15;
+        this.niveauMin = Random.Range(55, 85);
+        this.decceleration = 1.0f;
+        this.gravité = 0.18f;
+        this.puissanceMutation = 10;
+    }
+
+    /// <summary>
+    /// Constructeur à paramètres donnés
+    /// </summary>
+    /// <param name="personne"> Le Transform de la personne qui possède le virus </param>
+    /// <param name="force"> La force de projection des particules </param>
+    /// <param name="duréeVie"> La durée de vie des particules en secondes </param>
+    /// <param name="niveauMin"> Le niveau minimum de symptome nécessaire pour en voir </param>
+    /// <param name="decceleration"> La déccélération des particules </param>
+    /// <param name="gravité"> La gravité que subisse les particules </param>
+    /// <param name="puissanceMutation"> Le % qui détermine la valeur minimum et maximum de mutation </param>
     public Virus(Transform personne, float force, float duréeVie, float niveauMin, float decceleration, float gravité, int puissanceMutation)
     {
         this.personne = personne;
@@ -34,6 +62,10 @@ public class Virus
         this.puissanceMutation = puissanceMutation;
     }
 
+    /// <summary>
+    /// Change légèrement les paramètres du Virus selon sa force de mutation
+    /// </summary>
+    /// <returns> Le nouveau Virus muté </returns>
     public Virus Muter()
     {
         // Copie le virus

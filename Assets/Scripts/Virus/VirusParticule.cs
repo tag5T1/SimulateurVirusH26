@@ -23,8 +23,7 @@ public class VirusParticule : MonoBehaviour
 
         var forceVectorielle = directionEmission * Random.Range(0, force) + new Vector3((float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10);
         rb.AddForce(forceVectorielle, ForceMode.Impulse);
-        transform.LookAt(transform.position + forceVectorielle);
-        Debug.DrawRay(transform.position, forceVectorielle, Color.red, 1);
+        //transform.LookAt(transform.position + forceVectorielle);
     }
 
     private void FixedUpdate()
@@ -40,7 +39,6 @@ public class VirusParticule : MonoBehaviour
     {
         if (collision.gameObject.tag == "Personne" && collision.gameObject != personneÉmettrice)
         {
-            Debug.Log(personneÉmettrice.name + " --> " + collision.gameObject.name);
             collision.gameObject.GetComponent<IAPersonne>().personne.Infecter(virus);
         }
     }

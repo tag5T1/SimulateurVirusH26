@@ -10,6 +10,8 @@ public class Manager : MonoBehaviour
     GameObject personne;
     List<EspaceDeTravail> espacesDeTravail;
     GameObject bureau;
+    GameObject distributrice;
+    public GameObject[] distributrices;
 
 
 
@@ -18,7 +20,10 @@ public class Manager : MonoBehaviour
         // Charge les prefabs à créer
         personne = Resources.Load<GameObject>("Prefabs/Personne");
         bureau = Resources.Load<GameObject>("Prefabs/Bureau");
+        distributrice = Resources.Load<GameObject>("Prefabs/Distributrice");
+
         espacesDeTravail = new List<EspaceDeTravail>();
+
         // Crée un espace de travail par personne
         for (int i = 0; i < nbPersonne; i++) {
             EspaceDeTravail espace = new()
@@ -29,7 +34,7 @@ public class Manager : MonoBehaviour
             espacesDeTravail.Add(espace);
             
             IAPersonne o = GameObject.Instantiate(personne).GetComponent<IAPersonne>();
-            o.Creation(espace);
+            o.Création(this, espace);
             // Infecte 1 personne sur 5
             if (i%5 == 0)
             {
@@ -39,6 +44,24 @@ public class Manager : MonoBehaviour
                 
         }
 
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    GameObject.Instantiate(distributrice);
+        //    distributrice.transform.position = new Vector3(Random.Range(-20, 20), -3, -25);
+        //}
+
+        distributrices = GameObject.FindGameObjectsWithTag("Distributrice");
+        foreach (GameObject go in distributrices)
+        {
+            Debug.Log(go.name);
+        }
+
         GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
+
+
+    public Distributrice GetDistributrice()
+    {
+        return distributrices[Random.Range(0, distributrices.Length)].GetComponent<Distributrice>();
     }
 }

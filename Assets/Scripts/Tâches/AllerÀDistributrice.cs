@@ -14,7 +14,7 @@ public class AllerÀDistributrice : Tâche
         // Calcule la direction face à la distributrice pour se positionner en file
         var dir = (distributrice.positionInteraction - distributrice.transform.position).normalized;
         // La destination est à la desrnière position de la file
-        UpdateDestination(distributrice.positionInteraction + dir * 2 * (distributrice.fileDattente.Count + 1));
+        UpdateDestination(distributrice.positionInteraction + (distributrice.fileDattente.Count + 1) * 2 * dir);
 
         // Se rend en file
         yield return new WaitUntil(() => Vector2.Distance(destination2D, personne.position2D) <= 4); // Distance pour empêcher qlqun de loin d'occuper une place avant d'être rendu
@@ -29,7 +29,7 @@ public class AllerÀDistributrice : Tâche
         // Va à la distributrice quand premier dans la file
         UpdateDestination(distributrice.positionInteraction);
         // Temps d'utilisation
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         Virus virus = distributrice.Utiliser(personne.personne.virus);
         if (virus != null)
             personne.Infecter(virus);

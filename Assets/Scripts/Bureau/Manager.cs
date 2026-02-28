@@ -51,10 +51,6 @@ public class Manager : MonoBehaviour
         //}
 
         distributrices = GameObject.FindGameObjectsWithTag("Distributrice");
-        foreach (GameObject go in distributrices)
-        {
-            Debug.Log(go.name);
-        }
 
         GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
     }
@@ -62,6 +58,24 @@ public class Manager : MonoBehaviour
 
     public Distributrice GetDistributrice()
     {
-        return distributrices[Random.Range(0, distributrices.Length)].GetComponent<Distributrice>();
+        List<Distributrice> distrMoinsOccupée = new()
+        {
+            distributrices[0].GetComponent<Distributrice>()
+        };
+
+        foreach (GameObject go in distributrices)
+        {
+            // Reset la liste si une distributrice avec moins de personnes est trouvée
+            if (go.GetComponent<Distributrice>().fileDattente.Count < distrMoinsOccupée.ToArray()[0].fileDattente.Count)
+            {
+                distrMoinsOccupée = new()
+                {
+                    go.GetComponent<Distributrice>()
+                };
+            }
+            else if (go.GetComponent<Distributrice>().fileDattente.Count == distrMoinsOccupée.ToArray()[0].fileDattente.Count)
+                distrMoinsOccupée.Add(go.GetComponent<Distributrice>());
+        }
+        return distrMoinsOccupée.ToArray()[Random.Range(0, distrMoinsOccupée.Count)].GetComponent<Distributrice>();
     }
 }

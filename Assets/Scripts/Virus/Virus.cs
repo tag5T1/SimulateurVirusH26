@@ -37,7 +37,7 @@ public class Virus
         this.force = Random.Range(10f, 16f);
         this.duréeVie = 15;
         this.niveauMin = Random.Range(85, 105);
-        this.decceleration = 1.2f;
+        this.décceleration = 1.2f;
         this.gravité = Random.Range(0.1f, 0.4f);
         this.puissanceMutation = 10f;
     }

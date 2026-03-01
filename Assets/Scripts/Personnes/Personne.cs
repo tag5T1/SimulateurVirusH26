@@ -10,8 +10,8 @@ public class Personne
     public EspaceDeTravail espaceDeTravail;
     public BureauDeTravail bureauDeTravail;
     public List<Coroutine> listeActions;
-    public bool infecté { get; private set; }
-    public float niveauToux;
+    public bool estInfecté { get; private set; }
+
 
 
     public Personne(EspaceDeTravail espace)
@@ -25,11 +25,13 @@ public class Personne
         return bureauDeTravail.positionInteraction;
     }
 
-    public void Infecter(Virus virus)
+    public void DevientInfecté(Virus virus)
     {
         this.virus = virus.Muter();
-        infecté = true;
+        estInfecté = true;
     }
+
+
 
     public List<Dictionary<string, string>> OnClick()
     {
@@ -41,10 +43,10 @@ public class Personne
         dataEspaceDeTravail.Add(espaceDeTravail);
         listeData.Add(dataEspaceDeTravail.données);
 
-        dataInfection.Add(infecté);
+        dataInfection.Add(estInfecté);
         listeData.Add(dataInfection.données);
 
-        if (infecté)
+        if (estInfecté)
         {
             dataVirus.Add(virus);
             listeData.Add(dataVirus.données);

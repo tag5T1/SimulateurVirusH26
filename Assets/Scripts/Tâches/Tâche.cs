@@ -17,8 +17,6 @@ public abstract class Tâche
     /// <summary>
     /// La tâche que l'IA peut faire
     /// </summary>
-    /// <param name="personne"></param>
-    /// <returns></returns>
     public abstract IEnumerator FaireTâche();
 
     public void UpdateDestination(Vector3 destination)

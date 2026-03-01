@@ -1,8 +1,13 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Virus
 {
     Transform personne;
+    public SymptomesHandler symptomes;
 
     public string nom = "virus 1";
     public float niveauMin {  get; private set; }
@@ -20,6 +25,7 @@ public class Virus
     public Virus(Virus vir)
     {
         this.personne = vir.personne;
+        this.symptomes = vir.symptomes;
         this.force = vir.force;
         this.duréeVie = vir.duréeVie;
         this.niveauMin = vir.niveauMin;
@@ -34,6 +40,7 @@ public class Virus
     public Virus(Transform personne)
     {
         this.personne = personne;
+        this.symptomes = new SymptomesHandler(this, new List<Symptome>() { new Toux(personne.gameObject) });
         this.force = Random.Range(10f, 16f);
         this.duréeVie = 15;
         this.niveauMin = Random.Range(85, 105);
@@ -52,9 +59,10 @@ public class Virus
     /// <param name="decceleration"> La déccélération des particules </param>
     /// <param name="gravité"> La gravité que subisse les particules </param>
     /// <param name="puissanceMutation"> Le % qui détermine la valeur minimum et maximum de mutation </param>
-    public Virus(Transform personne, float force, float duréeVie, float niveauMin, float decceleration, float gravité, int puissanceMutation)
+    public Virus(Transform personne, SymptomesHandler symptomes, float force, float duréeVie, float niveauMin, float decceleration, float gravité, int puissanceMutation)
     {
         this.personne = personne;
+        this.symptomes = symptomes;
         this.force = force;
         this.duréeVie = duréeVie;
         this.niveauMin = niveauMin;
@@ -63,6 +71,8 @@ public class Virus
         this.puissanceMutation = puissanceMutation;
     }
 
+
+
     /// <summary>
     /// Change légèrement les paramètres du Virus selon sa force de mutation
     /// </summary>
@@ -70,17 +80,26 @@ public class Virus
     public Virus Muter()
     {
         // Copie le virus
-        Virus virusMuté = new Virus(this);
-        int scale = 1000;
-        float min = scale - (puissanceMutation/100 * scale);
-        float max = scale + (puissanceMutation/100 * scale);
+        Virus virusMuté = new(this);
+        float min = 1f - puissanceMutation/100;
+        float max = 1f + puissanceMutation/100;
         // Modifie légèrement les paramètres
-        niveauMin *= Random.Range(min, max) / scale;
-        force *= Random.Range(min, max) / scale;
-        décceleration *= Random.Range(min, max) / scale;
-        gravité *= Random.Range(min, max) / scale;
-        duréeVie *= Random.Range(min, max) / scale;
-        puissanceMutation *= Random.Range(900, 1100) / 1000; // 10% de mutation de base sur la mutation
+        virusMuté.niveauMin *= Random.Range(min, max);
+        virusMuté.force *= Random.Range(min, max);
+        virusMuté.décceleration *= Random.Range(min, max);
+        virusMuté.gravité *= Random.Range(min, max);
+        virusMuté.duréeVie *= Random.Range(min, max);
+        virusMuté.puissanceMutation *= Random.Range(900, 1100) / 1000; // 10% de mutation de base sur la mutation
         return virusMuté;
+    }
+
+
+
+    /// <summary>
+    /// Effectue les symptomes du SymptomesHandler
+    /// </summary>
+    public void EffectuerSymptomes()
+    {
+        symptomes.EffectuerSymptomes();
     }
 }

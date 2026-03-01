@@ -7,20 +7,22 @@ public class Distributrice : Mobilier
     [SerializeField] Material materialInfecté;
     Virus virus;
     public List<IAPersonne> fileDattente;
+    public Vector3 distanceEnFile;
 
-    public void Infecter(Virus virus)
+
+
+    private void Start()
     {
-        this.virus = virus;
-        GetComponent<MeshRenderer>().material = materialInfecté;
+        distanceEnFile = positionInteraction - transform.position;
     }
 
     public void AttendreEnFile(IAPersonne personne)
     {
         fileDattente.Add(personne);
     }
-    public void QuitterFile()
+    public void QuitterFile(IAPersonne personne)
     {
-        fileDattente.RemoveAt(0);
+        fileDattente.Remove(personne);
     }
 
     // S'infecte et infecte lors d'une utilisation
@@ -33,5 +35,11 @@ public class Distributrice : Mobilier
             return null;
         else
             return virus;
+    }
+
+    public void Infecter(Virus virus)
+    {
+        this.virus = virus;
+        GetComponent<MeshRenderer>().material = materialInfecté;
     }
 }

@@ -34,12 +34,12 @@ public class Manager : MonoBehaviour
             espacesDeTravail.Add(espace);
             
             IAPersonne o = GameObject.Instantiate(personne).GetComponent<IAPersonne>();
-            o.Création(this, espace);
+            o.Création(espace);
             // Infecte 1 personne sur 5
             if (i%5 == 0)
             {
-                Virus virus = new Virus(transform);
-                o.personne.Infecter(virus);
+                Virus virus = new(o.transform);
+                o.DevientInfecté(virus);
             }
                 
         }

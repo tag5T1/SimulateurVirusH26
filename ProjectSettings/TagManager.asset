@@ -7,6 +7,7 @@ TagManager:
   - StationDeTravail
   - Personne
   - Distributrice
+  - Poubelle
   layers:
   - Default
   - TransparentFX

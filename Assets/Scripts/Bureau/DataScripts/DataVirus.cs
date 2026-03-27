@@ -12,7 +12,6 @@ public class DataVirus : Data
     public void Add(Virus virus)
     {
         données.Add("Type de virus", virus.nom);
-        données.Add("Niveau minimum d'infection", $"{virus.niveauMin}");
         données.Add("Force de propulsion des particules", $"{virus.force}");
         données.Add("Déccelération de la particule", $"{virus.décceleration}");
         données.Add("Durée de vie d'une particule", $"{virus.duréeVie}");

@@ -8,6 +8,10 @@ public class SélecteurTâche
     Dictionary<Tâche, float> tâchesRoam;
     float poidsTotal;
 
+    /// <summary>
+    /// Crée un sélecteur de tâche de base pour être modifié ou directement utilisé
+    /// </summary>
+    /// <param name="personne"> L'IA de la personne </param>
     public SélecteurTâche(IAPersonne personne) {
         this.personne = personne;
         tâchesRoam = new Dictionary<Tâche, float>

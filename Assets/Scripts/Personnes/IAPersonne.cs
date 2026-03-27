@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -9,95 +10,79 @@ using Random = UnityEngine.Random;
 public class IAPersonne : MonoBehaviour
 {
     [SerializeField] GameObject particuleDeBase;
-    NavMeshAgent agent;
-    public Manager manager;
+    public NavMeshAgent agent;
+    public float vitesseDeDéplacementDeBase { get; private set; }
     public Personne personne { get; private set; }
-    [SerializeField] Material materialInfecté;
     SélecteurTâche sélecteur;
-    Symptomes symptomes;
     public NomTâche nomTâche;
     public Tâche tâcheEnCours;
     public Vector2 position2D { get; private set; }
 
 
 
-    public void Création(Manager manager, EspaceDeTravail espace)
+    public void Création(EspaceDeTravail espace)
     {
-        this.manager = manager;
         personne = new Personne(espace);
         sélecteur = new SélecteurTâche(this);
-    }
-
-    private void Start()
-    {
         agent = GetComponent<NavMeshAgent>();
-        StartCoroutine(Pathfinding());
+        vitesseDeDéplacementDeBase = agent.speed;
+        FaireTâche();
     }
 
     private void Update()
     {
-        position2D = new Vector2(transform.position.x, transform.position.z);
+        UpdatePosition2D();
 
-        if (personne.infecté)
+        if (tâcheEnCours.status == StatusTâche.TERMINÉ)
         {
-            // LOGIQUE MUST BE POPPED
-            if (personne.niveauToux - personne.virus.niveauMin > Random.Range(20, 50))
-            {
-                Symptomes();
-                personne.niveauToux = 0;
-            }
-            else
-                personne.niveauToux += 25 * Time.deltaTime;
+            FaireTâche();
+        }
 
-            GetComponent<MeshRenderer>().material = materialInfecté;
+        if (personne.estInfecté)
+        {
+            personne.virus.EffectuerSymptomes();
         }
         
         transform.LookAt(transform.position + agent.velocity);
     }
 
 
-    private IEnumerator Pathfinding()
+
+    public void DevientInfecté(Virus virus)
+    {
+        personne.DevientInfecté(gameObject, virus);
+        GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Infection");
+    }
+
+
+    public void FaireTâche()
     {
         tâcheEnCours = sélecteur.ChoisirTâche();
-        FaireTâche(tâcheEnCours);
-
-        yield return new WaitUntil(() => tâcheEnCours.status == StatusTâche.TERMINÉ);
-        StartCoroutine(Pathfinding());
+        StartCoroutine(tâcheEnCours.FaireTâche());
+    }
+    public void FaireTâche(Tâche tâcheÀFaire)
+    {
+        tâcheEnCours = tâcheÀFaire;
+        StartCoroutine(tâcheÀFaire.FaireTâche());
     }
 
-    private void Symptomes()
+    public void Arrêt()
     {
-        Tousse(particuleDeBase);
+        agent.enabled = false;
     }
-
-    private void Tousse(GameObject prefab)
+    public void Départ()
     {
-        GameObject instance;
-        var pos = transform.position + 0.6f * transform.forward;
-        for (int i = 0; i < 10; i++)
-        {
-            instance = GameObject.Instantiate(prefab, pos, transform.rotation);
-            VirusParticule vir = instance.GetComponent<VirusParticule>();
-            vir.Création(gameObject, transform.forward, personne.virus);
-        }
-    }
-
-
-
-    public void Infecter(Virus virus)
-    {
-        personne.Infecter(virus);
-    }
-
-
-    public void FaireTâche(Tâche tâche)
-    {
-        StartCoroutine(tâche.FaireTâche());
+        agent.enabled = true;
     }
 
     public void SetDestination(Vector3 destination)
     {
-        agent.SetDestination(destination);
+        if (agent.enabled)
+            agent.SetDestination(destination);
+    }
+    public void UpdatePosition2D()
+    {
+        position2D = new Vector2(transform.position.x, transform.position.z);
     }
     public void SetNomTâche(NomTâche nom)
     {

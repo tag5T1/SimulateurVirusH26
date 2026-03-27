@@ -25,27 +25,21 @@ public class ClickManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction*1000, Color.yellow, 1);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit)) 
             {
-                Debug.Log("Som Hit");
                 var content = dataPanel.transform.GetChild(0).transform.GetChild(0).transform;
 
                 if (hit.collider.gameObject.tag == "Personne")
                 {
-                    Debug.Log("person found");
-
                     //texte pour les tests
-                    TMP_Text instance = Resources.Load<GameObject>("Prefabs/Textes/TextNormal").GetComponent<TMP_Text>();
-                    dataText = GameObject.Instantiate(instance);
+                    TMP_Text prefab = Resources.Load<GameObject>("Prefabs/Textes/TextNormal").GetComponent<TMP_Text>();
+                    dataText = GameObject.Instantiate(prefab);
                     dataText.text = FormatListToString(hit.collider.gameObject.GetComponent<IAPersonne>().personne.OnClick());
                     dataText.transform.SetParent(content);
-
-
                     dataPanel.SetActive(true);
                 }
                 else 
@@ -64,6 +58,7 @@ public class ClickManager : MonoBehaviour
         }
     }
     
+
 
     string FormatListToString(List<Dictionary<string, string>> liste)
     {

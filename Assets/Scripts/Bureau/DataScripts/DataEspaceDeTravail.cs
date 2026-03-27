@@ -9,6 +9,9 @@ public class DataEspaceDeTravail : Data
     { 
         données = new Dictionary<string, string>();
     }
+
+
+
     public void Add(EspaceDeTravail espaceDeTravail)
     {
         données.Add("Emplacement du bureau", $"{espaceDeTravail.bureau.transform.position.x}, {espaceDeTravail.bureau.transform.position.z}");

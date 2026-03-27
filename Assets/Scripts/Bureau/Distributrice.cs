@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Distributrice : Mobilier
 {
-    [SerializeField] Material materialInfecté;
     Virus virus;
     public List<IAPersonne> fileDattente;
-    public Vector3 distanceEnFile;
+    public Vector3 distanceEntrePersonnesEnFile { get; private set; }
 
 
 
     private void Start()
     {
-        distanceEnFile = positionInteraction - transform.position;
+        distanceEntrePersonnesEnFile = positionInteraction - transform.position;
     }
 
     public void AttendreEnFile(IAPersonne personne)
@@ -40,6 +39,6 @@ public class Distributrice : Mobilier
     public void Infecter(Virus virus)
     {
         this.virus = virus;
-        GetComponent<MeshRenderer>().material = materialInfecté;
+        GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Infection");
     }
 }

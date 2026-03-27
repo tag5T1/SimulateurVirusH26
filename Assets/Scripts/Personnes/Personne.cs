@@ -12,22 +12,23 @@ public class Personne
     public List<Coroutine> listeActions;
     public bool estInfecté { get; private set; }
 
-
-
     public Personne(EspaceDeTravail espace)
     {
         espaceDeTravail = espace;
         bureauDeTravail = espace.bureau.GetComponent<BureauDeTravail>();
     }
 
+
+
+
     public Vector3 GetPositionBureau()
     {
         return bureauDeTravail.positionInteraction;
     }
 
-    public void DevientInfecté(Virus virus)
+    public void DevientInfecté(GameObject objetPersonne, Virus virus)
     {
-        this.virus = virus.Muter();
+        this.virus = new Virus(objetPersonne, virus);
         estInfecté = true;
     }
 

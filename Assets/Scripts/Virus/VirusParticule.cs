@@ -16,7 +16,7 @@ public class VirusParticule : MonoBehaviour
     bool estCollée;
 
 
-    public void Création(GameObject personne, Virus virus)
+    public void CréationVolatile(GameObject personne, Virus virus)
     {
         personneÉmettrice = personne;
         objetsCollisionnés = new List<GameObject>();
@@ -32,6 +32,25 @@ public class VirusParticule : MonoBehaviour
         var forceVectorielle = personne.transform.forward * Random.Range(0, force) + new Vector3((float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10);
         rb.AddForce(forceVectorielle, ForceMode.Impulse);
     }
+
+    public void CréationSolide(GameObject personne, Virus virus)
+    {
+        personneÉmettrice = personne;
+        objetsCollisionnés = new List<GameObject>();
+        rb = GetComponent<Rigidbody>();
+        this.virus = virus;
+        force = (virus.force + 10) / 10;
+        gravité = 9f;
+        rb.linearDamping = Random.Range(virus.décceleration * 0.25f, virus.décceleration * 2f);
+        duréeVie = virus.duréeVie * 4;
+        tempsVie = 0;
+        premièreCollision = true;
+
+        var forceVectorielle = personne.transform.forward * Random.Range(0, force) + new Vector3((float)Random.Range(-virus.maxSpread / 3, virus.maxSpread / 3) / 10, (float)Random.Range(-virus.maxSpread / 3, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10);
+        rb.AddForce(forceVectorielle, ForceMode.Impulse);
+    }
+
+
 
     private void FixedUpdate()
     {

@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AllerÀDistributrice : Tâche
@@ -11,26 +10,32 @@ public class AllerÀDistributrice : Tâche
         status = StatusTâche.EN_COURS;
         personne.SetNomTâche(NomTâche.DÉPLACEMENT);
         Distributrice distributrice = GameObject.Find("Manager").GetComponent<Manager>().GetDistributrice();
+        var posInteraction = distributrice.positionInteraction;
 
-        // La destination est à la dernière position de la file
-        UpdateDestination(distributrice.positionInteraction + distributrice.distanceEnFile * (distributrice.fileDattente.Count + 1));
+        // Initialise le déplacement
+        UpdateDestination(posInteraction + distributrice.distanceEntrePersonnesEnFile * distributrice.fileDattente.Count);
 
         // Se rend en file
-        yield return new WaitUntil(() => Vector2.Distance(destination2D, personne.position2D) <= 4); // Distance pour empêcher qlqun de loin d'occuper une place avant d'être rendu
+        while (Vector2.Distance(destination2D, personne.position2D) >= 5)
+        {
+            UpdateDestination(posInteraction + distributrice.distanceEntrePersonnesEnFile * distributrice.fileDattente.Count);
+            yield return new WaitForFixedUpdate();
+        }
         distributrice.AttendreEnFile(personne);
 
         // Avance dans la file à la place la plus avancée
         while (distributrice.fileDattente.IndexOf(personne) != 0)
         {
-            UpdateDestination(distributrice.positionInteraction + distributrice.distanceEnFile * (distributrice.fileDattente.IndexOf(personne)));
-            yield return new WaitForEndOfFrame();
+            UpdateDestination(posInteraction + distributrice.distanceEntrePersonnesEnFile * distributrice.fileDattente.IndexOf(personne));
+            yield return new WaitForFixedUpdate();
         }
 
         // Va à la distributrice quand premier dans la file
-        UpdateDestination(distributrice.positionInteraction);
+        UpdateDestination(posInteraction);
 
         // Temps d'utilisation
         yield return new WaitForSeconds(3);
+        // Utilise
         Virus virus = distributrice.Utiliser(personne.personne.virus);
         if (virus != null)
             personne.DevientInfecté(virus);

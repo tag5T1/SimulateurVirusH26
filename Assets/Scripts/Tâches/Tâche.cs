@@ -24,5 +24,6 @@ public abstract class Tâche
         this.destination = destination;
         destination2D = new Vector2(destination.x, destination.z);
         personne.SetDestination(destination);
+        personne.UpdatePosition2D();
     }
 }

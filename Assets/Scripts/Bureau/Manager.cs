@@ -1,8 +1,11 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.U2D;
 
 public class Manager : MonoBehaviour
 {
@@ -12,6 +15,7 @@ public class Manager : MonoBehaviour
     GameObject bureau;
     GameObject distributrice;
     public GameObject[] distributrices;
+    public GameObject[] poubelles;
 
 
 
@@ -38,8 +42,7 @@ public class Manager : MonoBehaviour
             // Infecte 1 personne sur 5
             if (i%5 == 0)
             {
-                Virus virus = new(o.transform);
-                o.DevientInfecté(virus);
+                o.DevientInfecté(new Virus(o.gameObject));
             }
                 
         }
@@ -51,6 +54,7 @@ public class Manager : MonoBehaviour
         //}
 
         distributrices = GameObject.FindGameObjectsWithTag("Distributrice");
+        poubelles = GameObject.FindGameObjectsWithTag("Poubelle");
 
         GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
     }
@@ -77,5 +81,44 @@ public class Manager : MonoBehaviour
                 distrMoinsOccupée.Add(go.GetComponent<Distributrice>());
         }
         return distrMoinsOccupée.ToArray()[Random.Range(0, distrMoinsOccupée.Count)].GetComponent<Distributrice>();
+    }
+
+    public GameObject GetPoubelleLaPlusProche(Vector3 positionPersonne)
+    {
+        var poubelleProche = poubelles[0];
+        var distanceProche = CalculerLongueurPath(positionPersonne, poubelleProche.transform.position);
+
+        foreach (GameObject go in poubelles)
+        {
+            var distance = CalculerLongueurPath(positionPersonne, go.transform.position);
+            if (distance < distanceProche)
+            {
+                poubelleProche = go;
+                distanceProche = distance;
+            }
+        }
+
+        return poubelleProche;
+    }
+
+    public float CalculerLongueurPath(Vector3 départ, Vector3 arrivée)
+    {
+        NavMeshHit hitDépart, hitArrivée;
+
+        if (!NavMesh.SamplePosition(départ, out hitDépart, 2f, NavMesh.AllAreas) || !NavMesh.SamplePosition(arrivée, out hitArrivée, 2f, NavMesh.AllAreas))
+            return 0;
+
+        NavMeshPath path = new NavMeshPath();
+
+        if (!NavMesh.CalculatePath(hitDépart.position, hitArrivée.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
+            return 0;
+
+        float distance = 0;
+        var corners = path.corners;
+
+        for (int i = 0; i < corners.Length - 1; i++)
+            distance += Vector3.Distance(corners[i], corners[i + 1]);
+
+        return distance;
     }
 }

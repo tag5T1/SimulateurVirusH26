@@ -11,9 +11,9 @@ public class AllerAuBureau : Tâche
         personne.SetNomTâche(NomTâche.DÉPLACEMENT);
         UpdateDestination(personne.personne.GetPositionBureau());
         yield return new WaitUntil(() => Vector2.Distance(destination2D, personne.position2D) <= 2);
-
-        yield return new WaitForSeconds(2);
-        status = StatusTâche.TERMINÉ;
         personne.SetNomTâche(NomTâche.AU_BUREAU);
+
+        yield return new WaitForSeconds(3);
+        status = StatusTâche.TERMINÉ;
     }
 }

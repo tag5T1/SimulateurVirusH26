@@ -2,35 +2,44 @@ using UnityEngine;
 
 public class Toux : Symptome
 {
-    GameObject personne;
+
+    public Toux() { }
+
+    public Toux(Virus virus) : base(virus) { }
 
 
 
-    public Toux(GameObject personne)
+    public override void Initialiser(Virus virus)
     {
-        this.personne = personne;
-        intensitéSymptome = 10;
+        this.virus = virus;
+        intensitéSymptome = virus.force * 2f;
         cooldownMaximum = 80;
-        cooldownActuel = Random.Range(intensitéSymptome, cooldownMaximum);
+        RandomiserCooldownActuel();
     }
 
-    public override void EffectuerSymptome(Virus virus)
+    public override void EffectuerSymptome()
     {
+        var p = virus.personne;
         if (cooldownActuel < 0f)
         {
-            cooldownActuel = Random.Range(intensitéSymptome, cooldownMaximum);
+            RandomiserCooldownActuel();
             GameObject prefab = Resources.Load<GameObject>("Prefabs/Particule");
             GameObject instance;
 
-            var pos = personne.transform.position + 0.6f * personne.transform.forward;
+            var pos = p.transform.position + 0.6f * p.transform.forward;
             for (int i = 0; i < (int)intensitéSymptome; i++)
             {
-                instance = GameObject.Instantiate(prefab, pos, personne.transform.rotation);
+                instance = GameObject.Instantiate(prefab, pos, p.transform.rotation);
                 VirusParticule vir = instance.GetComponent<VirusParticule>();
-                vir.Création(personne, virus);
+                vir.CréationVolatile(p, virus);
             }
         }
         else
             cooldownActuel -= Time.deltaTime * intensitéSymptome;
+    }
+
+    public override Symptome Dupliquer()
+    {
+        return new Toux();
     }
 }

@@ -35,8 +35,7 @@ public class AllerÀDistributrice : Tâche
 
         // Temps d'utilisation
         yield return new WaitForSeconds(3);
-        // Utilise
-        Virus virus = distributrice.Utiliser(personne.personne.virus);
+        Virus virus = distributrice.Infecter(personne.personne.virus);
         if (virus != null)
             personne.DevientInfecté(virus);
 

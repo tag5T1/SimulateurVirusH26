@@ -7,6 +7,7 @@ TagManager:
   - StationDeTravail
   - Personne
   - Distributrice
+  - PickUpObjet
   - Poubelle
   layers:
   - Default

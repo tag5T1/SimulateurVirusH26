@@ -15,6 +15,8 @@ public class Manager : MonoBehaviour
     GameObject bureau;
     GameObject distributrice;
     public GameObject[] distributrices;
+
+    public GameObject[] pickUpObjets;
     public GameObject[] poubelles;
 
 
@@ -54,6 +56,7 @@ public class Manager : MonoBehaviour
         //}
 
         distributrices = GameObject.FindGameObjectsWithTag("Distributrice");
+        pickUpObjets = GameObject.FindGameObjectsWithTag("PickUpObjet");
         poubelles = GameObject.FindGameObjectsWithTag("Poubelle");
 
         GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
@@ -82,6 +85,11 @@ public class Manager : MonoBehaviour
         }
         return distrMoinsOccupée.ToArray()[Random.Range(0, distrMoinsOccupée.Count)].GetComponent<Distributrice>();
     }
+
+
+    public PickUpObjet GetPickUpObjet() 
+    {
+        return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
 
     public GameObject GetPoubelleLaPlusProche(Vector3 positionPersonne)
     {
@@ -120,5 +128,6 @@ public class Manager : MonoBehaviour
             distance += Vector3.Distance(corners[i], corners[i + 1]);
 
         return distance;
+
     }
 }

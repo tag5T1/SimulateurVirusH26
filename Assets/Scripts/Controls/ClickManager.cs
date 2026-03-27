@@ -3,6 +3,7 @@ using System.Text;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class ClickManager : MonoBehaviour
@@ -17,7 +18,7 @@ public class ClickManager : MonoBehaviour
     {
        mainCamera = Camera.main;
        dataPanel.SetActive(false);
-
+       prefabNormal = Resources.Load<GameObject>("Prefabs/Textes/TextNormal").GetComponent<TMP_Text>();
     }
 
 
@@ -35,11 +36,15 @@ public class ClickManager : MonoBehaviour
 
                 if (hit.collider.gameObject.tag == "Personne")
                 {
-                    //texte pour les tests
-                    TMP_Text prefab = Resources.Load<GameObject>("Prefabs/Textes/TextNormal").GetComponent<TMP_Text>();
-                    dataText = GameObject.Instantiate(prefab);
-                    dataText.text = FormatListToString(hit.collider.gameObject.GetComponent<IAPersonne>().personne.OnClick());
-                    dataText.transform.SetParent(content);
+                    Debug.Log("person found");
+                                     
+                    dataText = Instantiate(prefabNormal, content);                   
+                    dataText.text = FormatListToString(
+                        hit.collider.gameObject.GetComponent<IAPersonne>().personne.OnClick()
+                    );
+
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
+
                     dataPanel.SetActive(true);
                 }
                 else 
@@ -58,7 +63,6 @@ public class ClickManager : MonoBehaviour
         }
     }
     
-
 
     string FormatListToString(List<Dictionary<string, string>> liste)
     {

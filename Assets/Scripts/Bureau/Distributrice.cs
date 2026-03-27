@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Distributrice : Mobilier
 {
-    Virus virus;
     public List<IAPersonne> fileDattente;
     public Vector3 distanceEntrePersonnesEnFile { get; private set; }
 
@@ -22,23 +21,5 @@ public class Distributrice : Mobilier
     public void QuitterFile(IAPersonne personne)
     {
         fileDattente.Remove(personne);
-    }
-
-    // S'infecte et infecte lors d'une utilisation
-    public Virus Utiliser(Virus virusUtilisateur)
-    {
-        if (virusUtilisateur != null)
-            Infecter(virusUtilisateur);
-
-        if (virus == null)
-            return null;
-        else
-            return virus;
-    }
-
-    public void Infecter(Virus virus)
-    {
-        this.virus = virus;
-        GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Infection");
     }
 }

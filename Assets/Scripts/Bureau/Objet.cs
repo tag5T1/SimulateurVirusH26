@@ -8,7 +8,14 @@ public class Objet : MonoBehaviour
     [SerializeField] Material materialInfecté;
     public Vector3 positionInteraction { get; protected set; }
 
-    private void Start()
+
+
+    private void Awake()
+    {
+        TrouverPositionIndicateur();
+    }
+
+    public void TrouverPositionIndicateur()
     {
         positionInteraction = indicateurDePosition.position;
         indicateurDePosition.gameObject.SetActive(false);

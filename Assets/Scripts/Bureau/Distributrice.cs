@@ -5,14 +5,21 @@ using UnityEngine;
 public class Distributrice : Mobilier
 {
     public List<IAPersonne> fileDattente;
-  
+    public Vector3 distanceEntrePersonnesEnFile { get; private set; }
+
+
+
+    private void Start()
+    {
+        distanceEntrePersonnesEnFile = positionInteraction - transform.position;
+    }
 
     public void AttendreEnFile(IAPersonne personne)
     {
         fileDattente.Add(personne);
     }
-    public void QuitterFile()
+    public void QuitterFile(IAPersonne personne)
     {
-        fileDattente.RemoveAt(0);
+        fileDattente.Remove(personne);
     }
 }

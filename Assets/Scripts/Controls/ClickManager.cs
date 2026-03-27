@@ -11,8 +11,6 @@ public class ClickManager : MonoBehaviour
     Camera mainCamera;
     [SerializeField] GameObject dataPanel;
     TMP_Text dataText;
-    TMP_Text prefabNormal;
-    bool pause;
 
 
 
@@ -26,32 +24,15 @@ public class ClickManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) 
-        {
-            if (pause)
-            {
-                Time.timeScale = 1.0f;
-                pause = false;
-            }
-            else
-            {
-                Time.timeScale = 0f;
-                pause = true;   
-            }
-        }
-
-
         if (Input.GetMouseButtonDown(0))
         {
-            
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction*1000, Color.yellow, 1);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit)) 
             {
-                Debug.Log("Som Hit");
-                var content = dataPanel.transform.GetChild(0).GetChild(0);
+                var content = dataPanel.transform.GetChild(0).transform.GetChild(0).transform;
 
                 if (hit.collider.gameObject.tag == "Personne")
                 {

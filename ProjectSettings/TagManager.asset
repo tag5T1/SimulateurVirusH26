@@ -8,6 +8,7 @@ TagManager:
   - Personne
   - Distributrice
   - PickUpObjet
+  - Poubelle
   layers:
   - Default
   - TransparentFX

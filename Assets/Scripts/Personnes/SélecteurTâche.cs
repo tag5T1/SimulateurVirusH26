@@ -13,7 +13,8 @@ public class SélecteurTâche
         tâchesRoam = new Dictionary<Tâche, float>
         {
             { new Roam(personne), 1 }, 
-            { new AllerÀDistributrice(personne), 20 }
+            { new AllerÀDistributrice(personne), 1 },
+            { new AllerÀPickUp(personne), 1}
         };
     }
 

@@ -3,6 +3,7 @@ using System.Text;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class ClickManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class ClickManager : MonoBehaviour
     Camera mainCamera;
     [SerializeField] GameObject dataPanel;
     TMP_Text dataText;
+    TMP_Text prefabNormal;
+    bool pause;
 
 
 
@@ -17,12 +20,27 @@ public class ClickManager : MonoBehaviour
     {
        mainCamera = Camera.main;
        dataPanel.SetActive(false);
-
+       prefabNormal = Resources.Load<GameObject>("Prefabs/Textes/TextNormal").GetComponent<TMP_Text>();
     }
 
 
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            if (pause)
+            {
+                Time.timeScale = 1.0f;
+                pause = false;
+            }
+            else
+            {
+                Time.timeScale = 0f;
+                pause = true;   
+            }
+        }
+
+
         if (Input.GetMouseButtonDown(0))
         {
             
@@ -33,18 +51,18 @@ public class ClickManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit)) 
             {
                 Debug.Log("Som Hit");
-                var content = dataPanel.transform.GetChild(0).transform.GetChild(0).transform;
+                var content = dataPanel.transform.GetChild(0).GetChild(0);
 
                 if (hit.collider.gameObject.tag == "Personne")
                 {
                     Debug.Log("person found");
+                                     
+                    dataText = Instantiate(prefabNormal, content);                   
+                    dataText.text = FormatListToString(
+                        hit.collider.gameObject.GetComponent<IAPersonne>().personne.OnClick()
+                    );
 
-                    //texte pour les tests
-                    TMP_Text instance = Resources.Load<GameObject>("Prefabs/Textes/TextNormal").GetComponent<TMP_Text>();
-                    dataText = GameObject.Instantiate(instance);
-                    dataText.text = FormatListToString(hit.collider.gameObject.GetComponent<IAPersonne>().personne.OnClick());
-                    dataText.transform.SetParent(content);
-
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
 
                     dataPanel.SetActive(true);
                 }

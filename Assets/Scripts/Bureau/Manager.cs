@@ -12,6 +12,7 @@ public class Manager : MonoBehaviour
     GameObject bureau;
     GameObject distributrice;
     public GameObject[] distributrices;
+    public GameObject[] pickUpObjets;
 
 
 
@@ -51,6 +52,7 @@ public class Manager : MonoBehaviour
         //}
 
         distributrices = GameObject.FindGameObjectsWithTag("Distributrice");
+        pickUpObjets = GameObject.FindGameObjectsWithTag("PickUpObjet");
 
         GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
     }
@@ -77,5 +79,10 @@ public class Manager : MonoBehaviour
                 distrMoinsOccupée.Add(go.GetComponent<Distributrice>());
         }
         return distrMoinsOccupée.ToArray()[Random.Range(0, distrMoinsOccupée.Count)].GetComponent<Distributrice>();
+    }
+
+    public PickUpObjet GetPickUpObjet() 
+    {
+        return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
     }
 }

@@ -30,7 +30,7 @@ public class AllerÀDistributrice : Tâche
         UpdateDestination(distributrice.positionInteraction);
         // Temps d'utilisation
         yield return new WaitForSeconds(3);
-        Virus virus = distributrice.Utiliser(personne.personne.virus);
+        Virus virus = distributrice.Infecter(personne.personne.virus);
         if (virus != null)
             personne.Infecter(virus);
         distributrice.QuitterFile();

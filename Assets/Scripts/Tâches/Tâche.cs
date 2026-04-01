@@ -18,6 +18,7 @@ public abstract class Tâche
     /// La tâche que l'IA peut faire
     /// </summary>
     public abstract IEnumerator FaireTâche();
+    public abstract bool VérifierSiFaisable();
 
     public void UpdateDestination(Vector3 destination)
     {

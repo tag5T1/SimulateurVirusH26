@@ -6,16 +6,18 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.U2D;
+using UnityEngine.UIElements;
 
 public class Manager : MonoBehaviour
 {
     [SerializeField] int nbPersonne;
+    public bool modeOfficeBuilderActivé;
     GameObject personne;
     List<EspaceDeTravail> espacesDeTravail;
     GameObject bureau;
     GameObject distributrice;
-    public GameObject[] distributrices;
 
+    public GameObject[] distributrices;
     public GameObject[] pickUpObjets;
     public GameObject[] poubelles;
 
@@ -89,8 +91,19 @@ public class Manager : MonoBehaviour
 
     public PickUpObjet GetPickUpObjet()
     {
-        return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
+        if (PickupObjetAccessible())
+            return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
+        else return null;
+
     }
+    public bool PickupObjetAccessible() {
+        foreach (var o in pickUpObjets) {
+            if (!o.GetComponent<PickUpObjet>().utilisé)
+                return true;
+        }
+        return false;
+    }
+
 
     public GameObject GetPoubelleLaPlusProche(Vector3 positionPersonne)
     {
@@ -108,6 +121,12 @@ public class Manager : MonoBehaviour
         }
 
         return poubelleProche;
+    }
+    public bool VérifierSiPoubelleAccessible() {
+        if (poubelles.Length > 0)
+            return true;
+        else
+            return false;
     }
 
     public float CalculerLongueurPath(Vector3 départ, Vector3 arrivée)

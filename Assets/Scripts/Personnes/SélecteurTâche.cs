@@ -16,6 +16,7 @@ public class SélecteurTâche
         this.personne = personne;
         tâchesRoam = new Dictionary<Tâche, float>
         {
+            { new AllerAuBureau(personne), 1 },
             { new Roam(personne), 1 }, 
             { new AllerÀDistributrice(personne), 1 },
             { new AllerÀPickUp(personne), 1}
@@ -26,14 +27,7 @@ public class SélecteurTâche
 
     public Tâche ChoisirTâche()
     {
-        if (personne.nomTâche == NomTâche.AU_BUREAU)
-        {
-            return ChoisirRoam();
-        }
-        else
-        {
-            return new AllerAuBureau(personne);
-        }
+        return ChoisirRoam();
     }
 
 
@@ -44,15 +38,22 @@ public class SélecteurTâche
     public Tâche ChoisirRoam()
     {
         CalculerPoidsTotal();
-        float valeurMax = Random.Range(0f, poidsTotal);
-        float valeur = 0f;
-        foreach (Tâche t in tâchesRoam.Keys)
-        {
-            valeur += tâchesRoam.GetValueOrDefault(t);
-            if (valeur > valeurMax)
-                return t;
+        Tâche tâcheFinale = null;
+        for (int i = 0; i < 15; i++) {
+            float valeurMax = Random.Range(0f, poidsTotal);
+            float valeur = 0f;
+            foreach (Tâche t in tâchesRoam.Keys) {
+                valeur += tâchesRoam.GetValueOrDefault(t);
+                if (valeur >= valeurMax) {
+                    tâcheFinale = t;
+                    break;
+                }
+            }
+            if (tâcheFinale != null && tâcheFinale.VérifierSiFaisable()) {
+                return tâcheFinale;
+            }
         }
-        return null; // Ne devrait pas arriver, le poids total sera tjr plus grand que le poids mesurer
+        return null; // Ne devrait pas arriver, le poids total sera tjr plus grand ou égal que le poids mesuré
     }
 
 

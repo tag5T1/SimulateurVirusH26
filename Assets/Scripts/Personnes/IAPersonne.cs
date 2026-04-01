@@ -35,7 +35,7 @@ public class IAPersonne : MonoBehaviour
     {
         UpdatePosition2D();
 
-        if (tâcheEnCours.status == StatusTâche.TERMINÉ)
+        if (tâcheEnCours != null && tâcheEnCours.status == StatusTâche.TERMINÉ)
         {
             FaireTâche();
         }

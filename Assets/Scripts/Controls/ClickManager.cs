@@ -28,7 +28,6 @@ public class ClickManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction*1000, Color.yellow, 1);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit)) 

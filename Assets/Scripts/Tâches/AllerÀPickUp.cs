@@ -1,15 +1,20 @@
+using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
 
 public class AllerÀPickUp : Tâche
 {
     public AllerÀPickUp(IAPersonne personne) : base(personne) { }
+
+
+
     public override IEnumerator FaireTâche()
     {
-
         status = StatusTâche.EN_COURS;
         personne.SetNomTâche(NomTâche.DÉPLACEMENT);
         PickUpObjet puo = personne.manager.GetPickUpObjet();
+        if (puo == null)
+            status = StatusTâche.TERMINÉ;
 
         if (puo.utilisé == true)
         {
@@ -48,5 +53,9 @@ public class AllerÀPickUp : Tâche
             status = StatusTâche.TERMINÉ;
             personne.SetNomTâche(NomTâche.IDLE);
         }
+    }
+
+    public override bool VérifierSiFaisable() {
+            return personne.manager.PickupObjetAccessible();
     }
 }

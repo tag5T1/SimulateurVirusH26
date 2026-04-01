@@ -16,4 +16,8 @@ public class AllerAuBureau : Tâche
         yield return new WaitForSeconds(3);
         status = StatusTâche.TERMINÉ;
     }
+
+    public override bool VérifierSiFaisable() {
+        return true;
+    }
 }

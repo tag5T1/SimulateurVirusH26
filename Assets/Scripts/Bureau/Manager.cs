@@ -87,9 +87,10 @@ public class Manager : MonoBehaviour
     }
 
 
-    public PickUpObjet GetPickUpObjet() 
+    public PickUpObjet GetPickUpObjet()
     {
         return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
+    }
 
     public GameObject GetPoubelleLaPlusProche(Vector3 positionPersonne)
     {

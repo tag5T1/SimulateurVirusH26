@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 public class ClickManager : MonoBehaviour
 {
     Camera mainCamera;
+    TMP_Text prefabNormal;
     [SerializeField] GameObject dataPanel;
     TMP_Text dataText;
 
@@ -36,8 +37,6 @@ public class ClickManager : MonoBehaviour
 
                 if (hit.collider.gameObject.tag == "Personne")
                 {
-                    Debug.Log("person found");
-                                     
                     dataText = Instantiate(prefabNormal, content);                   
                     dataText.text = FormatListToString(
                         hit.collider.gameObject.GetComponent<IAPersonne>().personne.OnClick()

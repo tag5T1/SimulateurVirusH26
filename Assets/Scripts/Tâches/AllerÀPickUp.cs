@@ -18,24 +18,29 @@ public class AllerÀPickUp : Tâche
         }
         else
         {
+            personne.SetNomTâche(NomTâche.PICKUP);
             puo.utilisé = true;
             // Calcule la direction face à la distributrice pour se positionner en file
             var dir = (puo.positionInteraction - puo.transform.position).normalized;
+            Debug.Log("1");
 
             // La destination 
             UpdateDestination(puo.positionInteraction);
-            personne.SetNomTâche(NomTâche.PICKUP);
-            yield return new WaitUntil(() => Vector2.Distance(personne.gameObject.transform.position, puo.positionInteraction) <= 1);
+            yield return new WaitUntil(() => Vector2.Distance(personne.gameObject.transform.position, puo.positionInteraction) <= 2);
+            Debug.Log("2");
 
             // PickUp
             puo.Utiliser(personne);
             Virus virus = puo.Infecter(personne.personne.virus);
             if (virus != null)
-                personne.Infecter(virus);
+                personne.DevientInfecté(virus);
+            Debug.Log("3");
 
             // Retour au bureau
             UpdateDestination(personne.personne.espaceDeTravail.bureau.transform.position);
+            Debug.Log("4");
             yield return new WaitUntil(() => Vector2.Distance(personne.gameObject.transform.position, personne.personne.espaceDeTravail.bureau.transform.position) <= 0.5);
+            Debug.Log("5");
             personne.SetNomTâche(NomTâche.DÉPLACEMENT);
 
             // Lacher l'objet

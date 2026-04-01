@@ -41,8 +41,6 @@ public class CameraControls : MonoBehaviour
         //Tourner le point autour de la caméra
         if (Input.GetMouseButton(1) && Input.GetKey(KeyCode.LeftAlt))
         {
-            
-
             float mouseX = Input.GetAxis("Mouse X") * rotateSpeed;
             float mouseY = Input.GetAxis("Mouse Y") * rotateSpeed;
 

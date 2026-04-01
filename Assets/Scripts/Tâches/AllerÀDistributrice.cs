@@ -44,4 +44,8 @@ public class AllerÀDistributrice : Tâche
         status = StatusTâche.TERMINÉ;
         personne.SetNomTâche(NomTâche.IDLE);
     }
+
+    public override bool VérifierSiFaisable() {
+        return personne.manager.distributrices.Length > 0;
+    }
 }

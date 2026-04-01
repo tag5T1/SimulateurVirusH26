@@ -47,4 +47,8 @@ public class AllerVomir : Tâche
         status = StatusTâche.TERMINÉ;
         personne.SetNomTâche(NomTâche.IDLE);
     }
+
+    public override bool VérifierSiFaisable() {
+        return personne.manager.VérifierSiPoubelleAccessible();
+    }
 }

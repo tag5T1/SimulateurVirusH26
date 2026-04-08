@@ -362,7 +362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25ae1f4e51c43b48b5bf102877a815c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OfficeBuilderManager
-  bureauPrefab: {fileID: 11400000, guid: b7f9b89b71d9ddc44af9306bc9877f0b, type: 2}
+  bureauBuilderObjet: {fileID: 11400000, guid: b7f9b89b71d9ddc44af9306bc9877f0b, type: 2}
+  crayonBuilderObjet: {fileID: 11400000, guid: 1925b1d59bd53e8438814208c566de82, type: 2}
 --- !u!1001 &298344372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1923,11 +1924,11 @@ SceneRoots:
   - {fileID: 1329450129}
   - {fileID: 708490285}
   - {fileID: 953094032}
+  - {fileID: 291640960}
   - {fileID: 232720892}
   - {fileID: 1287637445}
   - {fileID: 627186708}
   - {fileID: 1839331428}
-  - {fileID: 291640960}
   - {fileID: 1911630777}
   - {fileID: 323757685}
   - {fileID: 460640505}

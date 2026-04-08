@@ -17,6 +17,11 @@ public class OfficeBuilderControls : MonoBehaviour
             manager.modeOfficeBuilderActivé = !manager.modeOfficeBuilderActivé;
         }
         if (Input.GetMouseButtonDown(0) && manager.modeOfficeBuilderActivé)
-            builderManager.CréerBureau();
+            builderManager.CréerObjet();
+
+        if (Input.GetKeyDown(KeyCode.G)) {
+            builderManager.CycleObjet();
+        }
+
     }
 }

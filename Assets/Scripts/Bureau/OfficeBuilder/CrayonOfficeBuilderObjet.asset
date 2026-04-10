@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e3cf38dd863be94db8fbc9bbb096ec9, type: 3}
-  m_Name: BureauOfficeBuilder
+  m_Name: CrayonOfficeBuilderObjet
   m_EditorClassIdentifier: Assembly-CSharp::OfficeBuilderObjectScriptableObject
-  nom: Bureau
-  prefab: {fileID: 84820985108742778, guid: de8444855d367164fa91c70feb25ebbc, type: 3}
-  ghostPrefab: {fileID: 5863230735652745921, guid: 4fbfa10b9cd513941a432ac7c9a44a6e, type: 3}
+  nom: Crayon
+  prefab: {fileID: 2942079598520342656, guid: 16d2d26a2e650634c817265439f1e6e5, type: 3}
+  ghostPrefab: {fileID: 4682315223670869850, guid: 6a2bb7c6f1369174e9735dafd31b8546, type: 3}
   "layersO\xF9Pla\xE7able":
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768

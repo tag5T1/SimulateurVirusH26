@@ -11,7 +11,6 @@ public class CameraControls : MonoBehaviour
     {
         Vector3 angles = transform.localEulerAngles;
         float sinX = Mathf.Sin(Mathf.Deg2Rad * angles.x);
-        Debug.Log(sinX);
 
         //Tourner la caméra autour du point
         if (Input.GetMouseButton(1) && !Input.GetKey(KeyCode.LeftShift))

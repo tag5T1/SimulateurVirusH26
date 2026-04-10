@@ -57,11 +57,11 @@ public class Manager : MonoBehaviour
         //    distributrice.transform.position = new Vector3(Random.Range(-20, 20), -3, -25);
         //}
 
-        distributrices = GameObject.FindGameObjectsWithTag("Distributrice");
-        pickUpObjets = GameObject.FindGameObjectsWithTag("PickUpObjet");
-        poubelles = GameObject.FindGameObjectsWithTag("Poubelle");
+        FindDistributrices();
+        FindPickups();
+        FindPoubelles();
 
-        GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
+        BuildNavMesh();
     }
 
 
@@ -91,15 +91,20 @@ public class Manager : MonoBehaviour
 
     public PickUpObjet GetPickUpObjet()
     {
-        if (PickupObjetAccessible())
+        if (VérifierPickupObjetAccessible())
             return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
         else return null;
 
     }
-    public bool PickupObjetAccessible() {
-        foreach (var o in pickUpObjets) {
-            if (!o.GetComponent<PickUpObjet>().utilisé)
-                return true;
+    public bool VérifierPickupObjetAccessible() {
+        if (pickUpObjets.Length > 0)
+        {
+            foreach (var o in pickUpObjets)
+            {
+                var x = o.GetComponent<PickUpObjet>();
+                if (x != null && !x.utilisé)
+                    return true;
+            }
         }
         return false;
     }
@@ -148,6 +153,23 @@ public class Manager : MonoBehaviour
             distance += Vector3.Distance(corners[i], corners[i + 1]);
 
         return distance;
+    }
 
+    public void FindDistributrices()
+    {
+        distributrices = GameObject.FindGameObjectsWithTag("Distributrice");
+    }
+    public void FindPickups()
+    {
+        pickUpObjets = GameObject.FindGameObjectsWithTag("PickUpObjet");
+    }
+    public void FindPoubelles()
+    {
+        poubelles = GameObject.FindGameObjectsWithTag("Poubelle");
+    }
+
+    public void BuildNavMesh()
+    {
+        GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 }

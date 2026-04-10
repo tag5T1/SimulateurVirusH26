@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6107064118755220213}
   - component: {fileID: 5733465091322940751}
   - component: {fileID: 1747925532535133488}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Crayon
   m_TagString: PickUpObjet
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4947506218965713510}
   - component: {fileID: 2808031929039261424}
   - component: {fileID: 8964317003835716809}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Indicateur de position
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,11 +12,11 @@ public class AllerÀPickUp : Tâche
     {
         status = StatusTâche.EN_COURS;
         personne.SetNomTâche(NomTâche.DÉPLACEMENT);
-        PickUpObjet puo = personne.manager.GetPickUpObjet();
-        if (puo == null)
+        PickUpObjet objet = personne.manager.GetPickUpObjet();
+        if (objet == null)
             status = StatusTâche.TERMINÉ;
 
-        if (puo.utilisé == true)
+        if (objet.utilisé == true)
         {
             status = StatusTâche.TERMINÉ;
             personne.SetNomTâche(NomTâche.IDLE);
@@ -24,38 +24,36 @@ public class AllerÀPickUp : Tâche
         else
         {
             personne.SetNomTâche(NomTâche.PICKUP);
-            puo.utilisé = true;
+            objet.utilisé = true;
             // Calcule la direction face à la distributrice pour se positionner en file
-            var dir = (puo.positionInteraction - puo.transform.position).normalized;
-            Debug.Log("1");
+            var dir = (objet.positionInteraction - objet.transform.position).normalized;
 
             // La destination 
-            UpdateDestination(puo.positionInteraction);
-            yield return new WaitUntil(() => Vector2.Distance(personne.gameObject.transform.position, puo.positionInteraction) <= 2);
-            Debug.Log("2");
+            UpdateDestination(objet.positionInteraction);
+            yield return new WaitUntil(() => Vector3.Distance(personne.gameObject.transform.position, objet.positionInteraction) <= 2);
+            Debug.Log(objet.positionInteraction);
+            Debug.Log(personne.gameObject.transform.position);
+            Debug.Log(personne.gameObject.transform.position);
 
             // PickUp
-            puo.Utiliser(personne);
-            Virus virus = puo.Infecter(personne.personne.virus);
+            objet.Utiliser(personne);
+            Virus virus = objet.Infecter(personne.personne.virus);
             if (virus != null)
                 personne.DevientInfecté(virus);
-            Debug.Log("3");
 
             // Retour au bureau
             UpdateDestination(personne.personne.espaceDeTravail.bureau.transform.position);
-            Debug.Log("4");
             yield return new WaitUntil(() => Vector2.Distance(personne.gameObject.transform.position, personne.personne.espaceDeTravail.bureau.transform.position) <= 0.5);
-            Debug.Log("5");
             personne.SetNomTâche(NomTâche.DÉPLACEMENT);
 
             // Lacher l'objet
-            puo.Lacher(personne);
+            objet.Lacher();
             status = StatusTâche.TERMINÉ;
             personne.SetNomTâche(NomTâche.IDLE);
         }
     }
 
     public override bool VérifierSiFaisable() {
-            return personne.manager.PickupObjetAccessible();
+            return personne.manager.VérifierPickupObjetAccessible();
     }
 }

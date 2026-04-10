@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6178404194584848220}
   - component: {fileID: 203109124945354145}
   - component: {fileID: 7950669946308380448}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Distributrice
   m_TagString: Distributrice
   m_Icon: {fileID: 0}
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Distributrice
   indicateurDePosition: {fileID: 2081135779835762060}
   "materialInfect\xE9": {fileID: 2100000, guid: f9d5d9a7950d93243ab444bb3359a12f, type: 2}
+  fileDattente: []
 --- !u!1 &1909341490795752963
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +139,7 @@ GameObject:
   - component: {fileID: 2081135779835762060}
   - component: {fileID: 5068526699645244242}
   - component: {fileID: 5471754726308082730}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Indicateur position
   m_TagString: Untagged
   m_Icon: {fileID: 0}

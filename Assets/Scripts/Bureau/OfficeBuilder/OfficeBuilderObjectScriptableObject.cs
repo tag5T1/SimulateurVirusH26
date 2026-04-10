@@ -6,5 +6,6 @@ public class OfficeBuilderObjectScriptableObject : ScriptableObject
 {
     public string nom;
     public GameObject prefab;
-    public float hauteurPrefab;
+    public GameObject ghostPrefab;
+    public LayerMask layersOùPlaçable;
 }

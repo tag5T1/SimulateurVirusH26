@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e3cf38dd863be94db8fbc9bbb096ec9, type: 3}
-  m_Name: CrawonOfficeBuilderObjet
+  m_Name: PoubelleOfficeBuilder
   m_EditorClassIdentifier: Assembly-CSharp::OfficeBuilderObjectScriptableObject
-  nom: Crawon
-  prefab: {fileID: 2942079598520342656, guid: 16d2d26a2e650634c817265439f1e6e5, type: 3}
-  hauteurPrefab: 0.3
+  nom: Poubelle
+  prefab: {fileID: 6763807753982851461, guid: 6de334100e0eaab40a7193de004bde23, type: 3}
+  ghostPrefab: {fileID: 1321032010535807038, guid: cdd9dc27a8dadd44485b6e6ca617c302, type: 3}
+  "layersO\xF9Pla\xE7able":
+    serializedVersion: 2
+    m_Bits: 256

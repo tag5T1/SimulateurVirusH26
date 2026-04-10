@@ -3,25 +3,29 @@ using UnityEngine;
 
 public class OfficeBuilderControls : MonoBehaviour
 {
-    Manager manager;
     OfficeBuilderManager builderManager;
 
 
     public void Start() {
-        manager = gameObject.GetComponent<Manager>();
         builderManager = gameObject.GetComponent<OfficeBuilderManager>();
     }
 
     public void Update() {
         if (Input.GetKeyDown(KeyCode.H)) {
-            manager.modeOfficeBuilderActivé = !manager.modeOfficeBuilderActivé;
+            builderManager.ToggleBuilder();
         }
-        if (Input.GetMouseButtonDown(0) && manager.modeOfficeBuilderActivé)
-            builderManager.CréerObjet();
-
-        if (Input.GetKeyDown(KeyCode.G)) {
+        if (Input.GetMouseButtonDown(0) && builderManager.modeBuilderActivé) {
+            builderManager.Click();
+        }
+        if (Input.GetMouseButtonDown(1) && builderManager.rotationActivée)
+        {
+            builderManager.ToggleRotation();
+        }
+        if (builderManager.rotationActivée) {
+            builderManager.TournerGhost(Input.GetAxis("Mouse X"));
+        }
+        if (Input.GetKeyDown(KeyCode.G) && builderManager.modeBuilderActivé) {
             builderManager.CycleObjet();
         }
-
     }
 }

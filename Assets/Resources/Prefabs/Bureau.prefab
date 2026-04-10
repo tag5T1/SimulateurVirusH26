@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3367216234129774095}
   - component: {fileID: 9206621168503390236}
   - component: {fileID: 7801220442887009308}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bureau
   m_TagString: StationDeTravail
   m_Icon: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BureauDeTravail
   indicateurDePosition: {fileID: 5108498142956261304}
+  "materialInfect\xE9": {fileID: 0}
 --- !u!1 &7202089216595077777
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +138,7 @@ GameObject:
   - component: {fileID: 5108498142956261304}
   - component: {fileID: 5660998595326498264}
   - component: {fileID: 4782802312106766816}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Indicateur position
   m_TagString: Untagged
   m_Icon: {fileID: 0}

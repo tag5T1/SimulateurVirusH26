@@ -267,7 +267,7 @@ Transform:
   m_GameObject: {fileID: 232720889}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -362,8 +362,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25ae1f4e51c43b48b5bf102877a815c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OfficeBuilderManager
+  "modeBuilderActiv\xE9": 0
+  "rotationActiv\xE9e": 0
   bureauBuilderObjet: {fileID: 11400000, guid: b7f9b89b71d9ddc44af9306bc9877f0b, type: 2}
   crayonBuilderObjet: {fileID: 11400000, guid: 1925b1d59bd53e8438814208c566de82, type: 2}
+  distributriceBuilderObjet: {fileID: 11400000, guid: dd72bf071cb846d4b8fe1db9ffc3bbc1, type: 2}
+  poubelleBuilderObjet: {fileID: 11400000, guid: e3d4c7f8fac55ad42abeaea0a517fe12, type: 2}
 --- !u!1001 &298344372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -374,7 +378,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 714026140649221975, guid: b474b347820d5414e98e55ba17fd8ab6, type: 3}
       propertyPath: m_Name
-      value: Distributrice (3)
+      value: Distributrice 3
       objectReference: {fileID: 0}
     - target: {fileID: 2721030246313907559, guid: b474b347820d5414e98e55ba17fd8ab6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -433,7 +437,7 @@ GameObject:
   - component: {fileID: 323757684}
   - component: {fileID: 323757683}
   - component: {fileID: 323757682}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Mur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +582,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 714026140649221975, guid: b474b347820d5414e98e55ba17fd8ab6, type: 3}
       propertyPath: m_Name
-      value: Distributrice (2)
+      value: Distributrice 1
       objectReference: {fileID: 0}
     - target: {fileID: 2721030246313907559, guid: b474b347820d5414e98e55ba17fd8ab6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -637,7 +641,7 @@ GameObject:
   - component: {fileID: 627186707}
   - component: {fileID: 627186706}
   - component: {fileID: 627186705}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1391,7 +1395,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 887
   m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -1657,7 +1661,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 714026140649221975, guid: b474b347820d5414e98e55ba17fd8ab6, type: 3}
       propertyPath: m_Name
-      value: Distributrice (4)
+      value: Distributrice 2
       objectReference: {fileID: 0}
     - target: {fileID: 2721030246313907559, guid: b474b347820d5414e98e55ba17fd8ab6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1716,7 +1720,7 @@ GameObject:
   - component: {fileID: 1839331427}
   - component: {fileID: 1839331426}
   - component: {fileID: 1839331425}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Mur (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1925,12 +1929,12 @@ SceneRoots:
   - {fileID: 708490285}
   - {fileID: 953094032}
   - {fileID: 291640960}
-  - {fileID: 232720892}
   - {fileID: 1287637445}
-  - {fileID: 627186708}
-  - {fileID: 1839331428}
+  - {fileID: 232720892}
   - {fileID: 1911630777}
+  - {fileID: 627186708}
   - {fileID: 323757685}
+  - {fileID: 1839331428}
   - {fileID: 460640505}
   - {fileID: 1835806371}
   - {fileID: 298344372}

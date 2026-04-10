@@ -35,9 +35,10 @@ public class Virus
         this.duréeVie = vir.duréeVie;
         this.décceleration = vir.décceleration;
         this.gravité = vir.gravité;
+        this.puissanceMutation = vir.puissanceMutation;
 
         this.symptomes = DupliquerSymptomes(vir.symptomes);
-        InitialiserSymptomes(this);
+        Muter();
     }
 
     /// <summary>

@@ -6,6 +6,9 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.U2D;
+using XCharts.Runtime;
+using System;
+using Unity.VisualScripting;
 
 public class Manager : MonoBehaviour
 {
@@ -14,10 +17,12 @@ public class Manager : MonoBehaviour
     List<EspaceDeTravail> espacesDeTravail;
     GameObject bureau;
     GameObject distributrice;
+    public GameObject[] personnes;
     public GameObject[] distributrices;
-
     public GameObject[] pickUpObjets;
     public GameObject[] poubelles;
+
+    [SerializeField] LineChart graphInfecte;
 
 
 
@@ -31,6 +36,7 @@ public class Manager : MonoBehaviour
         espacesDeTravail = new List<EspaceDeTravail>();
 
         // Crée un espace de travail par personne
+        personnes = new GameObject[nbPersonne];
         for (int i = 0; i < nbPersonne; i++) {
             EspaceDeTravail espace = new()
             {
@@ -38,16 +44,13 @@ public class Manager : MonoBehaviour
             };
             espace.RandomiserPositionBureau();
             espacesDeTravail.Add(espace);
-            
-            IAPersonne o = GameObject.Instantiate(personne).GetComponent<IAPersonne>();
-            o.Création(espace);
-            // Infecte 1 personne sur 5
-            if (i%5 == 0)
-            {
-                o.DevientInfecté(new Virus(o.gameObject));
-            }
-                
+
+            var p = GameObject.Instantiate(personne);
+            p.GetComponent<IAPersonne>().Création(espace);
+
+            personnes[i] = p;
         }
+
 
         //for (int i = 0; i < 5; i++)
         //{
@@ -60,6 +63,23 @@ public class Manager : MonoBehaviour
         poubelles = GameObject.FindGameObjectsWithTag("Poubelle");
 
         GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
+    }
+
+    private void Start()
+    {
+        for(int i = 0; i < personnes.Length;i++) {
+            var p = personnes[i];
+            IAPersonne o = p.GetComponent<IAPersonne>();
+            // Infecte 1 personne sur 5
+            if (i % 5 == 0)
+            {
+                o.DevientInfecté(new Virus(o.gameObject));
+            }
+        }
+    }
+    private void Update()
+    {
+
     }
 
 
@@ -83,13 +103,14 @@ public class Manager : MonoBehaviour
             else if (go.GetComponent<Distributrice>().fileDattente.Count == distrMoinsOccupée.ToArray()[0].fileDattente.Count)
                 distrMoinsOccupée.Add(go.GetComponent<Distributrice>());
         }
-        return distrMoinsOccupée.ToArray()[Random.Range(0, distrMoinsOccupée.Count)].GetComponent<Distributrice>();
+        return distrMoinsOccupée.ToArray()[UnityEngine.Random.Range(0, distrMoinsOccupée.Count)].GetComponent<Distributrice>();
     }
 
 
-    public PickUpObjet GetPickUpObjet() 
+    public PickUpObjet GetPickUpObjet()
     {
-        return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
+        return pickUpObjets[UnityEngine.Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
+    }
 
     public GameObject GetPoubelleLaPlusProche(Vector3 positionPersonne)
     {

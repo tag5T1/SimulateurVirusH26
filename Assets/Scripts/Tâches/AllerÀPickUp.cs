@@ -1,15 +1,22 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 public class AllerÀPickUp : Tâche
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="personne"></param>
     public AllerÀPickUp(IAPersonne personne) : base(personne) { }
     public override IEnumerator FaireTâche()
     {
 
         status = StatusTâche.EN_COURS;
         personne.SetNomTâche(NomTâche.DÉPLACEMENT);
-        PickUpObjet puo = personne.manager.GetPickUpObjet();
+        PickUpObjet puo = GameObject.Find("Manager").GetComponent<Manager>().GetPickUpObjet();
 
         if (puo.utilisé == true)
         {
@@ -30,8 +37,6 @@ public class AllerÀPickUp : Tâche
             // PickUp
             puo.Utiliser(personne);
             Virus virus = puo.Infecter(personne.personne.virus);
-            if (virus != null)
-                personne.Infecter(virus);
 
             // Retour au bureau
             UpdateDestination(personne.personne.espaceDeTravail.bureau.transform.position);

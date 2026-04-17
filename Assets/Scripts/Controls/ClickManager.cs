@@ -11,6 +11,7 @@ public class ClickManager : MonoBehaviour
     Camera mainCamera;
     [SerializeField] GameObject dataPanel;
     TMP_Text dataText;
+    TMP_Text prefabNormal;
 
 
 

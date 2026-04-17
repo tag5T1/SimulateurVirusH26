@@ -49,7 +49,7 @@ public class Virus
     {
         this.personne = personne;
         this.force = Random.Range(1f, 10f);
-        this.duréeVie = 15;
+        this.duréeVie = 150;
         this.décceleration = 1.2f;
         this.gravité = Random.Range(0.1f, 0.4f);
         this.puissanceMutation = 10f;

@@ -112,7 +112,7 @@ public class Manager : MonoBehaviour
     public PickUpObjet GetPickUpObjet()
     {
         if (VérifierPickupObjetAccessible())
-            return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
+            return pickUpObjets[UnityEngine.Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
         else return null;
 
     }

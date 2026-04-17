@@ -38,9 +38,7 @@ public class AllerÀPickUp : Tâche
             // La destination 
             UpdateDestination(objet.positionInteraction);
             yield return new WaitUntil(() => Vector3.Distance(personne.gameObject.transform.position, objet.positionInteraction) <= 2);
-            Debug.Log(objet.positionInteraction);
-            Debug.Log(personne.gameObject.transform.position);
-            Debug.Log(personne.gameObject.transform.position);
+            
 
             // PickUp
             objet.Utiliser(personne);

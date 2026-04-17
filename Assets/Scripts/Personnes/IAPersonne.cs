@@ -18,21 +18,24 @@ public class IAPersonne : MonoBehaviour
     public NomTâche nomTâche;
     public Tâche tâcheEnCours;
     public Vector2 position2D { get; private set; }
+    private float tempsInfecte;
 
 
 
     public void Création(EspaceDeTravail espace)
     {
-        personne = new Personne(espace);
+        personne = new Personne(espace, gameObject);
         sélecteur = new SélecteurTâche(this);
         agent = GetComponent<NavMeshAgent>();
         manager = GameObject.Find("Manager").GetComponent<Manager>();
         vitesseDeDéplacementDeBase = agent.speed;
+        tempsInfecte = 0;
         FaireTâche();
     }
 
     private void Update()
     {
+        tempsInfecte += Time.deltaTime;
         UpdatePosition2D();
 
         if (tâcheEnCours != null && tâcheEnCours.status == StatusTâche.TERMINÉ)
@@ -43,6 +46,13 @@ public class IAPersonne : MonoBehaviour
         if (personne.estInfecté)
         {
             personne.virus.EffectuerSymptomes();
+
+            if (tempsInfecte >= personne.virus.duréeVie)
+            {
+                Debug.Log("Gueri");
+                DevientGueri();
+                tempsInfecte = 0;
+            }
         }
         
         transform.LookAt(transform.position + agent.velocity);
@@ -54,6 +64,12 @@ public class IAPersonne : MonoBehaviour
     {
         personne.DevientInfecté(gameObject, virus);
         GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Infection");
+    }
+
+    public void DevientGueri()
+    {
+        personne.DevientGueri();
+        GetComponent<MeshRenderer>().material = personne.immunite.getMaterial();
     }
 
 

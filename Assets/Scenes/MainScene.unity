@@ -5762,7 +5762,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 155, y: 27}
+  m_SizeDelta: {x: 259, y: 27}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &541059137
 MonoBehaviour:
@@ -8071,7 +8071,7 @@ MonoBehaviour:
   m_RadiusAxes: []
   m_Titles:
   - m_Show: 1
-    m_Text: Taux de mutation du virus
+    m_Text: Taux de mutation moyen du virus
     m_SubText: 
     m_LabelStyle:
       m_Show: 1
@@ -12477,7 +12477,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 276, y: 27}
+  m_SizeDelta: {x: 354, y: 27}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &820900688
 MonoBehaviour:
@@ -13347,7 +13347,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -0, y: -0}
-  m_SizeDelta: {x: 151, y: 27}
+  m_SizeDelta: {x: 255, y: 27}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &909774889
 MonoBehaviour:
@@ -13382,7 +13382,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Force du virus
+  m_Text: Force moyenne du virus
 --- !u!222 &909774890
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14196,7 +14196,7 @@ MonoBehaviour:
   m_RadiusAxes: []
   m_Titles:
   - m_Show: 1
-    m_Text: Force du virus
+    m_Text: Force moyenne du virus
     m_SubText: 
     m_LabelStyle:
       m_Show: 1
@@ -20717,7 +20717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -85.5, y: 0}
+  m_AnchoredPosition: {x: -137.5, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1501494692
@@ -21984,7 +21984,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -0, y: -0}
-  m_SizeDelta: {x: 272, y: 27}
+  m_SizeDelta: {x: 350, y: 27}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1638191711
 MonoBehaviour:
@@ -22019,7 +22019,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Taux de mutation du virus
+  m_Text: Taux de mutation moyen du virus
 --- !u!222 &1638191712
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24505,7 +24505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -146, y: 0}
+  m_AnchoredPosition: {x: -185, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1875065351

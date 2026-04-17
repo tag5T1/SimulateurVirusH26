@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,25 +8,39 @@ public class OfficeBuilderControls : MonoBehaviour
 
 
     public void Start() {
-        builderManager = gameObject.GetComponent<OfficeBuilderManager>();
+        StartCoroutine(TrouverManager());
     }
 
     public void Update() {
-        if (Input.GetKeyDown(KeyCode.H)) {
-            builderManager.ToggleBuilder();
-        }
-        if (Input.GetMouseButtonDown(0) && builderManager.modeBuilderActivé) {
-            builderManager.Click();
-        }
-        if (Input.GetMouseButtonDown(1) && builderManager.rotationActivée)
+        if (builderManager != null)
         {
-            builderManager.ToggleRotation();
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                builderManager.ToggleMenuBuilder();
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                builderManager.Click();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape) && builderManager.modeRotationActivée)
+            {
+                builderManager.ToggleRotation();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && builderManager.modePlacementObjet && !builderManager.modeRotationActivée)
+                builderManager.DeselectObjet();
+            if (builderManager.modeRotationActivée)
+            {
+                builderManager.TournerGhost(Input.GetAxis("Mouse X"));
+            }
         }
-        if (builderManager.rotationActivée) {
-            builderManager.TournerGhost(Input.GetAxis("Mouse X"));
-        }
-        if (Input.GetKeyDown(KeyCode.G) && builderManager.modeBuilderActivé) {
-            builderManager.CycleObjet();
+    }
+
+    private IEnumerator TrouverManager()
+    {
+        while (builderManager == null)
+        {
+            builderManager = OfficeBuilderManager.Instance;
+            yield return new WaitForEndOfFrame();
         }
     }
 }

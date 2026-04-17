@@ -9,7 +9,7 @@ public class AllerÀDistributrice : Tâche
     {
         status = StatusTâche.EN_COURS;
         personne.SetNomTâche(NomTâche.DÉPLACEMENT);
-        Distributrice distributrice = GameObject.Find("Manager").GetComponent<Manager>().GetDistributrice();
+        Distributrice distributrice = Manager.Instance.GetDistributrice();
         var posInteraction = distributrice.positionInteraction;
 
         // Initialise le déplacement

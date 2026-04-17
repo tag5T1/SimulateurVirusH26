@@ -26,7 +26,7 @@ public class IAPersonne : MonoBehaviour
         personne = new Personne(espace);
         sélecteur = new SélecteurTâche(this);
         agent = GetComponent<NavMeshAgent>();
-        manager = GameObject.Find("Manager").GetComponent<Manager>();
+        manager = Manager.Instance;
         vitesseDeDéplacementDeBase = agent.speed;
         FaireTâche();
     }

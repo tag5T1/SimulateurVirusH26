@@ -13,6 +13,8 @@ using UnityEngine.UIElements;
 
 public class Manager : MonoBehaviour
 {
+    public static Manager Instance;
+
     [SerializeField] int nbPersonne;
     public bool modeOfficeBuilderActivé;
     GameObject personne;
@@ -30,10 +32,17 @@ public class Manager : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("Duplicate Manager in \"" + gameObject.name + "\"");
+            GameObject.Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+
         // Charge les prefabs à créer
         personne = Resources.Load<GameObject>("Prefabs/Personne");
         bureau = Resources.Load<GameObject>("Prefabs/Bureau");
-        distributrice = Resources.Load<GameObject>("Prefabs/Distributrice");
 
         espacesDeTravail = new List<EspaceDeTravail>();
 
@@ -53,12 +62,6 @@ public class Manager : MonoBehaviour
             personnes[i] = p;
         }
 
-
-        //for (int i = 0; i < 5; i++)
-        //{
-        //    GameObject.Instantiate(distributrice);
-        //    distributrice.transform.position = new Vector3(Random.Range(-20, 20), -3, -25);
-        //}
 
         FindDistributrices();
         FindPickups();

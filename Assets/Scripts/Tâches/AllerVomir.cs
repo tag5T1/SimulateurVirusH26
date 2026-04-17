@@ -14,7 +14,7 @@ public class AllerVomir : Tâche
     {
         status = StatusTâche.EN_COURS;
         personne.SetNomTâche(NomTâche.DÉPLACEMENT);
-        GameObject poubelle = GameObject.Find("Manager").GetComponent<Manager>().GetPoubelleLaPlusProche(personne.transform.position);
+        GameObject poubelle = Manager.Instance.GetPoubelleLaPlusProche(personne.transform.position);
         var posInteraction = poubelle.transform.position;
 
         // Initialise le déplacement

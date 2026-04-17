@@ -12,7 +12,6 @@ public class ClickManager : MonoBehaviour
     TMP_Text prefabNormal;
     [SerializeField] GameObject dataPanel;
     TMP_Text dataText;
-    TMP_Text prefabNormal;
 
 
 
@@ -37,6 +36,8 @@ public class ClickManager : MonoBehaviour
 
                 if (hit.collider.gameObject.tag == "Personne")
                 {
+                    if (content.childCount > 0)
+                        Destroy(content.GetChild(0).gameObject);
                     dataText = Instantiate(prefabNormal, content);                   
                     dataText.text = FormatListToString(
                         hit.collider.gameObject.GetComponent<IAPersonne>().personne.OnClick()
@@ -55,9 +56,7 @@ public class ClickManager : MonoBehaviour
                             Destroy(content.GetChild(i-1).gameObject);
                         dataPanel.SetActive(false);                   
                     }
-
                 }
-              
             }
         }
     }

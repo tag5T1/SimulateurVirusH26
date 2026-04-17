@@ -25,7 +25,7 @@ public class VirusParticule : MonoBehaviour
         force = virus.force;
         gravité = virus.gravité;
         rb.linearDamping = Random.Range(virus.décceleration*0.25f, virus.décceleration*2f);
-        duréeVie = virus.duréeVie;
+        duréeVie = virus.duréeVie/10;
         tempsVie = 0;
         premièreCollision = true;
 
@@ -42,7 +42,7 @@ public class VirusParticule : MonoBehaviour
         force = (virus.force + 10) / 10;
         gravité = 9f;
         rb.linearDamping = Random.Range(virus.décceleration * 0.25f, virus.décceleration * 2f);
-        duréeVie = virus.duréeVie * 4;
+        duréeVie = virus.duréeVie/2;
         tempsVie = 0;
         premièreCollision = true;
 

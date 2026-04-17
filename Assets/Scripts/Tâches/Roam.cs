@@ -15,4 +15,8 @@ public class Roam : Tâche
         status = StatusTâche.TERMINÉ;
         personne.SetNomTâche(NomTâche.IDLE);
     }
+
+    public override bool VérifierSiFaisable() {
+        return true;
+    }
 }

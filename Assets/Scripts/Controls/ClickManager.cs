@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 public class ClickManager : MonoBehaviour
 {
     Camera mainCamera;
+    TMP_Text prefabNormal;
     [SerializeField] GameObject dataPanel;
     TMP_Text dataText;
     TMP_Text prefabNormal;
@@ -28,7 +29,6 @@ public class ClickManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction*1000, Color.yellow, 1);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit)) 
@@ -37,8 +37,6 @@ public class ClickManager : MonoBehaviour
 
                 if (hit.collider.gameObject.tag == "Personne")
                 {
-                    Debug.Log("person found");
-                                     
                     dataText = Instantiate(prefabNormal, content);                   
                     dataText.text = FormatListToString(
                         hit.collider.gameObject.GetComponent<IAPersonne>().personne.OnClick()

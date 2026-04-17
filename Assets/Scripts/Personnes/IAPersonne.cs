@@ -11,6 +11,7 @@ public class IAPersonne : MonoBehaviour
 {
     [SerializeField] GameObject particuleDeBase;
     public NavMeshAgent agent;
+    public Manager manager;
     public float vitesseDeDéplacementDeBase { get; private set; }
     public Personne personne { get; private set; }
     SélecteurTâche sélecteur;
@@ -25,6 +26,7 @@ public class IAPersonne : MonoBehaviour
         personne = new Personne(espace);
         sélecteur = new SélecteurTâche(this);
         agent = GetComponent<NavMeshAgent>();
+        manager = GameObject.Find("Manager").GetComponent<Manager>();
         vitesseDeDéplacementDeBase = agent.speed;
         FaireTâche();
     }
@@ -33,7 +35,7 @@ public class IAPersonne : MonoBehaviour
     {
         UpdatePosition2D();
 
-        if (tâcheEnCours.status == StatusTâche.TERMINÉ)
+        if (tâcheEnCours != null && tâcheEnCours.status == StatusTâche.TERMINÉ)
         {
             FaireTâche();
         }

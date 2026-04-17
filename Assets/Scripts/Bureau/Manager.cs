@@ -9,10 +9,12 @@ using UnityEngine.U2D;
 using XCharts.Runtime;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public class Manager : MonoBehaviour
 {
     [SerializeField] int nbPersonne;
+    public bool modeOfficeBuilderActivÃ©;
     GameObject personne;
     List<EspaceDeTravail> espacesDeTravail;
     GameObject bureau;
@@ -28,14 +30,14 @@ public class Manager : MonoBehaviour
 
     void Awake()
     {
-        // Charge les prefabs à créer
+        // Charge les prefabs Ã  crÃ©er
         personne = Resources.Load<GameObject>("Prefabs/Personne");
         bureau = Resources.Load<GameObject>("Prefabs/Bureau");
         distributrice = Resources.Load<GameObject>("Prefabs/Distributrice");
 
         espacesDeTravail = new List<EspaceDeTravail>();
 
-        // Crée un espace de travail par personne
+        // CrÃ©e un espace de travail par personne
         personnes = new GameObject[nbPersonne];
         for (int i = 0; i < nbPersonne; i++) {
             EspaceDeTravail espace = new()
@@ -46,7 +48,7 @@ public class Manager : MonoBehaviour
             espacesDeTravail.Add(espace);
 
             var p = GameObject.Instantiate(personne);
-            p.GetComponent<IAPersonne>().Création(espace);
+            p.GetComponent<IAPersonne>().CrÃ©ation(espace);
 
             personnes[i] = p;
         }
@@ -58,11 +60,11 @@ public class Manager : MonoBehaviour
         //    distributrice.transform.position = new Vector3(Random.Range(-20, 20), -3, -25);
         //}
 
-        distributrices = GameObject.FindGameObjectsWithTag("Distributrice");
-        pickUpObjets = GameObject.FindGameObjectsWithTag("PickUpObjet");
-        poubelles = GameObject.FindGameObjectsWithTag("Poubelle");
+        FindDistributrices();
+        FindPickups();
+        FindPoubelles();
 
-        GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
+        BuildNavMesh();
     }
 
     private void Start()
@@ -73,7 +75,7 @@ public class Manager : MonoBehaviour
             // Infecte 1 personne sur 5
             if (i % 5 == 0)
             {
-                o.DevientInfecté(new Virus(o.gameObject));
+                o.DevientInfectÃ©(new Virus(o.gameObject));
             }
         }
     }
@@ -85,32 +87,48 @@ public class Manager : MonoBehaviour
 
     public Distributrice GetDistributrice()
     {
-        List<Distributrice> distrMoinsOccupée = new()
+        List<Distributrice> distrMoinsOccupÃ©e = new()
         {
             distributrices[0].GetComponent<Distributrice>()
         };
 
         foreach (GameObject go in distributrices)
         {
-            // Reset la liste si une distributrice avec moins de personnes est trouvée
-            if (go.GetComponent<Distributrice>().fileDattente.Count < distrMoinsOccupée.ToArray()[0].fileDattente.Count)
+            // Reset la liste si une distributrice avec moins de personnes est trouvÃ©e
+            if (go.GetComponent<Distributrice>().fileDattente.Count < distrMoinsOccupÃ©e.ToArray()[0].fileDattente.Count)
             {
-                distrMoinsOccupée = new()
+                distrMoinsOccupÃ©e = new()
                 {
                     go.GetComponent<Distributrice>()
                 };
             }
-            else if (go.GetComponent<Distributrice>().fileDattente.Count == distrMoinsOccupée.ToArray()[0].fileDattente.Count)
-                distrMoinsOccupée.Add(go.GetComponent<Distributrice>());
+            else if (go.GetComponent<Distributrice>().fileDattente.Count == distrMoinsOccupÃ©e.ToArray()[0].fileDattente.Count)
+                distrMoinsOccupÃ©e.Add(go.GetComponent<Distributrice>());
         }
-        return distrMoinsOccupée.ToArray()[UnityEngine.Random.Range(0, distrMoinsOccupée.Count)].GetComponent<Distributrice>();
+        return distrMoinsOccupÃ©e.ToArray()[UnityEngine.Random.Range(0, distrMoinsOccupÃ©e.Count)].GetComponent<Distributrice>();
     }
 
 
     public PickUpObjet GetPickUpObjet()
     {
-        return pickUpObjets[UnityEngine.Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
+        if (VÃ©rifierPickupObjetAccessible())
+            return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
+        else return null;
+
     }
+    public bool VÃ©rifierPickupObjetAccessible() {
+        if (pickUpObjets.Length > 0)
+        {
+            foreach (var o in pickUpObjets)
+            {
+                var x = o.GetComponent<PickUpObjet>();
+                if (x != null && !x.utilisÃ©)
+                    return true;
+            }
+        }
+        return false;
+    }
+
 
     public GameObject GetPoubelleLaPlusProche(Vector3 positionPersonne)
     {
@@ -129,17 +147,23 @@ public class Manager : MonoBehaviour
 
         return poubelleProche;
     }
+    public bool VÃ©rifierSiPoubelleAccessible() {
+        if (poubelles.Length > 0)
+            return true;
+        else
+            return false;
+    }
 
-    public float CalculerLongueurPath(Vector3 départ, Vector3 arrivée)
+    public float CalculerLongueurPath(Vector3 dÃ©part, Vector3 arrivÃ©e)
     {
-        NavMeshHit hitDépart, hitArrivée;
+        NavMeshHit hitDÃ©part, hitArrivÃ©e;
 
-        if (!NavMesh.SamplePosition(départ, out hitDépart, 2f, NavMesh.AllAreas) || !NavMesh.SamplePosition(arrivée, out hitArrivée, 2f, NavMesh.AllAreas))
+        if (!NavMesh.SamplePosition(dÃ©part, out hitDÃ©part, 2f, NavMesh.AllAreas) || !NavMesh.SamplePosition(arrivÃ©e, out hitArrivÃ©e, 2f, NavMesh.AllAreas))
             return 0;
 
         NavMeshPath path = new NavMeshPath();
 
-        if (!NavMesh.CalculatePath(hitDépart.position, hitArrivée.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
+        if (!NavMesh.CalculatePath(hitDÃ©part.position, hitArrivÃ©e.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
             return 0;
 
         float distance = 0;
@@ -149,6 +173,23 @@ public class Manager : MonoBehaviour
             distance += Vector3.Distance(corners[i], corners[i + 1]);
 
         return distance;
+    }
 
+    public void FindDistributrices()
+    {
+        distributrices = GameObject.FindGameObjectsWithTag("Distributrice");
+    }
+    public void FindPickups()
+    {
+        pickUpObjets = GameObject.FindGameObjectsWithTag("PickUpObjet");
+    }
+    public void FindPoubelles()
+    {
+        poubelles = GameObject.FindGameObjectsWithTag("Poubelle");
+    }
+
+    public void BuildNavMesh()
+    {
+        GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 }

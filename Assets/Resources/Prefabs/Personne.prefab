@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8777614584792492733}
   - component: {fileID: 3198990095204762233}
   - component: {fileID: 8141636451306648579}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Personne
   m_TagString: Personne
   m_Icon: {fileID: 0}
@@ -150,4 +150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IAPersonne
   particuleDeBase: {fileID: 5123916652799007557, guid: ba35c9eb1704fb949812b162f4eda1b5, type: 3}
+  agent: {fileID: 0}
+  manager: {fileID: 0}
   "nomT\xE2che": 0

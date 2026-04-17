@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6157996324767545232}
   - component: {fileID: 4910577304079442981}
   - component: {fileID: 1334250741934506636}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Particule
   m_TagString: Particules
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

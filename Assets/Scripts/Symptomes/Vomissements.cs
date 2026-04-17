@@ -17,7 +17,6 @@ public class Vomissements : Symptome
         intensitéSymptome = (virus.force + 4) / 3; // Temps de vomissement
         cooldownMaximum = 300;
         RandomiserCooldownActuel();
-        cooldownActuel = 20;
     }
 
 
@@ -41,7 +40,7 @@ public class Vomissements : Symptome
         GameObject instance;
 
         var pos = pers.transform.position + 0.55f * pers.transform.forward;
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 9; i++)
         {
             instance = GameObject.Instantiate(prefab, pos, pers.transform.rotation);
             VirusParticule vir = instance.GetComponent<VirusParticule>();

@@ -9,6 +9,7 @@ TagManager:
   - Distributrice
   - PickUpObjet
   - Poubelle
+  - Particules
   layers:
   - Default
   - TransparentFX

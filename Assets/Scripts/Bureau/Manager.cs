@@ -6,33 +6,39 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.U2D;
+using XCharts.Runtime;
+using System;
+using Unity.VisualScripting;
 using UnityEngine.UIElements;
 
 public class Manager : MonoBehaviour
 {
     [SerializeField] int nbPersonne;
-    public bool modeOfficeBuilderActivé;
+    public bool modeOfficeBuilderActivÃ©;
     GameObject personne;
     List<EspaceDeTravail> espacesDeTravail;
     GameObject bureau;
     GameObject distributrice;
-
+    public GameObject[] personnes;
     public GameObject[] distributrices;
     public GameObject[] pickUpObjets;
     public GameObject[] poubelles;
+
+    [SerializeField] LineChart graphInfecte;
 
 
 
     void Awake()
     {
-        // Charge les prefabs à créer
+        // Charge les prefabs Ã  crÃ©er
         personne = Resources.Load<GameObject>("Prefabs/Personne");
         bureau = Resources.Load<GameObject>("Prefabs/Bureau");
         distributrice = Resources.Load<GameObject>("Prefabs/Distributrice");
 
         espacesDeTravail = new List<EspaceDeTravail>();
 
-        // Crée un espace de travail par personne
+        // CrÃ©e un espace de travail par personne
+        personnes = new GameObject[nbPersonne];
         for (int i = 0; i < nbPersonne; i++) {
             EspaceDeTravail espace = new()
             {
@@ -40,16 +46,13 @@ public class Manager : MonoBehaviour
             };
             espace.RandomiserPositionBureau();
             espacesDeTravail.Add(espace);
-            
-            IAPersonne o = GameObject.Instantiate(personne).GetComponent<IAPersonne>();
-            o.Création(espace);
-            // Infecte 1 personne sur 5
-            if (i%5 == 0)
-            {
-                o.DevientInfecté(new Virus(o.gameObject));
-            }
-                
+
+            var p = GameObject.Instantiate(personne);
+            p.GetComponent<IAPersonne>().CrÃ©ation(espace);
+
+            personnes[i] = p;
         }
+
 
         //for (int i = 0; i < 5; i++)
         //{
@@ -64,45 +67,62 @@ public class Manager : MonoBehaviour
         BuildNavMesh();
     }
 
+    private void Start()
+    {
+        for(int i = 0; i < personnes.Length;i++) {
+            var p = personnes[i];
+            IAPersonne o = p.GetComponent<IAPersonne>();
+            // Infecte 1 personne sur 5
+            if (i % 5 == 0)
+            {
+                o.DevientInfectÃ©(new Virus(o.gameObject));
+            }
+        }
+    }
+    private void Update()
+    {
+
+    }
+
 
     public Distributrice GetDistributrice()
     {
-        List<Distributrice> distrMoinsOccupée = new()
+        List<Distributrice> distrMoinsOccupÃ©e = new()
         {
             distributrices[0].GetComponent<Distributrice>()
         };
 
         foreach (GameObject go in distributrices)
         {
-            // Reset la liste si une distributrice avec moins de personnes est trouvée
-            if (go.GetComponent<Distributrice>().fileDattente.Count < distrMoinsOccupée.ToArray()[0].fileDattente.Count)
+            // Reset la liste si une distributrice avec moins de personnes est trouvÃ©e
+            if (go.GetComponent<Distributrice>().fileDattente.Count < distrMoinsOccupÃ©e.ToArray()[0].fileDattente.Count)
             {
-                distrMoinsOccupée = new()
+                distrMoinsOccupÃ©e = new()
                 {
                     go.GetComponent<Distributrice>()
                 };
             }
-            else if (go.GetComponent<Distributrice>().fileDattente.Count == distrMoinsOccupée.ToArray()[0].fileDattente.Count)
-                distrMoinsOccupée.Add(go.GetComponent<Distributrice>());
+            else if (go.GetComponent<Distributrice>().fileDattente.Count == distrMoinsOccupÃ©e.ToArray()[0].fileDattente.Count)
+                distrMoinsOccupÃ©e.Add(go.GetComponent<Distributrice>());
         }
-        return distrMoinsOccupée.ToArray()[Random.Range(0, distrMoinsOccupée.Count)].GetComponent<Distributrice>();
+        return distrMoinsOccupÃ©e.ToArray()[UnityEngine.Random.Range(0, distrMoinsOccupÃ©e.Count)].GetComponent<Distributrice>();
     }
 
 
     public PickUpObjet GetPickUpObjet()
     {
-        if (VérifierPickupObjetAccessible())
+        if (VÃ©rifierPickupObjetAccessible())
             return pickUpObjets[Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
         else return null;
 
     }
-    public bool VérifierPickupObjetAccessible() {
+    public bool VÃ©rifierPickupObjetAccessible() {
         if (pickUpObjets.Length > 0)
         {
             foreach (var o in pickUpObjets)
             {
                 var x = o.GetComponent<PickUpObjet>();
-                if (x != null && !x.utilisé)
+                if (x != null && !x.utilisÃ©)
                     return true;
             }
         }
@@ -127,23 +147,23 @@ public class Manager : MonoBehaviour
 
         return poubelleProche;
     }
-    public bool VérifierSiPoubelleAccessible() {
+    public bool VÃ©rifierSiPoubelleAccessible() {
         if (poubelles.Length > 0)
             return true;
         else
             return false;
     }
 
-    public float CalculerLongueurPath(Vector3 départ, Vector3 arrivée)
+    public float CalculerLongueurPath(Vector3 dÃ©part, Vector3 arrivÃ©e)
     {
-        NavMeshHit hitDépart, hitArrivée;
+        NavMeshHit hitDÃ©part, hitArrivÃ©e;
 
-        if (!NavMesh.SamplePosition(départ, out hitDépart, 2f, NavMesh.AllAreas) || !NavMesh.SamplePosition(arrivée, out hitArrivée, 2f, NavMesh.AllAreas))
+        if (!NavMesh.SamplePosition(dÃ©part, out hitDÃ©part, 2f, NavMesh.AllAreas) || !NavMesh.SamplePosition(arrivÃ©e, out hitArrivÃ©e, 2f, NavMesh.AllAreas))
             return 0;
 
         NavMeshPath path = new NavMeshPath();
 
-        if (!NavMesh.CalculatePath(hitDépart.position, hitArrivée.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
+        if (!NavMesh.CalculatePath(hitDÃ©part.position, hitArrivÃ©e.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
             return 0;
 
         float distance = 0;

@@ -12,6 +12,7 @@ public class ClickManager : MonoBehaviour
     TMP_Text prefabNormal;
     [SerializeField] GameObject dataPanel;
     TMP_Text dataText;
+    TMP_Text prefabNormal;
 
 
 

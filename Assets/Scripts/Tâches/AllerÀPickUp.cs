@@ -2,8 +2,15 @@ using JetBrains.Annotations;
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 public class AllerÀPickUp : Tâche
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="personne"></param>
     public AllerÀPickUp(IAPersonne personne) : base(personne) { }
 
 

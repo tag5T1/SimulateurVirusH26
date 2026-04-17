@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
 
 public class Personne
 {
@@ -16,6 +17,7 @@ public class Personne
     {
         espaceDeTravail = espace;
         bureauDeTravail = espace.bureau.GetComponent<BureauDeTravail>();
+        estInfecté = false;
     }
 
 
@@ -29,6 +31,10 @@ public class Personne
     public void DevientInfecté(GameObject objetPersonne, Virus virus)
     {
         this.virus = new Virus(objetPersonne, virus);
+        if (!estInfecté)
+            Actions.InvokeNewOnInfection();
+        Actions.InvokeOnInfection();
+
         estInfecté = true;
     }
 

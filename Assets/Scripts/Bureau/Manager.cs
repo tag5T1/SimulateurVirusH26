@@ -35,10 +35,10 @@ public class Manager : MonoBehaviour
         // Crée un espace de travail par personne
         personnes = new();
         for (int i = 0; i < nbPersonne; i++) {
-            CréerEspaceDeTravail(GameObject.Instantiate(bureau));
+            CreerEspaceDeTravail(GameObject.Instantiate(bureau));
 
             var p = GameObject.Instantiate(personne);
-            p.GetComponent<IAPersonne>().Création(espacesDeTravail[^1]);
+            p.GetComponent<IAPersonne>().Creation(espacesDeTravail[^1]);
             espacesDeTravail[^1].occupé = false;
 
             personnes.Add(p);
@@ -66,7 +66,7 @@ public class Manager : MonoBehaviour
             // Infecte 1 personne sur 5
             if (i % 5 == 0)
             {
-                o.DevientInfecté(new Virus(o.gameObject));
+                o.DevientInfecte(new Virus(o.gameObject));
             }
         }
     }
@@ -99,12 +99,12 @@ public class Manager : MonoBehaviour
 
     public PickUpObjet GetPickUpObjet()
     {
-        if (VérifierPickupObjetAccessible())
+        if (VerifierPickupObjetAccessible())
             return pickUpObjets[UnityEngine.Random.Range(0, pickUpObjets.Length)].GetComponent<PickUpObjet>();
         else return null;
 
     }
-    public bool VérifierPickupObjetAccessible() {
+    public bool VerifierPickupObjetAccessible() {
         if (pickUpObjets.Length > 0)
         {
             foreach (var o in pickUpObjets)
@@ -135,7 +135,7 @@ public class Manager : MonoBehaviour
 
         return poubelleProche;
     }
-    public bool VérifierSiPoubelleAccessible() {
+    public bool VerifierSiPoubelleAccessible() {
         if (poubelles.Length > 0)
             return true;
         else
@@ -172,7 +172,7 @@ public class Manager : MonoBehaviour
         return distance;
     }
 
-    public void CréerEspaceDeTravail(GameObject bureau)
+    public void CreerEspaceDeTravail(GameObject bureau)
     {
         EspaceDeTravail espace = new()
         {

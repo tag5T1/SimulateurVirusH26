@@ -18,9 +18,9 @@ public class Virus
     /// <summary>
     /// La angular velocity du RigidBody des particules de toux
     /// </summary>
-    public  float décceleration { get; private set; }
-    public float gravité { get; private set; }
-    public float duréeVie { get; private set; }
+    public  float decceleration { get; private set; }
+    public float gravite { get; private set; }
+    public float dureeVie { get; private set; }
     public float puissanceMutation { get; private set; } // % possible de changement
     public float maxSpread = 40;
 
@@ -32,9 +32,9 @@ public class Virus
     {
         this.personne = personne;
         this.force = vir.force;
-        this.duréeVie = vir.duréeVie;
-        this.décceleration = vir.décceleration;
-        this.gravité = vir.gravité;
+        this.dureeVie = vir.dureeVie;
+        this.decceleration = vir.decceleration;
+        this.gravite = vir.gravite;
         this.puissanceMutation = vir.puissanceMutation;
 
         this.symptomes = DupliquerSymptomes(vir.symptomes);
@@ -49,9 +49,9 @@ public class Virus
     {
         this.personne = personne;
         this.force = Random.Range(1f, 10f);
-        this.duréeVie = 150;
-        this.décceleration = 1.2f;
-        this.gravité = Random.Range(0.1f, 0.4f);
+        this.dureeVie = 150;
+        this.decceleration = 1.2f;
+        this.gravite = Random.Range(0.1f, 0.4f);
         this.puissanceMutation = 10f;
 
         this.symptomes = new() {
@@ -76,9 +76,9 @@ public class Virus
     {
         this.personne = personne;
         this.force = force;
-        this.duréeVie = duréeVie;
-        this.décceleration = decceleration;
-        this.gravité = gravité;
+        this.dureeVie = duréeVie;
+        this.decceleration = decceleration;
+        this.gravite = gravité;
         this.puissanceMutation = puissanceMutation;
 
         this.symptomes = symptomes;
@@ -96,9 +96,9 @@ public class Virus
         float max = 1f + puissanceMutation/100;
         // Modifie légèrement les paramètres
         this.force *= Random.Range(min, max);
-        this.décceleration *= Random.Range(min, max);
-        this.gravité *= Random.Range(min, max);
-        this.duréeVie *= Random.Range(min, max);
+        this.decceleration *= Random.Range(min, max);
+        this.gravite *= Random.Range(min, max);
+        this.dureeVie *= Random.Range(min, max);
         this.puissanceMutation += Random.Range(-0.1f, 0.1f); // 10% flat de mutation de base sur la mutation
 
         InitialiserSymptomes(this);

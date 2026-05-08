@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public enum NomTâche
+public enum NomTache
 {
-    DÉPLACEMENT,
+    DEPLACEMENT,
     AU_BUREAU,
     DISTRIBUTRICE,
     PICKUP,

@@ -108,7 +108,7 @@ public class OfficeBuilderManager : MonoBehaviour
         var objet = GameObject.Instantiate(builderObjetSelectionné.prefab, currentGhost.transform.position, currentGhost.transform.rotation);
         if (builderObjetSelectionné.nom == "Bureau")
         {
-            manager.CréerEspaceDeTravail(objet);
+            manager.CreerEspaceDeTravail(objet);
         }
         else if (builderObjetSelectionné.nom == "Crayon") {
             manager.FindPickups();
@@ -123,7 +123,7 @@ public class OfficeBuilderManager : MonoBehaviour
         }
         else if (builderObjetSelectionné.nom == "Personne")
         {
-            objet.GetComponent<IAPersonne>().Création(manager.TrouverEspaceDeTravailLibre());
+            objet.GetComponent<IAPersonne>().Creation(manager.TrouverEspaceDeTravailLibre());
         }
         manager.BuildNavMesh();
     }

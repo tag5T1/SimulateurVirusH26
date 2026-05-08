@@ -3,7 +3,7 @@ using UnityEngine;
 public class Vomissements : Symptome
 {
     IAPersonne pers;
-    Tâche tâcheVomir;
+    Tache tacheVomir;
     public bool estEnVomissement;
 
     public Vomissements() { }
@@ -13,7 +13,7 @@ public class Vomissements : Symptome
     {
         this.virus = virus;
         pers = virus.personne.GetComponent<IAPersonne>();
-        tâcheVomir = new AllerVomir(pers, this);
+        tacheVomir = new AllerVomir(pers, this);
         intensitéSymptome = (virus.force + 4) / 3; // Temps de vomissement
         cooldownMaximum = 300;
         RandomiserCooldownActuel();
@@ -26,7 +26,7 @@ public class Vomissements : Symptome
         var p = virus.personne;
         if (cooldownActuel < 0f)
         {
-            pers.FaireTâche(tâcheVomir);
+            pers.FaireTache(tacheVomir);
             RandomiserCooldownActuel();
         }
         else if (!estEnVomissement)

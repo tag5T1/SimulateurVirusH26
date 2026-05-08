@@ -18,7 +18,7 @@ public class Fièvre : Symptome
         this.virus = virus;
         pers = virus.personne.GetComponent<IAPersonne>();
         agent = pers.agent;
-        vitesseDeBase = pers.vitesseDeDéplacementDeBase;
+        vitesseDeBase = pers.vitesseDeDeplacementDeBase;
         intensitéSymptome = 1f - virus.force * 0.07f;
     }
 

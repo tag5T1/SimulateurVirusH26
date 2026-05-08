@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class DataInfection : Data
 {
-    public Dictionary<string, string> données;
+    public Dictionary<string, string> donnees;
 
     public DataInfection()
     {
-        données = new Dictionary<string, string>();
+        donnees = new Dictionary<string, string>();
     }
     public void Add(bool infecté)
     {
         if (infecté)
         {
-            données.Add("Infecté", "Oui");
+            donnees.Add("Infecté", "Oui");
 
         }
         else
-            données.Add("Infecté", "Non");
+            donnees.Add("Infecté", "Non");
     }
 }

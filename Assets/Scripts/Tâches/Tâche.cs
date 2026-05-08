@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class Tâche
+public abstract class Tache
 {
-    public StatusTâche status { get; protected set; }
+    public StatusTache status { get; protected set; }
     public Vector3 destination { get; protected set; }
     public Vector2 destination2D { get; protected set; }
     public IAPersonne personne { get; protected set; }
 
-    public Tâche(IAPersonne personne)
+    public Tache(IAPersonne personne)
     {
         this.personne = personne;
     }
@@ -17,8 +17,8 @@ public abstract class Tâche
     /// <summary>
     /// La tâche que l'IA peut faire
     /// </summary>
-    public abstract IEnumerator FaireTâche();
-    public abstract bool VérifierSiFaisable();
+    public abstract IEnumerator FaireTache();
+    public abstract bool VerifierSiFaisable();
 
     public void UpdateDestination(Vector3 destination)
     {

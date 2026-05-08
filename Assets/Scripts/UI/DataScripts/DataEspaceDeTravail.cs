@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class DataEspaceDeTravail : Data
 {
-    public Dictionary<string, string> données;
+    public Dictionary<string, string> donnees;
 
     public DataEspaceDeTravail() 
     { 
-        données = new Dictionary<string, string>();
+        donnees = new Dictionary<string, string>();
     }
 
 
 
     public void Add(EspaceDeTravail espaceDeTravail)
     {
-        données.Add("Emplacement du bureau", $"{espaceDeTravail.bureau.transform.position.x}, {espaceDeTravail.bureau.transform.position.z}");
+        donnees.Add("Emplacement du bureau", $"{espaceDeTravail.bureau.transform.position.x}, {espaceDeTravail.bureau.transform.position.z}");
     }
 }

@@ -7,7 +7,7 @@ public abstract class Symptome
     /// <summary>
     /// Valeur qui dicte la force du symptome
     /// </summary>
-    protected float intensitéSymptome;
+    protected float intensiteSymptome;
     protected float cooldownMaximum;
     protected float cooldownActuel;
 

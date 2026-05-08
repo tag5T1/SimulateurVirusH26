@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class AllerÀDistributrice : Tâche
+public class AllerADistributrice : Tache
 {
-    public AllerÀDistributrice(IAPersonne personne) : base(personne) { }
+    public AllerADistributrice(IAPersonne personne) : base(personne) { }
 
-    public override IEnumerator FaireTâche()
+    public override IEnumerator FaireTache()
     {
-        status = StatusTâche.EN_COURS;
-        personne.SetNomTâche(NomTâche.DÉPLACEMENT);
+        status = StatusTache.EN_COURS;
+        personne.SetNomTache(NomTache.DEPLACEMENT);
         Distributrice distributrice = Manager.Instance.GetDistributrice();
         var posInteraction = distributrice.positionInteraction;
 
@@ -37,15 +37,15 @@ public class AllerÀDistributrice : Tâche
         yield return new WaitForSeconds(3);
         Virus virus = distributrice.Infecter(personne.personne.virus);
         if (virus != null)
-            personne.DevientInfecté(virus);
+            personne.DevientInfecte(virus);
 
 
         distributrice.QuitterFile(personne);
-        status = StatusTâche.TERMINÉ;
-        personne.SetNomTâche(NomTâche.IDLE);
+        status = StatusTache.TERMINE;
+        personne.SetNomTache(NomTache.IDLE);
     }
 
-    public override bool VérifierSiFaisable() {
+    public override bool VerifierSiFaisable() {
         return personne.manager.distributrices.Length > 0;
     }
 }

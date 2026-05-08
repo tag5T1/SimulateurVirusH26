@@ -18,9 +18,9 @@ public class Virus
     /// <summary>
     /// La angular velocity du RigidBody des particules de toux
     /// </summary>
-    public  float décceleration { get; private set; }
-    public float gravité { get; private set; }
-    public float duréeVie { get; private set; }
+    public  float decceleration { get; private set; }
+    public float gravite { get; private set; }
+    public float dureeVie { get; private set; }
     public float puissanceMutation { get; private set; } // % possible de changement
     public float maxSpread = 40;
 
@@ -32,9 +32,9 @@ public class Virus
     {
         this.personne = personne;
         this.force = vir.force;
-        this.duréeVie = vir.duréeVie;
-        this.décceleration = vir.décceleration;
-        this.gravité = vir.gravité;
+        this.dureeVie = vir.dureeVie;
+        this.decceleration = vir.decceleration;
+        this.gravite = vir.gravite;
         this.puissanceMutation = vir.puissanceMutation;
 
         this.symptomes = DupliquerSymptomes(vir.symptomes);
@@ -49,15 +49,15 @@ public class Virus
     {
         this.personne = personne;
         this.force = Random.Range(1f, 10f);
-        this.duréeVie = 150;
-        this.décceleration = 1.2f;
-        this.gravité = Random.Range(0.1f, 0.4f);
+        this.dureeVie = 150;
+        this.decceleration = 1.2f;
+        this.gravite = Random.Range(0.1f, 0.4f);
         this.puissanceMutation = 10f;
 
         this.symptomes = new() {
             new Vomissements(this),
             new Toux(this),
-            new Fièvre(this)
+            new Fievre(this)
         };
         InitialiserSymptomes(this);
     }
@@ -67,18 +67,18 @@ public class Virus
     /// </summary>
     /// <param name="personne"> Le Transform de la personne qui possède le virus </param>
     /// <param name="force"> La force de projection des particules </param>
-    /// <param name="duréeVie"> La durée de vie des particules en secondes </param>
+    /// <param name="dureeVie"> La durée de vie des particules en secondes </param>
     /// <param name="niveauMin"> Le niveau minimum de symptome nécessaire pour en voir </param>
     /// <param name="decceleration"> La déccélération des particules </param>
-    /// <param name="gravité"> La gravité que subisse les particules </param>
+    /// <param name="gravite"> La gravité que subisse les particules </param>
     /// <param name="puissanceMutation"> Le % qui détermine la valeur minimum et maximum de mutation </param>
-    public Virus(GameObject personne, List<Symptome> symptomes, float force, float duréeVie, float decceleration, float gravité, int puissanceMutation)
+    public Virus(GameObject personne, List<Symptome> symptomes, float force, float dureeVie, float decceleration, float gravite, int puissanceMutation)
     {
         this.personne = personne;
         this.force = force;
-        this.duréeVie = duréeVie;
-        this.décceleration = decceleration;
-        this.gravité = gravité;
+        this.dureeVie = dureeVie;
+        this.decceleration = decceleration;
+        this.gravite = gravite;
         this.puissanceMutation = puissanceMutation;
 
         this.symptomes = symptomes;
@@ -96,15 +96,15 @@ public class Virus
         float max = 1f + puissanceMutation/100;
         // Modifie légèrement les paramètres
         this.force *= Random.Range(min, max);
-        this.décceleration *= Random.Range(min, max);
-        this.gravité *= Random.Range(min, max);
-        this.duréeVie *= Random.Range(min, max);
+        this.decceleration *= Random.Range(min, max);
+        this.gravite *= Random.Range(min, max);
+        this.dureeVie *= Random.Range(min, max);
         this.puissanceMutation += Random.Range(-0.1f, 0.1f); // 10% flat de mutation de base sur la mutation
 
         InitialiserSymptomes(this);
     }
 
-
+   
 
     /// <summary>
     /// Applique les Symptomes
@@ -116,6 +116,7 @@ public class Virus
             s.EffectuerSymptome();
         }
     }
+
 
     public List<Symptome> DupliquerSymptomes(List<Symptome> symptomes)
     {

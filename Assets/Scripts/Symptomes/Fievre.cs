@@ -4,33 +4,33 @@ using UnityEngine.AI;
 using UnityEngine.Android;
 using UnityEngine.Rendering;
 
-public class Fièvre : Symptome
+public class Fievre : Symptome
 {
     NavMeshAgent agent;
     IAPersonne pers;
     float vitesseDeBase;
 
-    public Fièvre() { }
-    public Fièvre(Virus virus) : base(virus) { }
+    public Fievre() { }
+    public Fievre(Virus virus) : base(virus) { }
 
     public override void Initialiser(Virus virus)
     {
         this.virus = virus;
         pers = virus.personne.GetComponent<IAPersonne>();
         agent = pers.agent;
-        vitesseDeBase = pers.vitesseDeDéplacementDeBase;
-        intensitéSymptome = 1f - virus.force * 0.07f;
+        vitesseDeBase = pers.vitesseDeDeplacementDeBase;
+        intensiteSymptome = 1f - virus.force * 0.07f;
     }
 
 
 
     public override void EffectuerSymptome()
     {
-        agent.speed = vitesseDeBase * intensitéSymptome;
+        agent.speed = vitesseDeBase * intensiteSymptome;
     }
 
     public override Symptome Dupliquer()
     {
-        return new Fièvre();
+        return new Fievre();
     }
 }

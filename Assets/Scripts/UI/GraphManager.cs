@@ -66,7 +66,7 @@ public class GraphManager : MonoBehaviour
         float nbInfecte = 0;
         foreach (GameObject person in personnes)
         {
-            if (person.GetComponent<IAPersonne>().personne.estInfecté)
+            if (person.GetComponent<IAPersonne>().personne.estInfecte)
             {
                 switch (graph.name)
                 {

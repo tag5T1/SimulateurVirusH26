@@ -93,6 +93,7 @@ public class ControlGeneral:MonoBehaviour
         }
     }
 
+    
     public static void Pause()
     {
         if (!pauseActive)

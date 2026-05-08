@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class DataVirus : Data
 {
-    public Dictionary<string, string> données;
+    public Dictionary<string, string> donnees;
 
     public DataVirus()
     {
-        données = new Dictionary<string, string>();
+        donnees = new Dictionary<string, string>();
     }
     public void Add(Virus virus)
     {
-        données.Add("Type de virus", virus.nom);
-        données.Add("Force de propulsion des particules", $"{virus.force}");
-        données.Add("Déccelération de la particule", $"{virus.décceleration}");
-        données.Add("Durée de vie du virus", $"{virus.duréeVie}");
-        données.Add("Durée de vie d'une particule", $"{virus.duréeVie/2}");
-        données.Add("Gravité appliqué sur la particule", $"{virus.gravité}");
-        données.Add("Puissance de mutation", $"{virus.puissanceMutation}");
-        données.Add("Rayon de dispersion de particules", $"{virus.maxSpread}");
+        donnees.Add("Type de virus", virus.nom);
+        donnees.Add("Force de propulsion des particules", $"{virus.force}");
+        donnees.Add("Déccelération de la particule", $"{virus.decceleration}");
+        donnees.Add("Durée de vie du virus", $"{virus.dureeVie}");
+        donnees.Add("Durée de vie d'une particule", $"{virus.dureeVie/2}");
+        donnees.Add("Gravité appliqué sur la particule", $"{virus.gravite}");
+        donnees.Add("Puissance de mutation", $"{virus.puissanceMutation}");
+        donnees.Add("Rayon de dispersion de particules", $"{virus.maxSpread}");
     }
 }

@@ -4,16 +4,16 @@ using UnityEngine.Rendering;
 
 public class DataImmunite : Data
 {
-    public Dictionary<string, string> données;
+    public Dictionary<string, string> donnees;
     public DataImmunite()
     {
-        données = new Dictionary<string, string>();
+        donnees = new Dictionary<string, string>();
     }
 
     public void Add(Immunite immunite)
     {
-        données.Add("Pourcentage d'immunité", $"{immunite.pourcentageImmunite}");
-        if (immunite.immune) données.Add("Immunisé au virus", "Oui");
-        else données.Add("Immunisé au virus", "Non");
+        donnees.Add("Pourcentage d'immunité", $"{immunite.pourcentageImmunite}");
+        if (immunite.immune) donnees.Add("Immunisé au virus", "Oui");
+        else donnees.Add("Immunisé au virus", "Non");
     }
 }

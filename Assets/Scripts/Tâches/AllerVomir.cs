@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class AllerVomir : Tâche
+public class AllerVomir : Tache
 {
     Vomissements vomissements;
 
@@ -10,10 +10,10 @@ public class AllerVomir : Tâche
         this.vomissements = vomissements;
     }
 
-    public override IEnumerator FaireTâche()
+    public override IEnumerator FaireTache()
     {
-        status = StatusTâche.EN_COURS;
-        personne.SetNomTâche(NomTâche.DÉPLACEMENT);
+        status = StatusTache.EN_COURS;
+        personne.SetNomTache(NomTache.DEPLACEMENT);
         GameObject poubelle = Manager.Instance.GetPoubelleLaPlusProche(personne.transform.position);
         var posInteraction = poubelle.transform.position;
 
@@ -25,7 +25,7 @@ public class AllerVomir : Tâche
 
         // Vomit
         vomissements.estEnVomissement = true;
-        personne.Arrêt();
+        personne.Arret();
         float temps = vomissements.GetDurée();
         while (temps > 0)
         {
@@ -40,15 +40,15 @@ public class AllerVomir : Tâche
         }
 
         vomissements.estEnVomissement = false;
-        personne.Départ();
+        personne.Depart();
 
         yield return new WaitForSeconds(2f);
 
-        status = StatusTâche.TERMINÉ;
-        personne.SetNomTâche(NomTâche.IDLE);
+        status = StatusTache.TERMINE;
+        personne.SetNomTache(NomTache.IDLE);
     }
 
-    public override bool VérifierSiFaisable() {
-        return personne.manager.VérifierSiPoubelleAccessible();
+    public override bool VerifierSiFaisable() {
+        return personne.manager.VerifierSiPoubelleAccessible();
     }
 }

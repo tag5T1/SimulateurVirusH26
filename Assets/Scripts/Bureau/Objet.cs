@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
+/// <summary>
+/// Classe qui regroupe tout les types d'objets
+/// </summary>
 public class Objet : MonoBehaviour
 {
     Virus virus;

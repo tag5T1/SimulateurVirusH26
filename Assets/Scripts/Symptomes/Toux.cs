@@ -12,7 +12,7 @@ public class Toux : Symptome
     public override void Initialiser(Virus virus)
     {
         this.virus = virus;
-        intensitéSymptome = virus.force * 2f;
+        intensiteSymptome = virus.force * 2f;
         cooldownMaximum = 80;
         RandomiserCooldownActuel();
     }
@@ -27,7 +27,7 @@ public class Toux : Symptome
             GameObject instance;
 
             var pos = p.transform.position + 0.6f * p.transform.forward;
-            for (int i = 0; i < (int)intensitéSymptome; i++)
+            for (int i = 0; i < (int)intensiteSymptome; i++)
             {
                 instance = GameObject.Instantiate(prefab, pos, p.transform.rotation);
                 VirusParticule vir = instance.GetComponent<VirusParticule>();
@@ -35,7 +35,7 @@ public class Toux : Symptome
             }
         }
         else
-            cooldownActuel -= Time.deltaTime * intensitéSymptome;
+            cooldownActuel -= Time.deltaTime * intensiteSymptome;
     }
 
     public override Symptome Dupliquer()

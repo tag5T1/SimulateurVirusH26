@@ -22,6 +22,7 @@ public class Immunite
         immune = false;
     }
 
+    //Lorsqu'une personne gueri, elle gagne de l'immunité
     public void GainImmunite()
     {
         pourcentageImmunite += Random.Range(0, 1 - (int)pourcentageImmunite)/100;
@@ -31,6 +32,7 @@ public class Immunite
         }
     }
 
+    //Change le matériel si une personne est gueri ou rendu immunisé
     public Material getMaterial()
     {
         if(immune)

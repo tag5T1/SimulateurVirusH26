@@ -13,13 +13,13 @@ public class Personne
     public EspaceDeTravail espaceDeTravail;
     public BureauDeTravail bureauDeTravail;
     public List<Coroutine> listeActions;
-    public bool estInfecté { get; private set; }
+    public bool estInfecte { get; private set; }
 
     public Personne(EspaceDeTravail espace, GameObject objetPersonne)
     {
         espaceDeTravail = espace;
         bureauDeTravail = espace.bureau.GetComponent<BureauDeTravail>();
-        estInfecté = false;
+        estInfecte = false;
         immunite = new Immunite(objetPersonne);
     }
 
@@ -31,16 +31,16 @@ public class Personne
         return bureauDeTravail.positionInteraction;
     }
 
-    public void DevientInfecté(GameObject objetPersonne, Virus virus)
+    public void DevientInfecte(GameObject objetPersonne, Virus virus)
     {
         if (!immunite.immune)
         {
             this.virus = new Virus(objetPersonne, virus);
-            if (!estInfecté)
+            if (!estInfecte)
                 Actions.InvokeNewOnInfection();
             Actions.InvokeOnInfection();
 
-            estInfecté = true;
+            estInfecte = true;
         }
     }
 
@@ -51,11 +51,11 @@ public class Personne
 
         Actions.InvokeOnGueri();
 
-        estInfecté = false;
+        estInfecte = false;
     }
 
 
-
+    // Lorsqu'une personne est cliqué, voir les classes «Data» pour l'information spécifique qui est collecté
     public List<Dictionary<string, string>> OnClick()
     {
         DataEspaceDeTravail dataEspaceDeTravail = new DataEspaceDeTravail();
@@ -65,18 +65,18 @@ public class Personne
         List<Dictionary<string, string>> listeData = new List<Dictionary<string, string>>();
 
         dataEspaceDeTravail.Add(espaceDeTravail);
-        listeData.Add(dataEspaceDeTravail.données);
+        listeData.Add(dataEspaceDeTravail.donnees);
 
-        dataInfection.Add(estInfecté);
-        listeData.Add(dataInfection.données);
+        dataInfection.Add(estInfecte);
+        listeData.Add(dataInfection.donnees);
 
         dataImmunite.Add(immunite);
-        listeData.Add(dataImmunite.données);
+        listeData.Add(dataImmunite.donnees);
 
-        if (estInfecté)
+        if (estInfecte)
         {
             dataVirus.Add(virus);
-            listeData.Add(dataVirus.données);
+            listeData.Add(dataVirus.donnees);
         }
 
         return listeData;

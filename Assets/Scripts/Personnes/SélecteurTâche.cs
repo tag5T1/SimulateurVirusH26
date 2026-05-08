@@ -2,55 +2,55 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SélecteurTâche
+public class SelecteurTache
 {
     IAPersonne personne;
-    Dictionary<Tâche, float> tâchesRoam;
+    Dictionary<Tache, float> tachesRoam;
     float poidsTotal;
 
     /// <summary>
-    /// Crée un sélecteur de tâche de base pour être modifié ou directement utilisé
+    /// Crée un sélecteur de tache de base pour être modifié ou directement utilisé
     /// </summary>
     /// <param name="personne"> L'IA de la personne </param>
-    public SélecteurTâche(IAPersonne personne) {
+    public SelecteurTache(IAPersonne personne) {
         this.personne = personne;
-        tâchesRoam = new Dictionary<Tâche, float>
+        tachesRoam = new Dictionary<Tache, float>
         {
             { new AllerAuBureau(personne), 1 },
             { new Roam(personne), 1 }, 
-            { new AllerÀDistributrice(personne), 1 },
-            { new AllerÀPickUp(personne), 1}
+            { new AllerADistributrice(personne), 1 },
+            { new AllerAPickUp(personne), 1}
         };
     }
 
 
 
-    public Tâche ChoisirTâche()
+    public Tache ChoisirTache()
     {
         return ChoisirRoam();
     }
 
 
     /// <summary>
-    /// Choisis une tâche aléatoire parmi les tâche de roaming.
+    /// Choisis une tache aléatoire parmi les tache de roaming.
     /// </summary>
-    /// <returns> La Tâche sélectionnée </returns>
-    public Tâche ChoisirRoam()
+    /// <returns> La Tache sélectionnée </returns>
+    public Tache ChoisirRoam()
     {
         CalculerPoidsTotal();
-        Tâche tâcheFinale = null;
+        Tache tacheFinale = null;
         for (int i = 0; i < 15; i++) {
             float valeurMax = Random.Range(0f, poidsTotal);
             float valeur = 0f;
-            foreach (Tâche t in tâchesRoam.Keys) {
-                valeur += tâchesRoam.GetValueOrDefault(t);
+            foreach (Tache t in tachesRoam.Keys) {
+                valeur += tachesRoam.GetValueOrDefault(t);
                 if (valeur >= valeurMax) {
-                    tâcheFinale = t;
+                    tacheFinale = t;
                     break;
                 }
             }
-            if (tâcheFinale != null && tâcheFinale.VérifierSiFaisable()) {
-                return tâcheFinale;
+            if (tacheFinale != null && tacheFinale.VerifierSiFaisable()) {
+                return tacheFinale;
             }
         }
         return null; // Ne devrait pas arriver, le poids total sera tjr plus grand ou égal que le poids mesuré
@@ -60,9 +60,9 @@ public class SélecteurTâche
     public void CalculerPoidsTotal()
     {
         poidsTotal = 0f;
-        foreach (Tâche t in tâchesRoam.Keys)
+        foreach (Tache t in tachesRoam.Keys)
         {
-            poidsTotal += tâchesRoam.GetValueOrDefault(t);
+            poidsTotal += tachesRoam.GetValueOrDefault(t);
         }
     }
 }

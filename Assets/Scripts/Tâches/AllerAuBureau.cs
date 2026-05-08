@@ -1,23 +1,23 @@
 using System.Collections;
 using UnityEngine;
 
-public class AllerAuBureau : Tâche
+public class AllerAuBureau : Tache
 {
     public AllerAuBureau(IAPersonne personne) : base(personne) { }
 
-    public override IEnumerator FaireTâche()
+    public override IEnumerator FaireTache()
     {
-        status = StatusTâche.EN_COURS;
-        personne.SetNomTâche(NomTâche.DÉPLACEMENT);
+        status = StatusTache.EN_COURS;
+        personne.SetNomTache(NomTache.DEPLACEMENT);
         UpdateDestination(personne.personne.GetPositionBureau());
         yield return new WaitUntil(() => Vector2.Distance(destination2D, personne.position2D) <= 2);
-        personne.SetNomTâche(NomTâche.AU_BUREAU);
+        personne.SetNomTache(NomTache.AU_BUREAU);
 
         yield return new WaitForSeconds(3);
-        status = StatusTâche.TERMINÉ;
+        status = StatusTache.TERMINE;
     }
 
-    public override bool VérifierSiFaisable() {
+    public override bool VerifierSiFaisable() {
         return true;
     }
 }

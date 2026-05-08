@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public enum StatusTâche
+public enum StatusTache
 {
     INACTIVE = 0,
     EN_COURS = 1,
     EN_ATTENTE = 2,
-    TERMINÉ = 3
+    TERMINE = 3
 }

@@ -7,30 +7,45 @@ public class GraphManager : MonoBehaviour
     [SerializeField] LineChart graphInfecte;
     [SerializeField] LineChart graphForceVirus;
     [SerializeField] LineChart graphMutationVirus;
+    LineChart[] graphiques;
 
     private int infecte;
 
     private void Awake()
     {
         infecte = 0;
+        graphiques = new LineChart[3] {graphInfecte, graphForceVirus, graphMutationVirus};
+    }
+
+    private void Update()
+    {
+        VerifierTailleGraphique();
     }
 
     private void OnEnable()
     {
-        Actions.NewOnInfection += graphiqueInfection;
+        Actions.NewOnInfection += graphiqueInfectionPlus;
         Actions.OnInfection += graphiqueForceVirus;
         Actions.OnInfection += graphiqueMutationVirus;
+        Actions.OnGueri += graphiqueInfectionMoins;
     }
     private void OnDisable()
     {
-        Actions.NewOnInfection -= graphiqueInfection;
+        Actions.NewOnInfection -= graphiqueInfectionPlus;
         Actions.OnInfection -= graphiqueForceVirus;
         Actions.OnInfection -= graphiqueMutationVirus;
+        Actions.OnGueri -= graphiqueInfectionMoins;
     }
 
-    public void graphiqueInfection()
+    public void graphiqueInfectionPlus()
     {
         infecte++;
+        graphInfecte.AddData(0, Time.time, infecte);
+    }
+
+    public void graphiqueInfectionMoins()
+    {
+        infecte--;
         graphInfecte.AddData(0, Time.time, infecte);
     }
 
@@ -76,5 +91,21 @@ public class GraphManager : MonoBehaviour
     private float GetMutation(Personne pers)
     {
         return pers.virus.puissanceMutation;
+    }
+
+    private void VerifierTailleGraphique()
+    {
+        foreach(var g in graphiques)
+        {
+            var serie = g.GetSerie(0);
+            int nb = serie.dataCount;
+            if(nb >= 200)
+            {
+                for (int i = 1; i > nb; i+=2)
+                { 
+                    serie.RemoveData(i);
+                }
+            }
+        }
     }
 }

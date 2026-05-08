@@ -35,7 +35,6 @@ public class Vomissements : Symptome
 
     public void Vomir()
     {
-        Debug.Log("BLEUUUUAHH");
         GameObject prefab = Resources.Load<GameObject>("Prefabs/Particule");
         GameObject instance;
 

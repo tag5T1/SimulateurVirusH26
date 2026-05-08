@@ -14,7 +14,8 @@ public class DataVirus : Data
         données.Add("Type de virus", virus.nom);
         données.Add("Force de propulsion des particules", $"{virus.force}");
         données.Add("Déccelération de la particule", $"{virus.décceleration}");
-        données.Add("Durée de vie d'une particule", $"{virus.duréeVie}");
+        données.Add("Durée de vie du virus", $"{virus.duréeVie}");
+        données.Add("Durée de vie d'une particule", $"{virus.duréeVie/2}");
         données.Add("Gravité appliqué sur la particule", $"{virus.gravité}");
         données.Add("Puissance de mutation", $"{virus.puissanceMutation}");
         données.Add("Rayon de dispersion de particules", $"{virus.maxSpread}");

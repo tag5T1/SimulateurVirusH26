@@ -25,8 +25,8 @@ public class VirusParticule : MonoBehaviour
         force = virus.force;
         gravité = virus.gravité;
         rb.linearDamping = Random.Range(virus.décceleration*0.25f, virus.décceleration*2f);
-        duréeVie = virus.duréeVie;
-        tempsEnVie = 0;
+        duréeVie = virus.duréeVie/10;
+        tempsVie = 0;
         premièreCollision = true;
 
         var forceVectorielle = personne.transform.forward * Random.Range(0, force) + new Vector3((float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10);
@@ -42,8 +42,8 @@ public class VirusParticule : MonoBehaviour
         force = (virus.force + 10) / 10;
         gravité = 9f;
         rb.linearDamping = Random.Range(virus.décceleration * 0.25f, virus.décceleration * 2f);
-        duréeVie = virus.duréeVie * 4;
-        tempsEnVie = 0;
+        duréeVie = virus.duréeVie/2;
+        tempsVie = 0;
         premièreCollision = true;
 
         var forceVectorielle = personne.transform.forward * Random.Range(0, force) + new Vector3((float)Random.Range(-virus.maxSpread / 3, virus.maxSpread / 3) / 10, (float)Random.Range(-virus.maxSpread / 3, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10);

@@ -5,13 +5,14 @@ public static class Actions
 {
     public static event Action NewOnInfection;
     public static event Action OnInfection;
+
     public static void InvokeOnInfection() 
     {
-        OnInfection.Invoke();
+        OnInfection?.Invoke();
     }
 
     public static void InvokeNewOnInfection()
     {
-        NewOnInfection.Invoke();
+        NewOnInfection?.Invoke();
     }
 }

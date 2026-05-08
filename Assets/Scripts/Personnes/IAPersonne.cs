@@ -28,12 +28,21 @@ public class IAPersonne : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         manager = Manager.Instance;
         vitesseDeDéplacementDeBase = agent.speed;
-        FaireTâche();
+        FaireTâche(new AllerAuBureau(this));
     }
 
     private void Update()
     {
         UpdatePosition2D();
+
+        if (personne.espaceDeTravail == null)
+        {
+            var o = manager.TrouverEspaceDeTravailLibre();
+            if (o != null)
+                personne.espaceDeTravail = o;
+            else
+                Debug.LogWarning("Pas d'espace de travail disponible");
+        }
 
         if (tâcheEnCours != null && tâcheEnCours.status == StatusTâche.TERMINÉ)
         {

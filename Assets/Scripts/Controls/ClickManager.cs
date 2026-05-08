@@ -12,7 +12,6 @@ public class ClickManager : MonoBehaviour
     TMP_Text prefabNormal;
     [SerializeField] GameObject dataPanel;
     TMP_Text dataText;
-    TMP_Text prefabNormal;
 
 
 
@@ -26,7 +25,7 @@ public class ClickManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !OfficeBuilderManager.Instance.modePlacementObjet && !OfficeBuilderManager.Instance.modeRotationActivée)
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

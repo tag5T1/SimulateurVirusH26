@@ -11,7 +11,7 @@ public class VirusParticule : MonoBehaviour
     float force; // Force avec laquelle la particule est projetée
     float gravité; // Force appliquée vers le bas
     float duréeVie; // Temps de vie avant de mourir
-    float tempsVie; // Temps de vie depuis sa création
+    float tempsEnVie; // Temps de vie depuis sa création
     bool premièreCollision;
     bool estCollée;
 
@@ -26,7 +26,7 @@ public class VirusParticule : MonoBehaviour
         gravité = virus.gravité;
         rb.linearDamping = Random.Range(virus.décceleration*0.25f, virus.décceleration*2f);
         duréeVie = virus.duréeVie;
-        tempsVie = 0;
+        tempsEnVie = 0;
         premièreCollision = true;
 
         var forceVectorielle = personne.transform.forward * Random.Range(0, force) + new Vector3((float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10);
@@ -43,7 +43,7 @@ public class VirusParticule : MonoBehaviour
         gravité = 9f;
         rb.linearDamping = Random.Range(virus.décceleration * 0.25f, virus.décceleration * 2f);
         duréeVie = virus.duréeVie * 4;
-        tempsVie = 0;
+        tempsEnVie = 0;
         premièreCollision = true;
 
         var forceVectorielle = personne.transform.forward * Random.Range(0, force) + new Vector3((float)Random.Range(-virus.maxSpread / 3, virus.maxSpread / 3) / 10, (float)Random.Range(-virus.maxSpread / 3, virus.maxSpread) / 10, (float)Random.Range(-virus.maxSpread, virus.maxSpread) / 10);
@@ -59,8 +59,8 @@ public class VirusParticule : MonoBehaviour
             rb.AddForce(0, -gravité, 0);
         }
 
-        tempsVie += Time.fixedDeltaTime;
-        if (tempsVie > duréeVie)
+        tempsEnVie += Time.fixedDeltaTime;
+        if (tempsEnVie > duréeVie)
             GameObject.Destroy(gameObject);
     }
 

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e3cf38dd863be94db8fbc9bbb096ec9, type: 3}
-  m_Name: PoubelleOfficeBuilder
+  m_Name: MurOfficeBuilderObjet
   m_EditorClassIdentifier: Assembly-CSharp::OfficeBuilderObjectScriptableObject
-  nom: Poubelle
-  prefab: {fileID: 6763807753982851461, guid: 6de334100e0eaab40a7193de004bde23, type: 3}
-  ghostPrefab: {fileID: 1321032010535807038, guid: cdd9dc27a8dadd44485b6e6ca617c302, type: 3}
+  nom: Mur
+  prefab: {fileID: 3145868057135674685, guid: aa47d77e4cbd445498c96384731c71fe, type: 3}
+  ghostPrefab: {fileID: 3499263262859427309, guid: 265d48fb9dfef024caaa01511bd5a685, type: 3}
   "layersO\xF9Pla\xE7able":
     serializedVersion: 2
     m_Bits: 256

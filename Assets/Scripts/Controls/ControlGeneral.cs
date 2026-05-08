@@ -4,9 +4,10 @@ using XCharts.Runtime;
 
 public class ControlGeneral:MonoBehaviour
 {
-    bool pauseActive = false;
-    float vitessePrecedente;
+    static bool pauseActive = false;
+    static float vitessePrecedente;
     [SerializeField] GameObject graphs;
+    [SerializeField] GameObject menu;
     bool graphsActive;
 
     private void Awake()
@@ -16,7 +17,15 @@ public class ControlGeneral:MonoBehaviour
     private void LateUpdate()
     {
         // Input pour le contrôle sur le temps
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!OfficeBuilderManager.Instance.builderMenu.activeSelf) //Si le builder n'est pas activer
+            {
+                Pause();
+                menu.SetActive(!menu.activeSelf);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Pause();
         }
@@ -84,7 +93,7 @@ public class ControlGeneral:MonoBehaviour
         }
     }
 
-    void Pause()
+    public static void Pause()
     {
         if (!pauseActive)
         {

@@ -26,7 +26,6 @@ public class Manager : MonoBehaviour
     public GameObject[] pickUpObjets;
     public GameObject[] poubelles;
 
-    [SerializeField] LineChart graphInfecte;
 
 
 

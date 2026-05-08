@@ -22,13 +22,13 @@ public class OfficeBuilderControls : MonoBehaviour
             {
                 builderManager.Click();
             }
-            if (Input.GetKeyDown(KeyCode.Escape) && builderManager.modeRotationActivée)
+            if (Input.GetKeyDown(KeyCode.Escape) && builderManager.modeRotationActivee)
             {
                 builderManager.ToggleRotation();
             }
-            else if (Input.GetKeyDown(KeyCode.Escape) && builderManager.modePlacementObjet && !builderManager.modeRotationActivée)
+            else if (Input.GetKeyDown(KeyCode.Escape) && builderManager.modePlacementObjet && !builderManager.modeRotationActivee)
                 builderManager.DeselectObjet();
-            if (builderManager.modeRotationActivée)
+            if (builderManager.modeRotationActivee)
             {
                 builderManager.TournerGhost(Input.GetAxis("Mouse X"));
             }

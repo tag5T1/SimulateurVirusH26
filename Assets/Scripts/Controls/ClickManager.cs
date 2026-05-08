@@ -25,7 +25,7 @@ public class ClickManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !OfficeBuilderManager.Instance.modePlacementObjet && !OfficeBuilderManager.Instance.modeRotationActivée)
+        if (Input.GetMouseButtonDown(0) && !OfficeBuilderManager.Instance.modePlacementObjet)
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

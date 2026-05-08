@@ -15,6 +15,6 @@ MonoBehaviour:
   nom: Mur
   prefab: {fileID: 3145868057135674685, guid: aa47d77e4cbd445498c96384731c71fe, type: 3}
   ghostPrefab: {fileID: 3499263262859427309, guid: 265d48fb9dfef024caaa01511bd5a685, type: 3}
-  "layersO\xF9Pla\xE7able":
+  "layersOuPla\xE7able":
     serializedVersion: 2
     m_Bits: 256

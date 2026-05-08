@@ -15,6 +15,6 @@ MonoBehaviour:
   nom: Distributrice
   prefab: {fileID: 714026140649221975, guid: b474b347820d5414e98e55ba17fd8ab6, type: 3}
   ghostPrefab: {fileID: 3522346116202328787, guid: 8f8e8c4245fa3bc4eb3134ff1311bcd0, type: 3}
-  "layersO\xF9Pla\xE7able":
+  "layersOuPla\xE7able":
     serializedVersion: 2
     m_Bits: 256

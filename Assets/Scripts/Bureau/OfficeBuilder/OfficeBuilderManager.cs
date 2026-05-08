@@ -13,13 +13,13 @@ public class OfficeBuilderManager : MonoBehaviour
     private GameObject currentGhost;
     [Header("Modes")]
     public bool modePlacementObjet;
-    public bool modeRotationActivée = false;
+    public bool modeRotationActivee = false;
     [Header("Éléments UI")]
     public LayerMask layersOffice;
     public GameObject builderMenu;
     public GameObject buttonPrefab;
     public Transform viewContent;
-    private OfficeBuilderObjectScriptableObject builderObjetSelectionné;
+    private OfficeBuilderObjectScriptableObject builderObjetSelectionne;
     public OfficeBuilderObjectScriptableObject[] objets;
 
 
@@ -55,11 +55,13 @@ public class OfficeBuilderManager : MonoBehaviour
         {
             RaycastHit hit;
             bool valid;
-            CastRay(builderObjetSelectionné.layersOùPlaçable, out valid, out hit);
+            if (builderObjetSelectionne != null) {
+                CastRay(builderObjetSelectionne.layersOuPlaçable, out valid, out hit);
 
-            if (valid && !modeRotationActivée)
-            {
-                currentGhost.transform.position = hit.point + Vector3.up * currentGhost.transform.localScale.y / 2;
+                if (valid && !modeRotationActivee)
+                {
+                    currentGhost.transform.position = hit.point + Vector3.up * currentGhost.transform.localScale.y / 2;
+                }
             }
         }
     }
@@ -68,23 +70,25 @@ public class OfficeBuilderManager : MonoBehaviour
 
     public void ToggleMenuBuilder()
     {
-        builderObjetSelectionné = null;
+        modeRotationActivee = false;
+        modePlacementObjet = false;
+        builderObjetSelectionne = null;
         GameObject.Destroy(currentGhost);
-        builderMenu.SetActive(!modePlacementObjet);
+        builderMenu.SetActive(!builderMenu.activeSelf);
     }
 
     public void Click()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject() && builderMenu.activeSelf)
         {
             if (!modePlacementObjet)
             {
                 CastRay(layersOffice, out bool valide, out RaycastHit hit);
-                if (valide)
-                    Debug.Log(hit.collider);    
             }
-            else if (!modeRotationActivée)
+            else if (!modeRotationActivee)
+            {
                 ToggleRotation();
+            }
             else
             {
                 ToggleRotation();
@@ -95,7 +99,7 @@ public class OfficeBuilderManager : MonoBehaviour
 
     public void ToggleRotation()
     {
-        modeRotationActivée = !modeRotationActivée;
+        modeRotationActivee = !modeRotationActivee;
     }
 
     public void TournerGhost(float degrés)
@@ -105,23 +109,23 @@ public class OfficeBuilderManager : MonoBehaviour
 
     public void CréerObjet()
     {
-        var objet = GameObject.Instantiate(builderObjetSelectionné.prefab, currentGhost.transform.position, currentGhost.transform.rotation);
-        if (builderObjetSelectionné.nom == "Bureau")
+        var objet = GameObject.Instantiate(builderObjetSelectionne.prefab, currentGhost.transform.position, currentGhost.transform.rotation);
+        if (builderObjetSelectionne.nom == "Bureau")
         {
             manager.CreerEspaceDeTravail(objet);
         }
-        else if (builderObjetSelectionné.nom == "Crayon") {
+        else if (builderObjetSelectionne.nom == "Crayon") {
             manager.FindPickups();
         }
-        else if (builderObjetSelectionné.nom == "Distributrice")
+        else if (builderObjetSelectionne.nom == "Distributrice")
         {
             manager.FindDistributrices();
         }
-        else if (builderObjetSelectionné.nom == "Poubelle")
+        else if (builderObjetSelectionne.nom == "Poubelle")
         {
             manager.FindPoubelles();
         }
-        else if (builderObjetSelectionné.nom == "Personne")
+        else if (builderObjetSelectionne.nom == "Personne")
         {
             objet.GetComponent<IAPersonne>().Creation(manager.TrouverEspaceDeTravailLibre());
         }
@@ -130,25 +134,25 @@ public class OfficeBuilderManager : MonoBehaviour
 
     public void SetObjetSélectionné(OfficeBuilderObjectScriptableObject objet)
     {
-        if (objet == builderObjetSelectionné)
+        if (objet == builderObjetSelectionne)
         {
             DeselectObjet();
         }
         else
         {
             modePlacementObjet = true;
-            builderObjetSelectionné = objet;
+            builderObjetSelectionne = objet;
             GameObject.Destroy(currentGhost);
             currentGhost = GameObject.Instantiate(objet.ghostPrefab);
-            modeRotationActivée = false;
+            modeRotationActivee = false;
         }
             
     }
     public void DeselectObjet()
     {
         modePlacementObjet = false;
-        modeRotationActivée = false;
-        builderObjetSelectionné = null;
+        modeRotationActivee = false;
+        builderObjetSelectionne = null;
         GameObject.Destroy(currentGhost);
     }
 

@@ -15,6 +15,6 @@ MonoBehaviour:
   nom: Bureau
   prefab: {fileID: 84820985108742778, guid: de8444855d367164fa91c70feb25ebbc, type: 3}
   ghostPrefab: {fileID: 5863230735652745921, guid: 4fbfa10b9cd513941a432ac7c9a44a6e, type: 3}
-  "layersO\xF9Pla\xE7able":
+  "layersOuPla\xE7able":
     serializedVersion: 2
     m_Bits: 256

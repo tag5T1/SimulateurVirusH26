@@ -8,7 +8,6 @@ public class Manager : MonoBehaviour
     public static Manager Instance;
 
     [SerializeField] int nbPersonne;
-    public bool modeOfficeBuilderActive;
     GameObject personne;
     List<EspaceDeTravail> espacesDeTravail;
     public List<GameObject> personnes;

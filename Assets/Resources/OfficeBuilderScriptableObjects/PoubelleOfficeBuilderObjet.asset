@@ -15,6 +15,6 @@ MonoBehaviour:
   nom: Poubelle
   prefab: {fileID: 6763807753982851461, guid: 6de334100e0eaab40a7193de004bde23, type: 3}
   ghostPrefab: {fileID: 1321032010535807038, guid: cdd9dc27a8dadd44485b6e6ca617c302, type: 3}
-  "layersO\xF9Pla\xE7able":
+  "layersOuPla\xE7able":
     serializedVersion: 2
     m_Bits: 256

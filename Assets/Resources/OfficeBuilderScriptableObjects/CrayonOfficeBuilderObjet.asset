@@ -15,6 +15,6 @@ MonoBehaviour:
   nom: Crayon
   prefab: {fileID: 2942079598520342656, guid: 16d2d26a2e650634c817265439f1e6e5, type: 3}
   ghostPrefab: {fileID: 4682315223670869850, guid: 6a2bb7c6f1369174e9735dafd31b8546, type: 3}
-  "layersO\xF9Pla\xE7able":
+  "layersOuPla\xE7able":
     serializedVersion: 2
     m_Bits: 768

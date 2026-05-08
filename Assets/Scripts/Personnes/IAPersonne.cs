@@ -87,6 +87,11 @@ public class IAPersonne : MonoBehaviour
         tacheEnCours = selecteur.ChoisirTache();
         StartCoroutine(tacheEnCours.FaireTache());
     }
+
+    /// <summary>
+    /// Quand la personne re�oit une tache de l'ext�rieur
+    /// </summary>
+    /// <param name="tacheAFaire">Tache donn� � la personne de l'ext�rieur</param>
     public void FaireTache(Tache tacheAFaire)
     {
         tacheEnCours = tacheAFaire;

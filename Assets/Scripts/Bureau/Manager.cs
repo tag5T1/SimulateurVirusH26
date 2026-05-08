@@ -8,6 +8,8 @@ public class Manager : MonoBehaviour
     public static Manager Instance;
 
     [SerializeField] int nbPersonne;
+    public bool modeOfficeBuilderActive;
+    GameObject personne;
     List<EspaceDeTravail> espacesDeTravail;
     public List<GameObject> personnes;
     public GameObject[] distributrices;
@@ -75,7 +77,7 @@ public class Manager : MonoBehaviour
 
     public Distributrice GetDistributrice()
     {
-        List<Distributrice> distrMoinsOccupée = new()
+        List<Distributrice> distrMoinsOccupee = new()
         {
             distributrices[0].GetComponent<Distributrice>()
         };
@@ -83,17 +85,17 @@ public class Manager : MonoBehaviour
         foreach (GameObject go in distributrices)
         {
             // Reset la liste si une distributrice avec moins de personnes est trouvée
-            if (go.GetComponent<Distributrice>().fileDattente.Count < distrMoinsOccupée.ToArray()[0].fileDattente.Count)
+            if (go.GetComponent<Distributrice>().fileDattente.Count < distrMoinsOccupee.ToArray()[0].fileDattente.Count)
             {
-                distrMoinsOccupée = new()
+                distrMoinsOccupee = new()
                 {
                     go.GetComponent<Distributrice>()
                 };
             }
-            else if (go.GetComponent<Distributrice>().fileDattente.Count == distrMoinsOccupée.ToArray()[0].fileDattente.Count)
-                distrMoinsOccupée.Add(go.GetComponent<Distributrice>());
+            else if (go.GetComponent<Distributrice>().fileDattente.Count == distrMoinsOccupee.ToArray()[0].fileDattente.Count)
+                distrMoinsOccupee.Add(go.GetComponent<Distributrice>());
         }
-        return distrMoinsOccupée.ToArray()[UnityEngine.Random.Range(0, distrMoinsOccupée.Count)].GetComponent<Distributrice>();
+        return distrMoinsOccupee.ToArray()[UnityEngine.Random.Range(0, distrMoinsOccupee.Count)].GetComponent<Distributrice>();
     }
 
 
@@ -151,16 +153,16 @@ public class Manager : MonoBehaviour
         return null;
     }
 
-    public float CalculerLongueurPath(Vector3 départ, Vector3 arrivée)
+    public float CalculerLongueurPath(Vector3 depart, Vector3 arrivee)
     {
-        NavMeshHit hitDépart, hitArrivée;
+        NavMeshHit hitDepart, hitArrivee;
 
-        if (!NavMesh.SamplePosition(départ, out hitDépart, 2f, NavMesh.AllAreas) || !NavMesh.SamplePosition(arrivée, out hitArrivée, 2f, NavMesh.AllAreas))
+        if (!NavMesh.SamplePosition(depart, out hitDepart, 2f, NavMesh.AllAreas) || !NavMesh.SamplePosition(arrivee, out hitArrivee, 2f, NavMesh.AllAreas))
             return 0;
 
         NavMeshPath path = new NavMeshPath();
 
-        if (!NavMesh.CalculatePath(hitDépart.position, hitArrivée.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
+        if (!NavMesh.CalculatePath(hitDepart.position, hitArrivee.position, NavMesh.AllAreas, path) || path.status != NavMeshPathStatus.PathComplete)
             return 0;
 
         float distance = 0;

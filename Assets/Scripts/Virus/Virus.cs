@@ -57,7 +57,7 @@ public class Virus
         this.symptomes = new() {
             new Vomissements(this),
             new Toux(this),
-            new Fièvre(this)
+            new Fievre(this)
         };
         InitialiserSymptomes(this);
     }
@@ -67,18 +67,18 @@ public class Virus
     /// </summary>
     /// <param name="personne"> Le Transform de la personne qui possède le virus </param>
     /// <param name="force"> La force de projection des particules </param>
-    /// <param name="duréeVie"> La durée de vie des particules en secondes </param>
+    /// <param name="dureeVie"> La durée de vie des particules en secondes </param>
     /// <param name="niveauMin"> Le niveau minimum de symptome nécessaire pour en voir </param>
     /// <param name="decceleration"> La déccélération des particules </param>
-    /// <param name="gravité"> La gravité que subisse les particules </param>
+    /// <param name="gravite"> La gravité que subisse les particules </param>
     /// <param name="puissanceMutation"> Le % qui détermine la valeur minimum et maximum de mutation </param>
-    public Virus(GameObject personne, List<Symptome> symptomes, float force, float duréeVie, float decceleration, float gravité, int puissanceMutation)
+    public Virus(GameObject personne, List<Symptome> symptomes, float force, float dureeVie, float decceleration, float gravite, int puissanceMutation)
     {
         this.personne = personne;
         this.force = force;
-        this.dureeVie = duréeVie;
+        this.dureeVie = dureeVie;
         this.decceleration = decceleration;
-        this.gravite = gravité;
+        this.gravite = gravite;
         this.puissanceMutation = puissanceMutation;
 
         this.symptomes = symptomes;
@@ -104,7 +104,7 @@ public class Virus
         InitialiserSymptomes(this);
     }
 
-
+   
 
     /// <summary>
     /// Applique les Symptomes
@@ -116,6 +116,7 @@ public class Virus
             s.EffectuerSymptome();
         }
     }
+
 
     public List<Symptome> DupliquerSymptomes(List<Symptome> symptomes)
     {

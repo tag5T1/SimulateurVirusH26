@@ -55,7 +55,7 @@ public class Personne
     }
 
 
-
+    // Lorsqu'une personne est cliqué, voir les classes «Data» pour l'information spécifique qui est collecté
     public List<Dictionary<string, string>> OnClick()
     {
         DataEspaceDeTravail dataEspaceDeTravail = new DataEspaceDeTravail();

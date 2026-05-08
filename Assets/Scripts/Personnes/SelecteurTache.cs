@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class SelecteurTache
 {
+    IAPersonne personne;
     Dictionary<Tache, float> tachesRoam;
     float poidsTotal;
 
     /// <summary>
-    /// Crée un sélecteur de tâche de base pour être modifié ou directement utilisé
+    /// Crée un sélecteur de tache de base pour être modifié ou directement utilisé
     /// </summary>
     /// <param name="personne"> L'IA de la personne </param>
     public SelecteurTache(IAPersonne personne) {
+        this.personne = personne;
         tachesRoam = new Dictionary<Tache, float>
         {
             { new AllerAuBureau(personne), 1 },
@@ -30,25 +32,26 @@ public class SelecteurTache
 
 
     /// <summary>
-    /// Choisis une tâche aléatoire parmi les tâche de roaming.
+    /// Choisis une tache aléatoire parmi les tache de roaming.
     /// </summary>
     /// <returns> La Tâche sélectionnée </returns>
     public Tache ChoisirRoam()
     {
         CalculerPoidsTotal();
-        Tache tâcheFinale = null;
+        Tache tacheFinale = null;
         for (int i = 0; i < 15; i++) {
             float valeurMax = Random.Range(0f, poidsTotal);
             float valeur = 0f;
             foreach (Tache t in tachesRoam.Keys) {
                 valeur += tachesRoam.GetValueOrDefault(t);
                 if (valeur >= valeurMax) {
-                    tâcheFinale = t;
+                    tacheFinale = t;
                     break;
                 }
             }
-            if (tâcheFinale != null && tâcheFinale.VerifierSiFaisable()) {
-                return tâcheFinale;
+
+            if (tacheFinale != null && tacheFinale.VerifierSiFaisable()) {
+                return tacheFinale;
             }
         }
         return null; // Ne devrait pas arriver, le poids total sera tjr plus grand ou égal que le poids mesuré

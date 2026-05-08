@@ -14,7 +14,7 @@ public class Vomissements : Symptome
         this.virus = virus;
         pers = virus.personne.GetComponent<IAPersonne>();
         tacheVomir = new AllerVomir(pers, this);
-        intensitéSymptome = (virus.force + 4) / 3; // Temps de vomissement
+        intensiteSymptome = (virus.force + 4) / 3; // Temps de vomissement
         cooldownMaximum = 300;
         RandomiserCooldownActuel();
     }
@@ -30,7 +30,7 @@ public class Vomissements : Symptome
             RandomiserCooldownActuel();
         }
         else if (!estEnVomissement)
-            cooldownActuel -= Time.deltaTime * intensitéSymptome;
+            cooldownActuel -= Time.deltaTime * intensiteSymptome;
     }
 
     public void Vomir()
@@ -49,7 +49,7 @@ public class Vomissements : Symptome
 
     public float GetDurée()
     {
-        return intensitéSymptome;
+        return intensiteSymptome;
     }
 
     public override Symptome Dupliquer()

@@ -16,6 +16,7 @@ public class VirusParticule : MonoBehaviour
     bool estCollee;
 
 
+    ///Particules de la toux
     public void CréationVolatile(GameObject personne, Virus virus)
     {
         personneEmettrice = personne;
@@ -33,6 +34,7 @@ public class VirusParticule : MonoBehaviour
         rb.AddForce(forceVectorielle, ForceMode.Impulse);
     }
 
+    ///Particules du vomis
     public void CréationSolide(GameObject personne, Virus virus)
     {
         personneEmettrice = personne;
@@ -65,10 +67,12 @@ public class VirusParticule : MonoBehaviour
     }
 
 
+    // Lorsque la particule touche quelque chose
     private void OnCollisionEnter(Collision collision)
     {
         GameObject objet = collision.gameObject;
 
+        //Si l'objet touché est une personne et n'est pas celle qui émet la particule, on l'infecte
         if (objet != personneEmettrice && !objetsCollisionnes.Contains(collision.gameObject))
         {
             if (objet.tag == "Personne")

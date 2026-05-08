@@ -3,6 +3,7 @@ using UnityEngine;
 public class EspaceDeTravail
 {
     public GameObject bureau;
+    public bool occupé;
 
     public void RandomiserPositionBureau()
     {

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SélecteurTâche
 {
-    IAPersonne personne;
     Dictionary<Tâche, float> tâchesRoam;
     float poidsTotal;
 
@@ -13,7 +12,6 @@ public class SélecteurTâche
     /// </summary>
     /// <param name="personne"> L'IA de la personne </param>
     public SélecteurTâche(IAPersonne personne) {
-        this.personne = personne;
         tâchesRoam = new Dictionary<Tâche, float>
         {
             { new AllerAuBureau(personne), 1 },

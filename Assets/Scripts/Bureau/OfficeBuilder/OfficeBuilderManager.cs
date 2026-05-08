@@ -81,7 +81,7 @@ public class OfficeBuilderManager : MonoBehaviour
             {
                 CastRay(layersOffice, out bool valide, out RaycastHit hit);
                 if (valide)
-                    Debug.Log(hit.collider);
+                    Debug.Log(hit.collider);    
             }
             else if (!modeRotationActivée)
                 ToggleRotation();
@@ -105,8 +105,12 @@ public class OfficeBuilderManager : MonoBehaviour
 
     public void CréerObjet()
     {
-        GameObject.Instantiate(builderObjetSelectionné.prefab, currentGhost.transform.position, currentGhost.transform.rotation);
-        if (builderObjetSelectionné.nom == "Crayon") {
+        var objet = GameObject.Instantiate(builderObjetSelectionné.prefab, currentGhost.transform.position, currentGhost.transform.rotation);
+        if (builderObjetSelectionné.nom == "Bureau")
+        {
+            manager.CréerEspaceDeTravail(objet);
+        }
+        else if (builderObjetSelectionné.nom == "Crayon") {
             manager.FindPickups();
         }
         else if (builderObjetSelectionné.nom == "Distributrice")
@@ -116,6 +120,10 @@ public class OfficeBuilderManager : MonoBehaviour
         else if (builderObjetSelectionné.nom == "Poubelle")
         {
             manager.FindPoubelles();
+        }
+        else if (builderObjetSelectionné.nom == "Personne")
+        {
+            objet.GetComponent<IAPersonne>().Création(manager.TrouverEspaceDeTravailLibre());
         }
         manager.BuildNavMesh();
     }

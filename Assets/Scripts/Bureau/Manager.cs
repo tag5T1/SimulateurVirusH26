@@ -1,31 +1,18 @@
-using NUnit.Framework;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.U2D;
-using XCharts.Runtime;
-using System;
-using Unity.VisualScripting;
-using UnityEngine.UIElements;
 
 public class Manager : MonoBehaviour
 {
     public static Manager Instance;
 
     [SerializeField] int nbPersonne;
-    public bool modeOfficeBuilderActivé;
-    GameObject personne;
     List<EspaceDeTravail> espacesDeTravail;
-    GameObject bureau;
-    GameObject distributrice;
-    public GameObject[] personnes;
+    public List<GameObject> personnes;
     public GameObject[] distributrices;
     public GameObject[] pickUpObjets;
     public GameObject[] poubelles;
-
 
 
 
@@ -40,25 +27,27 @@ public class Manager : MonoBehaviour
         Instance = this;
 
         // Charge les prefabs à créer
-        personne = Resources.Load<GameObject>("Prefabs/Personne");
-        bureau = Resources.Load<GameObject>("Prefabs/Bureau");
+        var personne = Resources.Load<GameObject>("Prefabs/Personne");
+        var bureau = Resources.Load<GameObject>("Prefabs/Bureau");
 
         espacesDeTravail = new List<EspaceDeTravail>();
 
         // Crée un espace de travail par personne
-        personnes = new GameObject[nbPersonne];
+        personnes = new();
         for (int i = 0; i < nbPersonne; i++) {
-            EspaceDeTravail espace = new()
-            {
-                bureau = GameObject.Instantiate(bureau)
-            };
-            espace.RandomiserPositionBureau();
-            espacesDeTravail.Add(espace);
+            CréerEspaceDeTravail(GameObject.Instantiate(bureau));
 
             var p = GameObject.Instantiate(personne);
-            p.GetComponent<IAPersonne>().Création(espace);
+            p.GetComponent<IAPersonne>().Création(espacesDeTravail[^1]);
+            espacesDeTravail[^1].occupé = false;
 
-            personnes[i] = p;
+            personnes.Add(p);
+        }
+
+        // REMOVE IN FULL BUILD
+        foreach (EspaceDeTravail espace in espacesDeTravail)
+        {
+            espace.RandomiserPositionBureau();
         }
 
 
@@ -71,7 +60,7 @@ public class Manager : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < personnes.Length;i++) {
+        for(int i = 0; i < personnes.Count; i++) {
             var p = personnes[i];
             IAPersonne o = p.GetComponent<IAPersonne>();
             // Infecte 1 personne sur 5
@@ -81,10 +70,7 @@ public class Manager : MonoBehaviour
             }
         }
     }
-    private void Update()
-    {
 
-    }
 
 
     public Distributrice GetDistributrice()
@@ -155,6 +141,15 @@ public class Manager : MonoBehaviour
         else
             return false;
     }
+    public EspaceDeTravail TrouverEspaceDeTravailLibre()
+    {
+        foreach (EspaceDeTravail espace in espacesDeTravail)
+        {
+            if (!espace.occupé)
+                return espace;
+        }
+        return null;
+    }
 
     public float CalculerLongueurPath(Vector3 départ, Vector3 arrivée)
     {
@@ -177,6 +172,15 @@ public class Manager : MonoBehaviour
         return distance;
     }
 
+    public void CréerEspaceDeTravail(GameObject bureau)
+    {
+        EspaceDeTravail espace = new()
+        {
+            bureau = bureau
+        };
+        
+        espacesDeTravail.Add(espace);
+    }
     public void FindDistributrices()
     {
         distributrices = GameObject.FindGameObjectsWithTag("Distributrice");

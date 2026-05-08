@@ -12,25 +12,25 @@ public class IAPersonne : MonoBehaviour
     [SerializeField] GameObject particuleDeBase;
     public NavMeshAgent agent;
     public Manager manager;
-    public float vitesseDeDéplacementDeBase { get; private set; }
+    public float vitesseDeDï¿½placementDeBase { get; private set; }
     public Personne personne { get; private set; }
-    SélecteurTâche sélecteur;
-    public NomTâche nomTâche;
-    public Tâche tâcheEnCours;
+    Sï¿½lecteurTï¿½che sï¿½lecteur;
+    public NomTï¿½che nomTï¿½che;
+    public Tï¿½che tï¿½cheEnCours;
     public Vector2 position2D { get; private set; }
     private float tempsInfecte;
 
 
 
-    public void Création(EspaceDeTravail espace)
+    public void Crï¿½ation(EspaceDeTravail espace)
     {
         personne = new Personne(espace, gameObject);
-        sélecteur = new SélecteurTâche(this);
+        sï¿½lecteur = new Sï¿½lecteurTï¿½che(this);
         agent = GetComponent<NavMeshAgent>();
         manager = Manager.Instance;
-        vitesseDeDéplacementDeBase = agent.speed;
+        vitesseDeDï¿½placementDeBase = agent.speed;
         tempsInfecte = 0;
-        FaireTâche();
+        FaireTï¿½che();
     }
 
     private void Update()
@@ -38,16 +38,25 @@ public class IAPersonne : MonoBehaviour
         tempsInfecte += Time.deltaTime;
         UpdatePosition2D();
 
-        if (tâcheEnCours != null && tâcheEnCours.status == StatusTâche.TERMINÉ)
+        if (personne.espaceDeTravail == null)
         {
-            FaireTâche();
+            var o = manager.TrouverEspaceDeTravailLibre();
+            if (o != null)
+                personne.espaceDeTravail = o;
+            else
+                Debug.LogWarning("Pas d'espace de travail disponible");
         }
 
-        if (personne.estInfecté)
+        if (tï¿½cheEnCours != null && tï¿½cheEnCours.status == StatusTï¿½che.TERMINï¿½)
+        {
+            FaireTï¿½che();
+        }
+
+        if (personne.estInfectï¿½)
         {
             personne.virus.EffectuerSymptomes();
 
-            if (tempsInfecte >= personne.virus.duréeVie)
+            if (tempsInfecte >= personne.virus.durï¿½eVie)
             {
                 Debug.Log("Gueri");
                 DevientGueri();
@@ -60,9 +69,9 @@ public class IAPersonne : MonoBehaviour
 
 
 
-    public void DevientInfecté(Virus virus)
+    public void DevientInfectï¿½(Virus virus)
     {
-        personne.DevientInfecté(gameObject, virus);
+        personne.DevientInfectï¿½(gameObject, virus);
         GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Infection");
     }
 
@@ -73,22 +82,22 @@ public class IAPersonne : MonoBehaviour
     }
 
 
-    public void FaireTâche()
+    public void FaireTï¿½che()
     {
-        tâcheEnCours = sélecteur.ChoisirTâche();
-        StartCoroutine(tâcheEnCours.FaireTâche());
+        tï¿½cheEnCours = sï¿½lecteur.ChoisirTï¿½che();
+        StartCoroutine(tï¿½cheEnCours.FaireTï¿½che());
     }
-    public void FaireTâche(Tâche tâcheÀFaire)
+    public void FaireTï¿½che(Tï¿½che tï¿½cheï¿½Faire)
     {
-        tâcheEnCours = tâcheÀFaire;
-        StartCoroutine(tâcheÀFaire.FaireTâche());
+        tï¿½cheEnCours = tï¿½cheï¿½Faire;
+        StartCoroutine(tï¿½cheï¿½Faire.FaireTï¿½che());
     }
 
-    public void Arrêt()
+    public void Arrï¿½t()
     {
         agent.enabled = false;
     }
-    public void Départ()
+    public void Dï¿½part()
     {
         agent.enabled = true;
     }
@@ -102,8 +111,8 @@ public class IAPersonne : MonoBehaviour
     {
         position2D = new Vector2(transform.position.x, transform.position.z);
     }
-    public void SetNomTâche(NomTâche nom)
+    public void SetNomTï¿½che(NomTï¿½che nom)
     {
-        nomTâche = nom;
+        nomTï¿½che = nom;
     }
 }

@@ -11,7 +11,7 @@ public class VirusParticule : MonoBehaviour
     float force; // Force avec laquelle la particule est projetée
     float gravité; // Force appliquée vers le bas
     float duréeVie; // Temps de vie avant de mourir
-    float tempsVie; // Temps de vie depuis sa création
+    float tempsEnVie; // Temps de vie depuis sa création
     bool premièreCollision;
     bool estCollée;
 
@@ -59,8 +59,8 @@ public class VirusParticule : MonoBehaviour
             rb.AddForce(0, -gravité, 0);
         }
 
-        tempsVie += Time.fixedDeltaTime;
-        if (tempsVie > duréeVie)
+        tempsEnVie += Time.fixedDeltaTime;
+        if (tempsEnVie > duréeVie)
             GameObject.Destroy(gameObject);
     }
 

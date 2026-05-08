@@ -22,7 +22,7 @@ public class IAPersonne : MonoBehaviour
 
 
 
-    public void Création(EspaceDeTravail espace)
+    public void Crï¿½ation(EspaceDeTravail espace)
     {
         personne = new Personne(espace, gameObject);
         selecteur = new SelecteurTache(this);
@@ -38,7 +38,15 @@ public class IAPersonne : MonoBehaviour
         tempsInfecte += Time.deltaTime;
         UpdatePosition2D();
 
-        //Si la personne n'a pas de tache ou a fini sa dernière tache
+        if (personne.espaceDeTravail == null)
+        {
+            var o = manager.TrouverEspaceDeTravailLibre();
+            if (o != null)
+                personne.espaceDeTravail = o;
+            else
+                Debug.LogWarning("Pas d'espace de travail disponible");
+        }
+
         if (tacheEnCours != null && tacheEnCours.status == StatusTache.TERMINE)
         {
             FaireTache();
@@ -48,7 +56,6 @@ public class IAPersonne : MonoBehaviour
         {
             personne.virus.EffectuerSymptomes();
 
-            //Si le temps que la personne est infecté dépasse le temps de vie de son virus, elle guéri
             if (tempsInfecte >= personne.virus.dureeVie)
             {
                 Debug.Log("Gueri");
@@ -82,9 +89,9 @@ public class IAPersonne : MonoBehaviour
     }
 
     /// <summary>
-    /// Quand la personne reçoit une tache de l'extérieur
+    /// Quand la personne reï¿½oit une tache de l'extï¿½rieur
     /// </summary>
-    /// <param name="tacheAFaire">Tache donné à la personne de l'extérieur</param>
+    /// <param name="tacheAFaire">Tache donnï¿½ ï¿½ la personne de l'extï¿½rieur</param>
     public void FaireTache(Tache tacheAFaire)
     {
         tacheEnCours = tacheAFaire;

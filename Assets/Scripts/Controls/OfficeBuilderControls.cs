@@ -14,7 +14,7 @@ public class OfficeBuilderControls : MonoBehaviour
     public void Update() {
         if (builderManager != null)
         {
-            if (Input.GetKeyDown(KeyCode.H))
+            if (Input.GetKeyDown(KeyCode.B))
             {
                 builderManager.ToggleMenuBuilder();
             }

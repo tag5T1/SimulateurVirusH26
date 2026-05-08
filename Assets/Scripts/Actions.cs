@@ -10,13 +10,13 @@ public static class Actions
     //Appeler lors de l'infection
     public static void InvokeOnInfection() 
     {
-        OnInfection.Invoke();
+        OnInfection?.Invoke();
     }
 
-    //Appeler seulement lorsqu'une personne non-infecté devient infecté
+    //Appeler seulement lorsqu'une personne non-infectï¿½ devient infectï¿½
     public static void InvokeNewOnInfection()
     {
-        NewOnInfection.Invoke();
+        NewOnInfection?.Invoke();
     }
 
     //Appeler lorsqu'une personne gueri

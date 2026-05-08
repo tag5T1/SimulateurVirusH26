@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3cf38dd863be94db8fbc9bbb096ec9, type: 3}
+  m_Name: PersonneOfficeBuilderObject
+  m_EditorClassIdentifier: Assembly-CSharp::OfficeBuilderObjectScriptableObject
+  nom: Personne
+  prefab: {fileID: 3098120291148209196, guid: ab8f67a4315b87447bf07bc845cbaec1, type: 3}
+  ghostPrefab: {fileID: 6401354350763166103, guid: 95b7a825723d0194bb819cfcab0fe4a7, type: 3}
+  "layersO\xF9Pla\xE7able":
+    serializedVersion: 2
+    m_Bits: 256
